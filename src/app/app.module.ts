@@ -18,7 +18,6 @@ import { AuthModule } from './features/auth/auth.module';
     SharedModule,
     AuthModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

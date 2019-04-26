@@ -10,7 +10,7 @@
           <input matInput type="text" placeholder="Login" formControlName="login" required>
         </label>
 
-        <mat-error class="error" *ngIf="login.invalid && (login.touched || login.dirty)">
+        <mat-error class="error" *ngIf="getFormControl('login').hasError('required')">
           Login is required
         </mat-error>
       </mat-form-field>
@@ -20,7 +20,7 @@
           <input matInput type="password" placeholder="Password" formControlName="password" required>
         </label>
 
-        <mat-error class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
+        <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
           Password is required
         </mat-error>
       </mat-form-field>
