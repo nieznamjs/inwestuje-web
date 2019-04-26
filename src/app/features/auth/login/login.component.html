@@ -1,0 +1,37 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <h2>
+      Inwestu.je (logo, czy coś)
+    </h2>
+
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="field">
+        <label>
+          <input matInput type="text" placeholder="Login" formControlName="login" required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('login').hasError('required')">
+          Login is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <label>
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <button class="btn" mat-raised-button color="primary">
+        Login
+      </button>
+    </form>
+
+    <p>Nie masz jeszcze konta? <a routerLink="/register">Zarejestruj się!</a> </p>
+  </mat-card>
+</div>
+
+<app-auth-sidebar class="sidebar"></app-auth-sidebar>
