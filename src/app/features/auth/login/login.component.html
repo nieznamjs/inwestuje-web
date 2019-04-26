@@ -7,26 +7,30 @@
     <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="field">
         <label>
-          <input matInput type="text" placeholder="Login" formControlName="login" required>
+          <input matInput type="email" placeholder="E-mail" formControlName="email" required>
         </label>
 
-        <mat-error class="error" *ngIf="getFormControl('login').hasError('required')">
-          Login is required
+        <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
+          E-mail jest wymagany
+        </mat-error>
+
+        <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
+          To nie wygląda jak e-mail
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="field">
         <label>
-          <input matInput type="password" placeholder="Password" formControlName="password" required>
+          <input matInput type="password" placeholder="Hasło" formControlName="password" required>
         </label>
 
         <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
-          Password is required
+          Hasło jest wymagane
         </mat-error>
       </mat-form-field>
 
       <button class="btn" mat-raised-button color="primary">
-        Login
+        Zaloguj się
       </button>
     </form>
 

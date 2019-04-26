@@ -4,7 +4,57 @@
       Inwestu.je (logo, czy coś)
     </h2>
 
-    <p>Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a> </p>
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="field">
+        <label>
+          <input matInput type="text" placeholder="E-mail" formControlName="email" required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
+          E-mail jest wymagany
+        </mat-error>
+
+        <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
+          To nie wygląda jak e-mail
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <label>
+          <input matInput type="text" placeholder="Hasło" formControlName="password" required #password>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
+          Hasło jest wymagane
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <label>
+          <input
+            matInput
+            type="text"
+            placeholder="Potwierdź hasło"
+            formControlName="confirmPassword"
+            [pattern]="password.value"
+            required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('confirmPassword').hasError('required')">
+          Potwierdzenie hasła jest wymagane
+        </mat-error>
+
+        <mat-error class="error" *ngIf="getFormControl('confirmPassword').hasError('pattern')">
+          Hasła nie są takie same
+        </mat-error>
+      </mat-form-field>
+
+      <button class="btn" mat-raised-button color="primary">
+        Zarejestruj się
+      </button>
+    </form>
+
+    <p>Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a></p>
   </mat-card>
 </div>
 
