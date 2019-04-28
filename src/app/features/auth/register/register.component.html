@@ -7,7 +7,7 @@
     <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="field">
         <label>
-          <input matInput type="text" placeholder="E-mail" formControlName="email" required>
+          <input matInput type="email" placeholder="E-mail" formControlName="email" required>
         </label>
 
         <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
@@ -21,7 +21,7 @@
 
       <mat-form-field class="field">
         <label>
-          <input matInput type="text" placeholder="Hasło" formControlName="password" required #password>
+          <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
         </label>
 
         <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
@@ -33,7 +33,7 @@
         <label>
           <input
             matInput
-            type="text"
+            type="password"
             placeholder="Potwierdź hasło"
             formControlName="confirmPassword"
             [pattern]="password.value"
@@ -46,6 +46,91 @@
 
         <mat-error class="error" *ngIf="getFormControl('confirmPassword').hasError('pattern')">
           Hasła nie są takie same
+        </mat-error>
+      </mat-form-field>
+
+      <div class="roles-wrapper field-alt">
+        <span class="roles-label">
+          Moja rola to:
+        </span>
+
+        <div class="checkbox-group" formArrayName="roles">
+          <div class="checkbox-wrapper" *ngFor="let role of getFormControl('roles').controls; let i = index">
+            <mat-checkbox [formControl]="role" color="primary">
+              {{ rolesData[i].name }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <mat-slide-toggle
+        class="field-alt"
+        color="primary"
+        formControlName="isCompany">
+        Profil firmowy
+      </mat-slide-toggle>
+
+      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === false">
+        <label>
+          <input
+            matInput
+            type="text"
+            placeholder="Imię"
+            formControlName="name"
+            required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('name').hasError('required')">
+          Imię jest wymagana
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === false">
+        <label>
+          <input
+            matInput
+            type="text"
+            placeholder="Nazwisko"
+            formControlName="lastName"
+            required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('lastName').hasError('required')">
+          Nazwisko jest wymagane
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === true">
+        <label>
+          <input
+            matInput
+            type="text"
+            placeholder="Nazwa firmy"
+            formControlName="companyName"
+            required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('companyName').hasError('required')">
+          Nazwa firmy jest wymagana
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === true">
+        <label>
+          <input
+            matInput
+            type="text"
+            placeholder="NIP (same cyfry)"
+            formControlName="nip"
+            required>
+        </label>
+
+        <mat-error class="error" *ngIf="getFormControl('nip').hasError('required')">
+          NIP jest wymagany
+        </mat-error>
+
+        <mat-error class="error" *ngIf="getFormControl('nip').hasError('pattern')">
+          To nie wygląda jak NIP
         </mat-error>
       </mat-form-field>
 

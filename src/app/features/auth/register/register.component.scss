@@ -1,6 +1,8 @@
 :host {
   display: flex;
   justify-content: space-between;
+
+  padding: 20px 0;
 }
 
 .form-container {
@@ -29,6 +31,14 @@
   }
 }
 
+.field-alt {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
 .btn {
   width: 100%;
 }
@@ -36,4 +46,18 @@
 .sidebar {
   width: 50%;
   height: 100vh;
+}
+
+.roles-wrapper {
+  text-align: left;
+}
+
+.checkbox-group {
+  display: flex;
+}
+
+.checkbox-wrapper {
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
 }
