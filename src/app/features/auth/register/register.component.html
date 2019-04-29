@@ -4,140 +4,223 @@
       Inwestu.je (logo, czy coś)
     </h2>
 
-    <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="field">
-        <label>
-          <input matInput type="email" placeholder="E-mail" formControlName="email" required>
-        </label>
+    <mat-horizontal-stepper linear>
+      <mat-step label="Dane">
+        <form class="form" [formGroup]="registerForm">
+          <mat-form-field class="field">
+            <label>
+              <input matInput type="email" placeholder="E-mail" formControlName="email" required>
+            </label>
 
-        <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
-          E-mail jest wymagany
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'email').hasError('required')">
+              E-mail jest wymagany
+            </mat-error>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'email').hasError('email')">
+              To nie wygląda jak e-mail
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field">
+            <label>
+              <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'password').hasError('required')">
+              Hasło jest wymagane
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field">
+            <label>
+              <input
+                matInput
+                type="password"
+                placeholder="Potwierdź hasło"
+                formControlName="confirmPassword"
+                [pattern]="password.value"
+                required>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('required')">
+              Potwierdzenie hasła jest wymagane
+            </mat-error>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('pattern')">
+              Hasła nie są takie same
+            </mat-error>
+          </mat-form-field>
+
+          <mat-button-toggle-group formControlName="accountType" class="field-alt toggle-group">
+            <mat-button-toggle value="private" class="toggle-btn">
+              Osoba prywatna
+            </mat-button-toggle>
+
+            <mat-button-toggle value="company" class="toggle-btn">
+              Firma
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+            <label>
+              <input
+                matInput
+                type="text"
+                placeholder="Imię"
+                formControlName="name"
+                required>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'name').hasError('required')">
+              Imię jest wymagana
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+            <label>
+              <input
+                matInput
+                type="text"
+                placeholder="Nazwisko"
+                formControlName="lastName"
+                required>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'lastName').hasError('required')">
+              Nazwisko jest wymagane
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === 'company'">
+            <label>
+              <input
+                matInput
+                type="text"
+                placeholder="Nazwa firmy"
+                formControlName="companyName"
+                required>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'companyName').hasError('required')">
+              Nazwa firmy jest wymagana
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === 'company'">
+            <label>
+              <input
+                matInput
+                type="text"
+                placeholder="NIP (same cyfry)"
+                formControlName="nip"
+                required>
+            </label>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'nip').hasError('required')">
+              NIP jest wymagany
+            </mat-error>
+
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'nip').hasError('pattern')">
+              To nie wygląda jak NIP
+            </mat-error>
+          </mat-form-field>
+
+          <div class="field-alt">
+            <mat-button-toggle-group formControlName="roles" multiple class="toggle-group">
+              <mat-button-toggle *ngFor="let role of rolesData" [value]="role" class="toggle-btn">
+                {{ role }}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <mat-error *ngIf="getFormControl(registerForm, 'roles').hasError('required')">
+              Err
         </mat-error>
-
-        <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
-          To nie wygląda jak e-mail
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="field">
-        <label>
-          <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
-        </label>
-
-        <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
-          Hasło jest wymagane
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="field">
-        <label>
-          <input
-            matInput
-            type="password"
-            placeholder="Potwierdź hasło"
-            formControlName="confirmPassword"
-            [pattern]="password.value"
-            required>
-        </label>
-
-        <mat-error class="error" *ngIf="getFormControl('confirmPassword').hasError('required')">
-          Potwierdzenie hasła jest wymagane
-        </mat-error>
-
-        <mat-error class="error" *ngIf="getFormControl('confirmPassword').hasError('pattern')">
-          Hasła nie są takie same
-        </mat-error>
-      </mat-form-field>
-
-      <div class="roles-wrapper field-alt">
-        <span class="roles-label">
-          Moja rola to:
-        </span>
-
-        <div class="checkbox-group" formArrayName="roles">
-          <div class="checkbox-wrapper" *ngFor="let role of getFormControl('roles').controls; let i = index">
-            <mat-checkbox [formControl]="role" color="primary">
-              {{ rolesData[i].name }}
-            </mat-checkbox>
-          </div>
-        </div>
       </div>
 
-      <mat-slide-toggle
-        class="field-alt"
-        color="primary"
-        formControlName="isCompany">
-        Profil firmowy
-      </mat-slide-toggle>
+          <button class="btn" type="button" matStepperNext mat-raised-button color="primary">
+            Dalej
+          </button>
+        </form>
+      </mat-step>
 
-      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === false">
-        <label>
-          <input
-            matInput
-            type="text"
-            placeholder="Imię"
-            formControlName="name"
-            required>
-        </label>
+      <mat-step label="Płatnośc">
+        <form [formGroup]="paymentForm">
+          <mat-form-field class="field">
+            <label>
+              <input
+                class="payu-card-number"
+                matInput
+                type="text"
+                placeholder="Numer karty"
+                formControlName="cardNumber"
+                required>
+            </label>
 
-        <mat-error class="error" *ngIf="getFormControl('name').hasError('required')">
-          Imię jest wymagana
-        </mat-error>
-      </mat-form-field>
+            <mat-error class="error" *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('required')">
+              Numer karty jest wymagany
+            </mat-error>
+          </mat-form-field>
 
-      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === false">
-        <label>
-          <input
-            matInput
-            type="text"
-            placeholder="Nazwisko"
-            formControlName="lastName"
-            required>
-        </label>
+          <mat-form-field class="field">
+            <label>
+              <input
+                class="payu-card-cvv"
+                matInput
+                type="text"
+                placeholder="Kod CVV2/CVC2"
+                formControlName="cvv"
+                required>
+            </label>
 
-        <mat-error class="error" *ngIf="getFormControl('lastName').hasError('required')">
-          Nazwisko jest wymagane
-        </mat-error>
-      </mat-form-field>
+            <mat-error class="error" *ngIf="getFormControl(paymentForm, 'cvv').hasError('required')">
+              Kod CVV2/CVC2 jest wymgany
+            </mat-error>
+          </mat-form-field>
 
-      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === true">
-        <label>
-          <input
-            matInput
-            type="text"
-            placeholder="Nazwa firmy"
-            formControlName="companyName"
-            required>
-        </label>
+          <div class="card-exp-wrapper">
+            <mat-form-field class="field">
+              <label>
+                <input
+                  class="payu-card-expm"
+                  matInput
+                  type="text"
+                  placeholder="Miesiąc ważności karty"
+                  formControlName="expMonth"
+                  required>
+              </label>
 
-        <mat-error class="error" *ngIf="getFormControl('companyName').hasError('required')">
-          Nazwa firmy jest wymagana
-        </mat-error>
-      </mat-form-field>
+              <mat-error class="error" *ngIf="getFormControl(paymentForm, 'expMonth').hasError('required')">
+                Miesiąc jest wymagany
+              </mat-error>
+            </mat-form-field>
 
-      <mat-form-field class="field" *ngIf="getFormControl('isCompany').value === true">
-        <label>
-          <input
-            matInput
-            type="text"
-            placeholder="NIP (same cyfry)"
-            formControlName="nip"
-            required>
-        </label>
+            <span class="card-exp-divider">
+              /
+            </span>
 
-        <mat-error class="error" *ngIf="getFormControl('nip').hasError('required')">
-          NIP jest wymagany
-        </mat-error>
+            <mat-form-field class="field">
+              <label>
+                <input
+                  class="payu-card-expy"
+                  matInput
+                  type="text"
+                  placeholder="Rok ważności karty"
+                  formControlName="expYear"
+                  required>
+              </label>
 
-        <mat-error class="error" *ngIf="getFormControl('nip').hasError('pattern')">
-          To nie wygląda jak NIP
-        </mat-error>
-      </mat-form-field>
+              <mat-error class="error" *ngIf="getFormControl(paymentForm, 'expYear').hasError('required')">
+                Rok jest wymagany
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-      <button class="btn" mat-raised-button color="primary">
-        Zarejestruj się
-      </button>
-    </form>
+          <mat-checkbox class="field-alt payu-agreement" color="primary">
+            Zapisując dane karty akceptuję regulamin i chcę jej używać do kolejnych płatności
+          </mat-checkbox>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
 
     <p>Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a></p>
   </mat-card>

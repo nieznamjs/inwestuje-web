@@ -37,6 +37,11 @@
   &:not(:last-child) {
     margin-bottom: 20px;
   }
+
+  .toggle-btn {
+    flex: 1;
+  }
+
 }
 
 .btn {
@@ -52,12 +57,29 @@
   text-align: left;
 }
 
-.checkbox-group {
-  display: flex;
+.toggle-group {
+  width: 100%;
 }
 
-.checkbox-wrapper {
-  &:not(:last-child) {
-    margin-right: 10px;
+.card-exp-wrapper {
+  display: flex;
+  align-items: baseline;
+
+  .field {
+    width: calc(50% - 13px);
   }
+}
+
+.card-exp-divider {
+  margin: 0 10px;
+}
+
+.mat-checkbox-layout {
+  align-items: baseline;
+  white-space: normal;
+  text-align: left;
+}
+
+.mat-checkbox-inner-container {
+  margin: 0 8px 0 0;
 }
