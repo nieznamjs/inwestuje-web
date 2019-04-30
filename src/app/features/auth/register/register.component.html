@@ -12,11 +12,11 @@
               <input matInput type="email" placeholder="E-mail" formControlName="email" required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'email').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('required')">
               E-mail jest wymagany
             </mat-error>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'email').hasError('email')">
+            <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('email')">
               To nie wygląda jak e-mail
             </mat-error>
           </mat-form-field>
@@ -26,12 +26,12 @@
               <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'password').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'password').hasError('required')">
               Hasło jest wymagane
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="field">
+          <mat-form-field class="field-alt">
             <label>
               <input
                 matInput
@@ -42,11 +42,11 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('required')">
               Potwierdzenie hasła jest wymagane
             </mat-error>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('pattern')">
+            <mat-error *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('pattern')">
               Hasła nie są takie same
             </mat-error>
           </mat-form-field>
@@ -71,8 +71,8 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'name').hasError('required')">
-              Imię jest wymagana
+            <mat-error *ngIf="getFormControl(registerForm, 'name').hasError('required')">
+              Imię jest wymagane
             </mat-error>
           </mat-form-field>
 
@@ -86,7 +86,7 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'lastName').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'lastName').hasError('required')">
               Nazwisko jest wymagane
             </mat-error>
           </mat-form-field>
@@ -101,7 +101,7 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'companyName').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'companyName').hasError('required')">
               Nazwa firmy jest wymagana
             </mat-error>
           </mat-form-field>
@@ -116,11 +116,11 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'nip').hasError('required')">
+            <mat-error *ngIf="getFormControl(registerForm, 'nip').hasError('required')">
               NIP jest wymagany
             </mat-error>
 
-            <mat-error class="error" *ngIf="getFormControl(registerForm, 'nip').hasError('pattern')">
+            <mat-error *ngIf="getFormControl(registerForm, 'nip').hasError('pattern')">
               To nie wygląda jak NIP
             </mat-error>
           </mat-form-field>
@@ -132,19 +132,19 @@
               </mat-button-toggle>
             </mat-button-toggle-group>
 
-            <mat-error *ngIf="getFormControl(registerForm, 'roles').hasError('required')">
-              Err
-        </mat-error>
-      </div>
+            <mat-error class="error" *ngIf="getFormControl(registerForm, 'roles').hasError('required')">
+              Rola jest wymagana
+            </mat-error>
+          </div>
 
-          <button class="btn" type="button" matStepperNext mat-raised-button color="primary">
+          <button class="btn" matStepperNext mat-raised-button color="primary">
             Dalej
           </button>
         </form>
       </mat-step>
 
-      <mat-step label="Płatnośc">
-        <form [formGroup]="paymentForm">
+      <mat-step label="Płatności" [stepControl]="paymentForm">
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmitPaymentData()">
           <mat-form-field class="field">
             <label>
               <input
@@ -156,7 +156,7 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('required')">
+            <mat-error *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('required')">
               Numer karty jest wymagany
             </mat-error>
           </mat-form-field>
@@ -172,7 +172,7 @@
                 required>
             </label>
 
-            <mat-error class="error" *ngIf="getFormControl(paymentForm, 'cvv').hasError('required')">
+            <mat-error *ngIf="getFormControl(paymentForm, 'cvv').hasError('required')">
               Kod CVV2/CVC2 jest wymgany
             </mat-error>
           </mat-form-field>
@@ -189,7 +189,7 @@
                   required>
               </label>
 
-              <mat-error class="error" *ngIf="getFormControl(paymentForm, 'expMonth').hasError('required')">
+              <mat-error *ngIf="getFormControl(paymentForm, 'expMonth').hasError('required')">
                 Miesiąc jest wymagany
               </mat-error>
             </mat-form-field>
@@ -209,15 +209,25 @@
                   required>
               </label>
 
-              <mat-error class="error" *ngIf="getFormControl(paymentForm, 'expYear').hasError('required')">
+              <mat-error *ngIf="getFormControl(paymentForm, 'expYear').hasError('required')">
                 Rok jest wymagany
               </mat-error>
             </mat-form-field>
           </div>
 
-          <mat-checkbox class="field-alt payu-agreement" color="primary">
-            Zapisując dane karty akceptuję regulamin i chcę jej używać do kolejnych płatności
-          </mat-checkbox>
+          <div class="field-alt">
+            <mat-checkbox class="payu-agreement" color="primary" formControlName="agreement">
+              Zapisując dane karty akceptuję regulamin i chcę jej używać do kolejnych płatności
+            </mat-checkbox>
+
+            <mat-error *ngIf="getFormControl(paymentForm, 'agreement').hasError('requiredTrue')">
+              Zgoda jest wymagana
+            </mat-error>
+          </div>
+
+          <button class="btn" mat-raised-button matStepperNext color="primary">
+            Dalej
+          </button>
         </form>
       </mat-step>
     </mat-horizontal-stepper>

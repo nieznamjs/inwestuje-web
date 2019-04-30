@@ -1,3 +1,7 @@
+@import '~@angular/material/theming';
+@import "../../../../theme";
+@import "../../../../variables";
+
 :host {
   display: flex;
   justify-content: space-between;
@@ -16,7 +20,7 @@
 .form-card {
   width: 400px;
 
-  padding: 40px 30px;
+  padding: 40px 10px;
 
   text-align: center;
 }
@@ -33,6 +37,7 @@
 
 .field-alt {
   width: 100%;
+  text-align: left;
 
   &:not(:last-child) {
     margin-bottom: 20px;
@@ -41,7 +46,11 @@
   .toggle-btn {
     flex: 1;
   }
+}
 
+.error {
+  font-size: 75%;
+  margin-top: 5px;
 }
 
 .btn {
@@ -83,3 +92,12 @@
 .mat-checkbox-inner-container {
   margin: 0 8px 0 0;
 }
+
+.mat-button-toggle-checked {
+  background-color: mat-color($inwestuje-web-primary);
+  color: $color-white !important;
+}
+
+
+
+
