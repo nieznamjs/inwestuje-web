@@ -15,11 +15,11 @@
         </mat-error>
 
         <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
-          To nie wygląda jak e-mail
+          Niepoprawny e-mail
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="field">
+      <mat-form-field class="field-alt">
         <label>
           <input matInput type="password" placeholder="Hasło" formControlName="password" required>
         </label>
@@ -34,7 +34,13 @@
       </button>
     </form>
 
-    <p>Nie masz jeszcze konta? <a routerLink="/register">Zarejestruj się!</a> </p>
+    <p>
+      Nie masz jeszcze konta? <a routerLink="/register">Zarejestruj się!</a>
+    </p>
+
+    <p>
+      Zapomniałeś hasła? <a routerLink="/login">Przypomnij hasło!</a>
+    </p>
   </mat-card>
 </div>
 

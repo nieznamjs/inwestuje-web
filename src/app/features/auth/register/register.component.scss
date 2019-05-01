@@ -18,7 +18,7 @@
 }
 
 .form-card {
-  width: 400px;
+  max-width: 500px;
 
   padding: 40px 10px;
 
@@ -96,6 +96,10 @@
 .mat-button-toggle-checked {
   background-color: mat-color($inwestuje-web-primary);
   color: $color-white !important;
+}
+
+.summary-wrapper {
+  text-align: left;
 }
 
 

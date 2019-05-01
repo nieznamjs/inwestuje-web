@@ -3,6 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 
 import { FormsService } from '../../../core/services/forms.service';
 import { AccountTypes } from '../../../shared/constants/account-types';
+import { PayuTokenCreateResponse } from '../../../shared/interfaces/payu-token-create-response';
+import { PAYU_MERCHANT_ID } from '../../../shared/constants/payu-constants';
+
+declare const OpenPayU;
 
 @Component({
   selector: 'app-register',
@@ -12,6 +16,7 @@ import { AccountTypes } from '../../../shared/constants/account-types';
 export class RegisterComponent implements OnInit {
 
   public readonly rolesData = ['Inwestor', 'Deal Maker', 'Sourcer'];
+  public isCheckingCardData = false;
 
   public registerForm = this.fb.group({
     email: [ '', [ Validators.email, Validators.required ]],
@@ -26,12 +31,17 @@ export class RegisterComponent implements OnInit {
   });
 
   public paymentForm = this.fb.group({
-    cardNumber: [ '', Validators.required, Validators.pattern('^[0-9]{16}$') ],
-    cvv: [ '', Validators.required, Validators.pattern('^[0-9]{3}$') ],
-    expMonth: [ '', Validators.required, Validators.min(1), Validators.max(12) ],
-    expYear: [ '', Validators.required, Validators.min(19), Validators.max(50) ],
-    agreement: [ false, Validators.requiredTrue ],
+    cardNumber: [ '', [ Validators.required, Validators.pattern('^[0-9]{16}$') ]],
+    cvv: [ '', [ Validators.required, Validators.pattern('^[0-9]{3}$') ]],
+    expMonth: [ '', [ Validators.required, Validators.min(1), Validators.max(12) ]],
+    expYear: [ '', [ Validators.required, Validators.min(19), Validators.max(50) ]],
+    agreement: [ null, Validators.requiredTrue ],
+    token: [ null, Validators.required ],
   });
+
+  get agreementField(): AbstractControl {
+    return this.getFormControl(this.paymentForm, 'agreement');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -79,15 +89,19 @@ export class RegisterComponent implements OnInit {
   }
 
   public onSubmitPaymentData(): void {
+    this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
     const { cardNumber, cvv, expMonth, expYear, agreement } = this.paymentForm.value;
 
     console.log(cardNumber, cvv, expMonth, expYear, agreement);
-
-    OpenPayU.merchantId = '145227';
-    const response = OpenPayU.Token.create({}, (data) => {
-      console.warn(data);
+    console.log(this.getFormControl(this.paymentForm, 'agreement'));
+    this.isCheckingCardData = true;
+    OpenPayU.merchantId = PAYU_MERCHANT_ID;
+    const requestOk: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
+      this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
     });
 
-    console.log(response);
+    if (requestOk) {
+      this.isCheckingCardData = false;
+    }
   }
 }

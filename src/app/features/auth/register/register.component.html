@@ -5,7 +5,7 @@
     </h2>
 
     <mat-horizontal-stepper linear>
-      <mat-step label="Dane">
+      <mat-step label="Dane" [stepControl]="registerForm">
         <form class="form" [formGroup]="registerForm">
           <mat-form-field class="field">
             <label>
@@ -17,7 +17,7 @@
             </mat-error>
 
             <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('email')">
-              To nie wygląda jak e-mail
+              Niepoprawny e-mail
             </mat-error>
           </mat-form-field>
 
@@ -121,7 +121,7 @@
             </mat-error>
 
             <mat-error *ngIf="getFormControl(registerForm, 'nip').hasError('pattern')">
-              To nie wygląda jak NIP
+              Niepoprawny NIP
             </mat-error>
           </mat-form-field>
 
@@ -220,15 +220,49 @@
               Zapisując dane karty akceptuję regulamin i chcę jej używać do kolejnych płatności
             </mat-checkbox>
 
-            <mat-error *ngIf="getFormControl(paymentForm, 'agreement').hasError('requiredTrue')">
+            <mat-error
+              class="error"
+              *ngIf="agreementField.hasError('required') && agreementField.dirty">
               Zgoda jest wymagana
             </mat-error>
           </div>
 
-          <button class="btn" mat-raised-button matStepperNext color="primary">
+          <button class="btn" mat-raised-button matStepperNext color="primary" [disabled]="isCheckingCardData">
             Dalej
           </button>
+
+          <mat-spinner color="primary" *ngIf="isCheckingCardData"></mat-spinner>
         </form>
+      </mat-step>
+
+      <mat-step label="Podsumowanie" class="summary-wrapper">
+        <h2>
+          Podsumowanie
+        </h2>
+
+        <p class="summary-detail">
+          E-mail: {{ getFormControl(registerForm, 'email').value }}
+        </p>
+
+        <p class="summary-detail">
+          Typ konta: {{ getFormControl(registerForm, 'accountType').value }}
+        </p>
+
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+          Imię: {{ getFormControl(registerForm, 'name').value }}
+        </p>
+
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+          Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
+        </p>
+
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'company'">
+          Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
+        </p>
+
+        <p class="summary-detail">
+          Typ konta: {{ getFormControl(registerForm, 'roles').value }}
+        </p>
       </mat-step>
     </mat-horizontal-stepper>
 

@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatInputModule,
+  MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatStepperModule,
 } from '@angular/material';
@@ -22,6 +23,7 @@ const materialModules = [
   MatCheckboxModule,
   MatButtonToggleModule,
   MatStepperModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
