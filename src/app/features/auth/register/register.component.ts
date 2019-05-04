@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { FormsService } from '../../../core/services/forms.service';
-import { AccountTypes } from '../../../shared/constants/account-types';
-import { PayuTokenCreateResponse } from '../../../shared/interfaces/payu-token-create-response';
-import { PAYU_MERCHANT_ID } from '../../../shared/constants/payu-constants';
+import { FormsService } from '@services/forms.service';
+import { AccountTypes } from '@constants/account-types';
+import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
+import { PAYU_MERCHANT_ID } from '@constants/payu-constants';
 
 declare const OpenPayU;
 
@@ -17,6 +17,20 @@ export class RegisterComponent implements OnInit {
 
   public readonly rolesData = ['Inwestor', 'Deal Maker', 'Sourcer'];
   public isCheckingCardData = false;
+  public cardCheckError = false;
+  public nipMask = { mask: '000-000-00-00', };
+  public cardNumberMask = { mask: '0000 0000 0000 0000', };
+  public cvvMask = { mask: '000' };
+  public expMonthMask = {
+    mask: Number,
+    min: 1,
+    max: 12,
+  };
+  public expYearMask = {
+    mask: Number,
+    min: 19,
+    max: 30,
+  };
 
   public registerForm = this.fb.group({
     email: [ '', [ Validators.email, Validators.required ]],
@@ -92,16 +106,21 @@ export class RegisterComponent implements OnInit {
     this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
     const { cardNumber, cvv, expMonth, expYear, agreement } = this.paymentForm.value;
 
-    console.log(cardNumber, cvv, expMonth, expYear, agreement);
-    console.log(this.getFormControl(this.paymentForm, 'agreement'));
     this.isCheckingCardData = true;
     OpenPayU.merchantId = PAYU_MERCHANT_ID;
     const requestOk: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
-      this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
+      if (response.status.statusCode === 'SUCCESS') {
+        this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
+      } else {
+        this.getFormControl(this.paymentForm, 'token').setValue(null);
+      }
     });
 
     if (requestOk) {
       this.isCheckingCardData = false;
+      this.cardCheckError = false;
+    } else {
+      this.cardCheckError = true;
     }
   }
 }

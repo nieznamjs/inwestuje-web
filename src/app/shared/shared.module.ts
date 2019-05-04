@@ -12,8 +12,9 @@ import {
   MatStepperModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IMaskModule } from 'angular-imask';
 
-import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
+import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 
 const materialModules = [
   MatInputModule,
@@ -35,6 +36,7 @@ const materialModules = [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    IMaskModule,
   ],
   exports: [
     ...materialModules,
@@ -42,6 +44,7 @@ const materialModules = [
     CommonModule,
     ReactiveFormsModule,
     AuthSidebarComponent,
+    IMaskModule,
   ],
 })
 export class SharedModule { }
