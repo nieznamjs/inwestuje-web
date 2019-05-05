@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material';
 
 import { FormsService } from '@services/forms.service';
 import { AccountTypes } from '@constants/account-types';
-import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
+import { ACCOUNT_ROLES } from '@constants/account-roles';
+import { AccountRole } from '@interfaces/account-role.interface';
 import { PAYU_MERCHANT_ID } from '@constants/payu-constants';
+import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
 
 declare const OpenPayU;
 
@@ -15,28 +18,16 @@ declare const OpenPayU;
 })
 export class RegisterComponent implements OnInit {
 
-  public readonly rolesData = ['Inwestor', 'Deal Maker', 'Sourcer'];
   public isCheckingCardData = false;
   public cardCheckError = false;
-  public nipMask = { mask: '000-000-00-00', };
-  public cardNumberMask = { mask: '0000 0000 0000 0000', };
-  public cvvMask = { mask: '000' };
-  public expMonthMask = {
-    mask: Number,
-    min: 1,
-    max: 12,
-  };
-  public expYearMask = {
-    mask: Number,
-    min: 19,
-    max: 30,
-  };
+  public readonly rolesData: AccountRole[] = ACCOUNT_ROLES;
+  @ViewChild(MatStepper) stepper: MatStepper;
 
   public registerForm = this.fb.group({
     email: [ '', [ Validators.email, Validators.required ]],
     password: [ '', Validators.required ],
     confirmPassword: [ '', Validators.required ],
-    roles: [[ 'Inwestor' ], Validators.required ],
+    roles: [ this.rolesData[0], Validators.required ],
     accountType: [ 'private' ],
     name: [ '', Validators.required ],
     lastName: [ '', Validators.required ],
@@ -52,10 +43,6 @@ export class RegisterComponent implements OnInit {
     agreement: [ null, Validators.requiredTrue ],
     token: [ null, Validators.required ],
   });
-
-  get agreementField(): AbstractControl {
-    return this.getFormControl(this.paymentForm, 'agreement');
-  }
 
   constructor(
     private fb: FormBuilder,
@@ -98,16 +85,13 @@ export class RegisterComponent implements OnInit {
     return this.formsService.getFormControl(form, name);
   }
 
-  public onSubmit(): void {
-    const { email, password, confirmPassword, isCompany, roles } = this.registerForm.value;
-  }
-
   public onSubmitPaymentData(): void {
     this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
     const { cardNumber, cvv, expMonth, expYear, agreement } = this.paymentForm.value;
 
     this.isCheckingCardData = true;
     OpenPayU.merchantId = PAYU_MERCHANT_ID;
+
     const requestOk: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
       if (response.status.statusCode === 'SUCCESS') {
         this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
@@ -116,11 +100,11 @@ export class RegisterComponent implements OnInit {
       }
     });
 
-    if (requestOk) {
-      this.isCheckingCardData = false;
-      this.cardCheckError = false;
-    } else {
-      this.cardCheckError = true;
-    }
+    this.isCheckingCardData = false;
+    this.cardCheckError = !requestOk;
+  }
+
+  public onSubmit(): void {
+    const { email, password, confirmPassword, isCompany, roles } = this.registerForm.value;
   }
 }

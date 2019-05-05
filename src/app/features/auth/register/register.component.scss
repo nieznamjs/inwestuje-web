@@ -25,62 +25,9 @@
   text-align: center;
 }
 
-.field {
-  width: 100%;
-
-  line-height: 1.4;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.field-alt {
-  width: 100%;
-  text-align: left;
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-
-  .toggle-btn {
-    flex: 1;
-  }
-}
-
-.error {
-  font-size: 75%;
-  margin-top: 5px;
-}
-
-.btn {
-  width: 100%;
-}
-
 .sidebar {
   width: 50%;
   height: 100vh;
-}
-
-.roles-wrapper {
-  text-align: left;
-}
-
-.toggle-group {
-  width: 100%;
-}
-
-.card-exp-wrapper {
-  display: flex;
-  align-items: baseline;
-
-  .field {
-    width: calc(50% - 13px);
-  }
-}
-
-.card-exp-divider {
-  margin: 0 10px;
 }
 
 .mat-checkbox-layout {
@@ -91,11 +38,6 @@
 
 .mat-checkbox-inner-container {
   margin: 0 8px 0 0;
-}
-
-.mat-button-toggle-checked {
-  background-color: mat-color($inwestuje-web-primary);
-  color: $color-white !important;
 }
 
 .summary-wrapper {

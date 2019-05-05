@@ -1,0 +1,99 @@
+<form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="field">
+    <input
+      class="payu-card-number"
+      [imask]="cardNumberMask"
+      [unmask]="true"
+      matInput
+      type="text"
+      placeholder="Numer karty"
+      formControlName="cardNumber"
+      required>
+
+    <mat-error *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('pattern')">
+      Nieprawidłowy numer karty
+    </mat-error>
+
+    <mat-error *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('required')">
+      Numer karty jest wymagany
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field">
+    <label>
+      <input
+        class="payu-card-cvv"
+        [imask]="cvvMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Kod CVV2/CVC2"
+        formControlName="cvv"
+        required>
+    </label>
+
+    <mat-error *ngIf="getFormControl(paymentForm, 'cvv').hasError('required')">
+      Kod CVV2/CVC2 jest wymgany
+    </mat-error>
+  </mat-form-field>
+
+  <div class="card-exp-wrapper">
+    <mat-form-field class="field">
+      <input
+        class="payu-card-expm"
+        [imask]="expMonthMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Miesiąc ważności karty"
+        formControlName="expMonth"
+        required>
+
+      <mat-error *ngIf="getFormControl(paymentForm, 'expMonth').hasError('required')">
+        Miesiąc jest wymagany
+      </mat-error>
+    </mat-form-field>
+
+    <span class="card-exp-divider">
+              /
+            </span>
+
+    <mat-form-field class="field">
+      <input
+        class="payu-card-expy"
+        [imask]="expYearMask"
+        [unmask]="true"
+        matInput
+        type="text"
+        placeholder="Rok ważności karty"
+        formControlName="expYear"
+        required>
+
+      <mat-error *ngIf="getFormControl(paymentForm, 'expYear').hasError('required')">
+        Rok jest wymagany
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="field-alt">
+    <mat-checkbox class="payu-agreement" color="primary" formControlName="agreement">
+      Zapisując dane karty akceptuję regulamin i chcę jej używać do kolejnych płatności
+    </mat-checkbox>
+
+    <mat-error
+      class="error"
+      *ngIf="agreementField.hasError('required') && agreementField.dirty">
+      Zgoda jest wymagana
+    </mat-error>
+  </div>
+
+  <button class="btn" mat-raised-button matStepperNext color="primary" [disabled]="isCheckingCardData">
+    Dalej
+  </button>
+
+  <mat-spinner color="primary" *ngIf="isCheckingCardData"></mat-spinner>
+</form>
+
+<mat-error *ngIf="cardCheckError">
+  Walidacja karty przebiegła niepoprawnie.
+</mat-error>
