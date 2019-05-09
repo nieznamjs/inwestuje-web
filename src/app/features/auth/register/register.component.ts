@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material';
 
+import { environment } from '@env/environment';
 import { FormsService } from '@services/forms.service';
-import { AccountTypes } from '@constants/account-types';
+import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
 import { ACCOUNT_ROLES } from '@constants/account-roles';
-import { AccountRole } from '@interfaces/account-role.interface';
-import { PAYU_MERCHANT_ID } from '@constants/payu-constants';
+import { AccountRoleOrType } from '@interfaces/account-role.interface';
 import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
 
 declare const OpenPayU;
@@ -14,13 +14,14 @@ declare const OpenPayU;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
 
   public isCheckingCardData = false;
   public cardCheckError = false;
-  public readonly rolesData: AccountRole[] = ACCOUNT_ROLES;
+  public readonly rolesData: AccountRoleOrType[] = ACCOUNT_ROLES;
+  public readonly accountTypes: AccountRoleOrType[] = ACCOUNT_TYPES;
   @ViewChild(MatStepper) stepper: MatStepper;
 
   public registerForm = this.fb.group({
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
     password: [ '', Validators.required ],
     confirmPassword: [ '', Validators.required ],
     roles: [ this.rolesData[0], Validators.required ],
-    accountType: [ 'private' ],
+    accountType: [ this.accountTypes[0] ],
     name: [ '', Validators.required ],
     lastName: [ '', Validators.required ],
     companyName: [ '', Validators.required ],
@@ -58,8 +59,8 @@ export class RegisterComponent implements OnInit {
     this.disableFields([ companyNameField, nipField ]);
 
     this.getFormControl(this.registerForm, 'accountType').valueChanges
-      .subscribe((accountType: AccountTypes.Private | AccountTypes.Company) => {
-        if (accountType === AccountTypes.Private) {
+      .subscribe((accountType: AccountRoleOrType) => {
+        if (accountType.value === AccountTypes.Private) {
           this.enableFields([ nameField, lastNameField ]);
           this.disableFields([ companyNameField, nipField ]);
         } else {
@@ -89,22 +90,35 @@ export class RegisterComponent implements OnInit {
     this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
     const { cardNumber, cvv, expMonth, expYear, agreement } = this.paymentForm.value;
 
+    // if (this.paymentForm.invalid) {
+    //   console.log(this.paymentForm)
+    //   return;
+    // }
+
     this.isCheckingCardData = true;
-    OpenPayU.merchantId = PAYU_MERCHANT_ID;
+    this.cardCheckError = false;
+    OpenPayU.merchantId = environment.payUMerchantId;
 
     const requestOk: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
-      if (response.status.statusCode === 'SUCCESS') {
-        this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
-      } else {
+      if (response.status.statusCode !== 'SUCCESS') {
+        this.cardCheckError = true;
         this.getFormControl(this.paymentForm, 'token').setValue(null);
+
+        return;
       }
+
+      this.cardCheckError = false;
+      this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
     });
 
+    if (requestOk !== true) {
+      this.cardCheckError = true;
+    }
+
     this.isCheckingCardData = false;
-    this.cardCheckError = !requestOk;
   }
 
-  public onSubmit(): void {
-    const { email, password, confirmPassword, isCompany, roles } = this.registerForm.value;
+  public register(): void {
+    const { email, password, confirmPassword, accountType, roles } = this.registerForm.value;
   }
 }

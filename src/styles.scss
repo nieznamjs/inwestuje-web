@@ -30,3 +30,8 @@ a {
 .mat-button-toggle-appearance-standard:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay {
   border-bottom-width: 48px;
 }
+
+.mat-checkbox-layout {
+  white-space: normal !important;
+}
+

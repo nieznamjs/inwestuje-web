@@ -8,7 +8,8 @@
       <mat-step label="Dane" [stepControl]="registerForm">
         <app-user-data-form
           [registerForm]="registerForm"
-          [rolesData]="rolesData">
+          [rolesData]="rolesData"
+          [accountTypes]="accountTypes">
         </app-user-data-form>
       </mat-step>
 
@@ -22,33 +23,33 @@
       </mat-step>
 
       <mat-step label="Podsumowanie" class="summary-wrapper">
-        <h2>
-          Podsumowanie
-        </h2>
-
         <p class="summary-detail">
           E-mail: {{ getFormControl(registerForm, 'email').value }}
         </p>
 
         <p class="summary-detail">
-          Typ konta: {{ getFormControl(registerForm, 'accountType').value }}
+          Typ konta: {{ getFormControl(registerForm, 'accountType').value.label }}
         </p>
 
-        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
           Imię: {{ getFormControl(registerForm, 'name').value }}
         </p>
 
-        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'private'">
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
           Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
         </p>
 
-        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === 'company'">
+        <p class="summary-detail" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
           Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
         </p>
 
         <p class="summary-detail">
-          Typ konta: {{ getFormControl(registerForm, 'roles').value }}
+<!--          Role: <span *ngFor="let role of getFormControl(registerForm, 'roles').value">{{ role.label }}</span>-->
         </p>
+
+        <button mat-raised-button color="primary" class="btn" (click)="register()">
+          Zarejestruj się
+        </button>
       </mat-step>
     </mat-horizontal-stepper>
 

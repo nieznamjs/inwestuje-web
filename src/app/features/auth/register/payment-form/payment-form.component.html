@@ -55,8 +55,8 @@
     </mat-form-field>
 
     <span class="card-exp-divider">
-              /
-            </span>
+      /
+    </span>
 
     <mat-form-field class="field">
       <input
@@ -94,6 +94,6 @@
   <mat-spinner color="primary" *ngIf="isCheckingCardData"></mat-spinner>
 </form>
 
-<mat-error *ngIf="cardCheckError">
+<mat-error *ngIf="cardCheckError" class="card-valid-error">
   Walidacja karty przebiegła niepoprawnie.
 </mat-error>

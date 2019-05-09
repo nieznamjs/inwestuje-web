@@ -1,4 +1,4 @@
-export interface AccountRole {
+export interface AccountRoleOrType {
   label: string;
   value: string;
 }
