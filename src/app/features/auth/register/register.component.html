@@ -16,9 +16,9 @@
       <mat-step label="Płatności" [stepControl]="paymentForm">
         <app-payment-form
           [paymentForm]="paymentForm"
-          [cardCheckError]="cardCheckError"
+          [hasCardCheckError]="hasCardCheckError"
           [isCheckingCardData]="isCheckingCardData"
-          (checkCardData)="onSubmitPaymentData()">
+          (formSubmit)="onSubmitCardData()">
         </app-payment-form>
       </mat-step>
 

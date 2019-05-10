@@ -9,29 +9,21 @@ import { FormsService } from '@services/forms.service';
   styleUrls: ['./payment-form.component.scss']
 })
 export class PaymentFormComponent {
+  @Input() public paymentForm: FormGroup;
+  @Input() public isCheckingCardData: boolean;
+  @Input() public hasCardCheckError: boolean;
+  @Output() public formSubmit = new EventEmitter<void>();
+
   public readonly cardNumberMask = { mask: '0000 0000 0000 0000' };
   public readonly cvvMask = { mask: '000' };
-  public readonly expMonthMask = {
-    mask: Number,
-    min: 1,
-    max: 12,
-  };
-  public readonly expYearMask = {
-    mask: Number,
-    min: 19,
-    max: 30,
-  };
-
-  @Input() paymentForm: FormGroup;
-  @Input() isCheckingCardData: boolean;
-  @Input() cardCheckError: boolean;
-  @Output() checkCardData = new EventEmitter<void>();
+  public readonly expMonthMask = { mask: Number, min: 1, max: 12 };
+  public readonly expYearMask = { mask: Number, min: 19, max: 30 };
 
   constructor(
     private formsService: FormsService,
   ) { }
 
-  get agreementField(): AbstractControl {
+  public get agreementField(): AbstractControl {
     return this.getFormControl(this.paymentForm, 'agreement');
   }
 
@@ -40,6 +32,9 @@ export class PaymentFormComponent {
   }
 
   public onSubmit(): void {
-    this.checkCardData.emit();
+    if (this.paymentForm.invalid) { return; }
+
+    this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
+    this.formSubmit.emit();
   }
 }
