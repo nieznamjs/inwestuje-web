@@ -9,7 +9,6 @@ import { FormsService } from '@services/forms.service';
   styleUrls: ['./payment-form.component.scss']
 })
 export class PaymentFormComponent {
-
   public readonly cardNumberMask = { mask: '0000 0000 0000 0000' };
   public readonly cvvMask = { mask: '000' };
   public readonly expMonthMask = {

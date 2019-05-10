@@ -9,7 +9,7 @@ import { ACCOUNT_ROLES } from '@constants/account-roles';
 import { AccountRoleOrType } from '@interfaces/account-role.interface';
 import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
 
-declare const OpenPayU;
+declare const OpenPayU; // to nie miejsce na to
 
 @Component({
   selector: 'app-register',
@@ -22,13 +22,13 @@ export class RegisterComponent implements OnInit {
   public cardCheckError = false;
   public readonly rolesData: AccountRoleOrType[] = ACCOUNT_ROLES;
   public readonly accountTypes: AccountRoleOrType[] = ACCOUNT_TYPES;
-  @ViewChild(MatStepper) stepper: MatStepper;
+  @ViewChild('stepper') private stepper: MatStepper;
 
   public registerForm = this.fb.group({
     email: [ '', [ Validators.email, Validators.required ]],
     password: [ '', Validators.required ],
     confirmPassword: [ '', Validators.required ],
-    roles: [ this.rolesData[0], Validators.required ],
+    roles: [ [ this.rolesData[0] ], Validators.required ],
     accountType: [ this.accountTypes[0] ],
     name: [ '', Validators.required ],
     lastName: [ '', Validators.required ],
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
     expMonth: [ '', [ Validators.required, Validators.min(1), Validators.max(12) ]],
     expYear: [ '', [ Validators.required, Validators.min(19), Validators.max(50) ]],
     agreement: [ null, Validators.requiredTrue ],
-    token: [ null, Validators.required ],
+    // token: [ null, Validators.required ], // do usunięcia jak gadaliśmy
   });
 
   constructor(
@@ -97,10 +97,12 @@ export class RegisterComponent implements OnInit {
 
     this.isCheckingCardData = true;
     this.cardCheckError = false;
-    OpenPayU.merchantId = environment.payUMerchantId;
+    OpenPayU.merchantId = environment.payUMerchantId; // to chyba będziemy musieli jakoś wstrzykiwać
 
-    const requestOk: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
-      if (response.status.statusCode !== 'SUCCESS') {
+    // sprawdź czy nie ma oficjalnych types do tego payu gówna
+    // a jak nie ma to napisz sam
+    const isCardDataValid: boolean = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
+      if (response.status.statusCode !== 'SUCCESS') { // do stałej
         this.cardCheckError = true;
         this.getFormControl(this.paymentForm, 'token').setValue(null);
 
@@ -109,13 +111,12 @@ export class RegisterComponent implements OnInit {
 
       this.cardCheckError = false;
       this.getFormControl(this.paymentForm, 'token').setValue(response.data.token);
+      this.isCheckingCardData = false;
     });
 
-    if (requestOk !== true) {
+    if (isCardDataValid !== true) {
       this.cardCheckError = true;
     }
-
-    this.isCheckingCardData = false;
   }
 
   public register(): void {

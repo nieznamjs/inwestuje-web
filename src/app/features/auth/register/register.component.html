@@ -4,7 +4,7 @@
       Inwestu.je (logo, czy coś)
     </h2>
 
-    <mat-horizontal-stepper linear #MatStepper>
+    <mat-horizontal-stepper linear #stepper>
       <mat-step label="Dane" [stepControl]="registerForm">
         <app-user-data-form
           [registerForm]="registerForm"
@@ -44,7 +44,7 @@
         </p>
 
         <p class="summary-detail">
-<!--          Role: <span *ngFor="let role of getFormControl(registerForm, 'roles').value">{{ role.label }}</span>-->
+         Role: <span *ngFor="let role of getFormControl(registerForm, 'roles').value">{{ role.label }}</span>
         </p>
 
         <button mat-raised-button color="primary" class="btn" (click)="register()">
