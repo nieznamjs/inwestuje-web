@@ -91,7 +91,7 @@
     Dalej
   </button>
 
-  <mat-spinner color="primary" *ngIf="isCheckingCardData"></mat-spinner>
+  <mat-spinner color="primary" [diameter]="50" *ngIf="isCheckingCardData" class="loading-spinner"></mat-spinner>
 </form>
 
 <mat-error *ngIf="hasCardCheckError" class="card-valid-error">

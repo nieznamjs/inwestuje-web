@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { FormsService } from '@services/forms.service';
+import { FormsService } from '@services/utils/forms.service';
 
 @Component({
   selector: 'app-login',

@@ -1,5 +1,5 @@
 export interface PayuTokenCreateResponse {
-  data: {
+  data?: {
     token: string;
     mask: string;
     type: 'STANDARD' | 'RECURRING';

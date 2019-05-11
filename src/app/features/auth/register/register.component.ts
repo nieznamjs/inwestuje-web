@@ -3,13 +3,12 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { MatStepper } from '@angular/material';
 
 import { environment } from '@env/environment';
-import { FormsService } from '@services/forms.service';
+import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
 import { ACCOUNT_ROLES } from '@constants/account-roles';
 import { AccountRoleOrType } from '@interfaces/account-role.interface';
-import { PayuTokenCreateResponse } from '@interfaces/payu-token-create-response';
-
-declare const OpenPayU; // to nie miejsce na to
+import { PayuTokenCreateResponse } from '@interfaces/payu/payu-token-create-response';
+import { PayUService } from '@services/data-integration/payu.service';
 
 @Component({
   selector: 'app-register',
@@ -32,13 +31,14 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private formsService: FormsService,
     private cd: ChangeDetectorRef,
+    private payUService: PayUService,
   ) { }
 
   public ngOnInit(): void {
     this.registerForm = this.createRegisterForm();
     this.paymentForm = this.createPaymentForm();
 
-    this.someDummyShitForNow();
+    this.togglePrivateAndCompanyFields();
   }
 
   public getFormControl(form: FormGroup, name: string): AbstractControl {
@@ -46,37 +46,32 @@ export class RegisterComponent implements OnInit {
   }
 
   public onSubmitCardData(): void {
+    this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
+
     // to chyba będziemy musieli jakoś wstrzykiwać
     // i powinno tutaj trafić z jakiegoś config serwisu
-    OpenPayU.merchantId = environment.payUMerchantId;
+    this.payUService.setMerchantId(environment.payUMerchantId);
 
     this.isCheckingCardData = true;
     this.hasCardCheckError = false;
     this.cardDataToken = null;
 
-    // sprawdź czy nie ma oficjalnych types do tego payu gówna
-    // a jak nie ma to napisz sam
-    // dodatkowo powinieneś utworzyć serwis do payu z wrapperami na to
-    const isCardDataValid = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
-      this.isCheckingCardData = false;
+    this.payUService.createToken()
+      .subscribe((response: PayuTokenCreateResponse) => {
+        this.isCheckingCardData = false;
 
-      if (response.status.statusCode !== 'SUCCESS') { // do stałej
+        this.cardDataToken = response.data.token;
+
+        if (this.paymentForm.valid && this.cardDataToken) {
+          this.stepper.next();
+        }
+
+        this.cd.detectChanges();
+      }, () => {
         this.hasCardCheckError = true;
-        return this.cd.detectChanges();
-      }
-
-      this.cardDataToken = response.data.token;
-
-      if (isCardDataValid && this.paymentForm.valid && !!this.cardDataToken) {
-        this.stepper.next();
-      }
-
-      this.cd.detectChanges();
-    });
-
-    if (isCardDataValid !== true) {
-      this.hasCardCheckError = true;
-    }
+        this.isCheckingCardData = false;
+        this.cd.detectChanges();
+      });
   }
 
   public register(): void {
@@ -107,35 +102,22 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  private enableFields(fields: AbstractControl[]): void {
-    fields.forEach((field: AbstractControl) => {
-      field.enable();
-    });
-  }
-
-  private disableFields(fields: AbstractControl[]): void {
-    fields.forEach((field: AbstractControl) => {
-      field.disable();
-    });
-  }
-
-  private someDummyShitForNow(): void {
-    // sporo tej logiki do enable/disable może być w formsService
+  private togglePrivateAndCompanyFields(): void {
     const nameField = this.getFormControl(this.registerForm, 'name');
     const lastNameField = this.getFormControl(this.registerForm, 'lastName');
     const companyNameField = this.getFormControl(this.registerForm, 'companyName');
     const nipField = this.getFormControl(this.registerForm, 'nip');
 
-    this.disableFields([ companyNameField, nipField ]);
+    this.formsService.disableFields([ companyNameField, nipField ]);
 
     this.getFormControl(this.registerForm, 'accountType').valueChanges
       .subscribe((accountType: AccountRoleOrType) => {
         if (accountType.value === AccountTypes.Private) {
-          this.enableFields([ nameField, lastNameField ]);
-          this.disableFields([ companyNameField, nipField ]);
+          this.formsService.enableFields([ nameField, lastNameField ]);
+          this.formsService.disableFields([ companyNameField, nipField ]);
         } else {
-          this.enableFields([ companyNameField, nipField ]);
-          this.disableFields([ nameField, lastNameField ]);
+          this.formsService.enableFields([ companyNameField, nipField ]);
+          this.formsService.disableFields([ nameField, lastNameField ]);
         }
       });
   }

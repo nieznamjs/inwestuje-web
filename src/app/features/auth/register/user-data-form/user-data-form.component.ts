@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { FormsService } from '@services/forms.service';
+import { FormsService } from '@services/utils/forms.service';
 import { AccountRoleOrType } from '@interfaces/account-role.interface';
 
 @Component({

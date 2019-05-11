@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { FormsService } from '@services/forms.service';
+import { FormsService } from '@services/utils/forms.service';
 
 @Component({
   selector: 'app-payment-form',
@@ -32,9 +32,10 @@ export class PaymentFormComponent {
   }
 
   public onSubmit(): void {
+    this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
+
     if (this.paymentForm.invalid) { return; }
 
-    this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
     this.formSubmit.emit();
   }
 }
