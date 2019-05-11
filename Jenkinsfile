@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Build and Test') {
             agent {
-                docker { image 'node:10-alpine' }
+                docker { image 'weboaks/node-karma-protractor-chrome:alpine' }
             }
             stages {
                 stage('Build') {
