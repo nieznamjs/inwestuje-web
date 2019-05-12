@@ -9,15 +9,15 @@ export class FormsService {
     return form.get(name);
   }
 
-  public disableFields(fields: AbstractControl[]): void {
-    fields.forEach((field: AbstractControl) => {
-      field.disable();
+  public disableFields(form: FormGroup, fields: string[]): void {
+    fields.forEach((fieldName: string) => {
+      this.getFormControl(form, fieldName).disable();
     });
   }
 
-  public enableFields(fields: AbstractControl[]): void {
-    fields.forEach((field: AbstractControl) => {
-      field.enable();
+  public enableFields(form: FormGroup, fields: string[]): void {
+    fields.forEach((fieldName: string) => {
+      this.getFormControl(form, fieldName).enable();
     });
   }
 }

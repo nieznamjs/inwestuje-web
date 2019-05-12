@@ -1,4 +1,4 @@
-export enum PayUCreateTokenResponses {
+export enum PayuCreateTokenResponses {
   Success = '0',
   GeneralError = '100',
   UnknownMerchant = '101',

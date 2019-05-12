@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   payUMerchantId: '145227',
+  apiUrl: 'localhost:3000',
 };
 
 /*

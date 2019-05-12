@@ -1,4 +1,4 @@
-export interface AccountRole {
+export interface AccountType {
   label: string;
   value: string;
 }

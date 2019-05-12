@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material';
 
-import { environment } from '@env/environment';
 import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
 import { ACCOUNT_ROLES } from '@constants/account-roles';
-import { AccountRoleOrType } from '@interfaces/account-role.interface';
 import { PayuTokenCreateResponse } from '@interfaces/payu/payu-token-create-response';
-import { PayUService } from '@services/data-integration/payu.service';
+import { PayuService } from '@services/data-integration/payu.service';
+import { AccountType } from '@interfaces/account-type.interface';
+import { AccountRole } from '@interfaces/account-role.interface';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +18,8 @@ import { PayUService } from '@services/data-integration/payu.service';
 export class RegisterComponent implements OnInit {
   @ViewChild('stepper') private stepper: MatStepper;
 
-  public readonly rolesData = ACCOUNT_ROLES;
-  public readonly accountTypes = ACCOUNT_TYPES;
+  public readonly rolesData: AccountRole[] = ACCOUNT_ROLES;
+  public readonly accountTypes: AccountType[] = ACCOUNT_TYPES;
 
   public isCheckingCardData = false;
   public hasCardCheckError = false;
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private formsService: FormsService,
     private cd: ChangeDetectorRef,
-    private payUService: PayUService,
+    private payuService: PayuService,
   ) { }
 
   public ngOnInit(): void {
@@ -48,15 +48,13 @@ export class RegisterComponent implements OnInit {
   public onSubmitCardData(): void {
     this.getFormControl(this.paymentForm, 'agreement').markAsDirty();
 
-    // to chyba będziemy musieli jakoś wstrzykiwać
-    // i powinno tutaj trafić z jakiegoś config serwisu
-    this.payUService.setMerchantId(environment.payUMerchantId);
+    this.payuService.setMerchantId();
 
     this.isCheckingCardData = true;
     this.hasCardCheckError = false;
     this.cardDataToken = null;
 
-    this.payUService.createToken()
+    this.payuService.createToken()
       .subscribe((response: PayuTokenCreateResponse) => {
         this.isCheckingCardData = false;
 
@@ -103,21 +101,16 @@ export class RegisterComponent implements OnInit {
   }
 
   private togglePrivateAndCompanyFields(): void {
-    const nameField = this.getFormControl(this.registerForm, 'name');
-    const lastNameField = this.getFormControl(this.registerForm, 'lastName');
-    const companyNameField = this.getFormControl(this.registerForm, 'companyName');
-    const nipField = this.getFormControl(this.registerForm, 'nip');
-
-    this.formsService.disableFields([ companyNameField, nipField ]);
+    this.formsService.disableFields(this.registerForm, [ 'companyName', 'nip' ]);
 
     this.getFormControl(this.registerForm, 'accountType').valueChanges
-      .subscribe((accountType: AccountRoleOrType) => {
+      .subscribe((accountType: AccountType) => {
         if (accountType.value === AccountTypes.Private) {
-          this.formsService.enableFields([ nameField, lastNameField ]);
-          this.formsService.disableFields([ companyNameField, nipField ]);
+          this.formsService.enableFields(this.registerForm, [ 'name', 'lastName' ]);
+          this.formsService.disableFields(this.registerForm, [ 'companyName', 'nip' ]);
         } else {
-          this.formsService.enableFields([ companyNameField, nipField ]);
-          this.formsService.disableFields([ nameField, lastNameField ]);
+          this.formsService.enableFields(this.registerForm, [ 'companyName', 'nip' ]);
+          this.formsService.disableFields(this.registerForm, [ 'name', 'lastName' ]);
         }
       });
   }
