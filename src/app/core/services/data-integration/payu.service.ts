@@ -17,13 +17,17 @@ export class PayUService {
 
   public createToken(): Observable<CreateTokenFormatErrors | PayuTokenCreateResponse> {
     return new Observable((observer: Observer<CreateTokenFormatErrors | PayuTokenCreateResponse>) => {
-      OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
+      const isCardDataValid: CreateTokenFormatErrors | true = OpenPayU.Token.create({}, (response: PayuTokenCreateResponse) => {
         if (response.status.code !== PayUCreateTokenResponses.Success) {
           observer.error(response);
         }
 
         observer.next(response);
       });
+
+      if (isCardDataValid !== true) {
+        observer.error(isCardDataValid);
+      }
     });
   }
 
