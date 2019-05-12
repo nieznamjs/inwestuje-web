@@ -2,6 +2,15 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@services/*": [ "src/app/core/services/*" ],
+      "@components/*": [ "src/app/shared/components/*" ],
+      "@pipes/*": [ "src/app/shared/pipes/*" ],
+      "@directives/*": [ "src/app/shared/directives/*" ],
+      "@constants/*": [ "src/app/shared/constants/*" ],
+      "@interfaces/*": [ "src/app/shared/interfaces/*" ],
+      "@env/*": [ "src/environments/*" ]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

@@ -1,0 +1,56 @@
+.field {
+  width: 100%;
+
+  line-height: 1.4;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.field-alt {
+  width: 100%;
+  text-align: left;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .toggle-btn {
+    flex: 1;
+  }
+}
+
+.error {
+  font-size: 75%;
+  margin-top: 5px;
+}
+
+.card-exp-wrapper {
+  display: flex;
+  align-items: baseline;
+
+  .field {
+    width: calc(50% - 13px);
+  }
+}
+
+.btn {
+  width: 100%;
+}
+
+.card-exp-divider {
+  margin: 0 10px;
+}
+
+.card-valid-error {
+  margin-top: 10px;
+}
+
+.mat-checkbox-inner-container {
+  white-space: normal;
+}
+
+.loading-spinner {
+  margin: 20px auto 0;
+}

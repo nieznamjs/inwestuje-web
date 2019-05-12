@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { FormsService } from '../../../core/services/forms.service';
+import { FormsService } from '@services/utils/forms.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,8 @@ import { FormsService } from '../../../core/services/forms.service';
 export class LoginComponent {
 
   public loginForm = this.fb.group({
-    login: ['', Validators.required],
-    password: ['', Validators.required],
+    email: [ '', [ Validators.required, Validators.email ]],
+    password: [ '', Validators.required ],
   });
 
   constructor(
@@ -25,8 +25,8 @@ export class LoginComponent {
   }
 
   public onSubmit(): void {
-    const { login, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
 
-    alert(`${ login }, ${ password }`);
+    alert(`${ email }, ${ password }`);
   }
 }

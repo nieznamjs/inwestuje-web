@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "theme";
+@import "variables";
 
 * {
   box-sizing: border-box;
@@ -10,5 +12,26 @@ html, body {
 
 body {
   margin: 0;
+
+  background-color: $color-light-gray;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+a {
+  color: mat-color($inwestuje-web-primary);
+
+  transition-duration: 200ms;
+
+  &:hover {
+    color: mat-color($inwestuje-web-primary-dark);
+  }
+}
+
+.mat-button-toggle-appearance-standard:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay {
+  border-bottom-width: 48px;
+}
+
+.mat-checkbox-layout {
+  white-space: normal !important;
+}
+

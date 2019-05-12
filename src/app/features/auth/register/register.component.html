@@ -4,7 +4,71 @@
       Inwestu.je (logo, czy coś)
     </h2>
 
-    <p>Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a> </p>
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step label="Dane" [stepControl]="registerForm">
+        <app-user-data-form
+          [registerForm]="registerForm"
+          [rolesData]="rolesData"
+          [accountTypes]="accountTypes">
+        </app-user-data-form>
+      </mat-step>
+
+      <mat-step label="Płatności" [stepControl]="paymentForm">
+        <app-payment-form
+          [paymentForm]="paymentForm"
+          [hasCardCheckError]="hasCardCheckError"
+          [isCheckingCardData]="isCheckingCardData"
+          (formSubmit)="onSubmitCardData()">
+        </app-payment-form>
+      </mat-step>
+
+      <mat-step label="Podsumowanie">
+        <div class="summary-wrapper">
+          <p class="summary-detail">
+            E-mail: {{ getFormControl(registerForm, 'email').value }}
+          </p>
+
+          <p class="summary-detail">
+            Typ konta: {{ getFormControl(registerForm, 'accountType').value.label }}
+          </p>
+
+          <div *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+            <p class="summary-detail">
+              Imię: {{ getFormControl(registerForm, 'name').value }}
+            </p>
+
+            <p class="summary-detail">
+              Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
+            </p>
+          </div>
+
+          <div *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+            <p class="summary-detail">
+              Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
+            </p>
+
+            <p class="summary-detail">
+              NIP: {{ getFormControl(registerForm, 'nip').value }}
+            </p>
+          </div>
+
+          <p class="summary-detail">
+           Role:
+            <span *ngFor="let role of getFormControl(registerForm, 'roles').value; let isLast = last">
+              {{ role.label }}{{ isLast ? '' : ', ' }}
+            </span>
+          </p>
+
+          <button mat-raised-button color="primary" class="btn" (click)="register()">
+            Zarejestruj się
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+    <span>
+      Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a>
+    </span>
   </mat-card>
 </div>
 

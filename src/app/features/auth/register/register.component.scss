@@ -1,6 +1,8 @@
 :host {
   display: flex;
   justify-content: space-between;
+
+  padding: 20px 0;
 }
 
 .form-container {
@@ -12,28 +14,36 @@
 }
 
 .form-card {
-  width: 400px;
+  max-width: 500px;
 
-  padding: 40px 30px;
+  padding: 40px 10px;
 
   text-align: center;
-}
-
-.field {
-  width: 100%;
-
-  line-height: 1.4;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.btn {
-  width: 100%;
 }
 
 .sidebar {
   width: 50%;
   height: 100vh;
 }
+
+.mat-checkbox-layout {
+  align-items: baseline;
+  white-space: normal;
+  text-align: left;
+}
+
+.mat-checkbox-inner-container {
+  margin: 0 8px 0 0;
+}
+
+.summary-wrapper {
+  text-align: left;
+}
+
+.btn {
+  width: 100%;
+}
+
+
+
+

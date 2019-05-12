@@ -12,6 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $inwestuje-web-primary: mat-palette($mat-blue);
+$inwestuje-web-primary-dark: mat-palette($mat-blue, 700);
 $inwestuje-web-accent: mat-palette($mat-light-green, 400);
 
 // The warn palette is optional (defaults to red).

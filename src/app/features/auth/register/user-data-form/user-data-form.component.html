@@ -1,0 +1,123 @@
+<form class="form" [formGroup]="registerForm">
+  <mat-form-field class="field">
+    <input matInput type="email" placeholder="E-mail" formControlName="email" required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('required')">
+      E-mail jest wymagany
+    </mat-error>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('email')">
+      Niepoprawny e-mail
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field">
+    <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'password').hasError('required')">
+      Hasło jest wymagane
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-alt">
+    <input
+      matInput
+      type="password"
+      placeholder="Potwierdź hasło"
+      formControlName="confirmPassword"
+      [pattern]="password.value"
+      required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('required')">
+      Potwierdzenie hasła jest wymagane
+    </mat-error>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('pattern')">
+      Hasła nie są takie same
+    </mat-error>
+  </mat-form-field>
+
+  <mat-button-toggle-group formControlName="accountType" class="field-alt toggle-group">
+    <mat-button-toggle [value]="accountTypes[0]" class="toggle-btn">
+      Osoba prywatna
+    </mat-button-toggle>
+
+    <mat-button-toggle [value]="accountTypes[1]" class="toggle-btn">
+      Firma
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+    <input
+      matInput
+      type="text"
+      placeholder="Imię"
+      formControlName="name"
+      required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'name').hasError('required')">
+      Imię jest wymagane
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+    <input
+      matInput
+      type="text"
+      placeholder="Nazwisko"
+      formControlName="lastName"
+      required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'lastName').hasError('required')">
+      Nazwisko jest wymagane
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+    <input
+      matInput
+      type="text"
+      placeholder="Nazwa firmy"
+      formControlName="companyName"
+      required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'companyName').hasError('required')">
+      Nazwa firmy jest wymagana
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+    <input
+      matInput
+      [imask]="nipMask"
+      [unmask]="true"
+      type="text"
+      placeholder="NIP"
+      formControlName="nip"
+      required>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'nip').hasError('required')">
+      NIP jest wymagany
+    </mat-error>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'nip').hasError('pattern')">
+      Niepoprawny NIP
+    </mat-error>
+  </mat-form-field>
+
+  <div class="field-alt">
+    <mat-button-toggle-group formControlName="roles" multiple class="toggle-group">
+      <mat-button-toggle *ngFor="let role of rolesData" [value]="role" class="toggle-btn">
+        {{ role.label }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-error class="error" *ngIf="getFormControl(registerForm, 'roles').hasError('required')">
+      Rola jest wymagana
+    </mat-error>
+  </div>
+
+  <button class="btn" matStepperNext mat-raised-button color="primary">
+    Dalej
+  </button>
+</form>
