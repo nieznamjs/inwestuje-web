@@ -15,8 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IMaskModule } from 'angular-imask';
 
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
-import { ACCOUNT_ROLES } from '@constants/account-roles';
-import { ACCOUNT_TYPES } from '@constants/account-types';
 
 const materialModules = [
   MatInputModule,
@@ -47,10 +45,6 @@ const materialModules = [
     ReactiveFormsModule,
     AuthSidebarComponent,
     IMaskModule,
-  ],
-  providers: [
-    { provide: ACCOUNT_ROLES, useValue: ACCOUNT_ROLES },
-    { provide: ACCOUNT_TYPES, useValue: ACCOUNT_TYPES },
   ],
 })
 export class SharedModule { }
