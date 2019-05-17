@@ -6,6 +6,9 @@ pipeline {
             agent {
                 docker { image 'weboaks/node-karma-protractor-chrome:alpine' }
             }
+            environment {
+              HOME='.'
+            }
             stages {
                 stage('Build') {
                     steps {
