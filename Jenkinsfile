@@ -33,6 +33,7 @@ pipeline {
           stage('Push image') {
             steps {
               sh 'docker image prune -a -f'
+              sh 'docker container prune -f'
               sh 'docker build -t inwestuje-web .'
               sh '\$(/var/lib/jenkins/.local/bin/aws ecr get-login --region eu-west-1 --no-include-email)'
               sh 'docker tag inwestuje-web:latest 130063139515.dkr.ecr.eu-west-1.amazonaws.com/inwestuje-web:latest'
