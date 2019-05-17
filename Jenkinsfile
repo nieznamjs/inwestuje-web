@@ -33,6 +33,9 @@ pipeline {
           AWS_ACCESS_KEY_ID = credentials('aws-access-key')
           AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         }
+        when {
+            branch 'master'
+        }
         stages {
           stage('Push image') {
             steps {
