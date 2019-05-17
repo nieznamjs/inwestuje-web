@@ -29,12 +29,12 @@
           </p>
 
           <p class="summary-detail">
-            Typ konta: {{ getFormControl(registerForm, 'accountType').value.label }}
+            Typ konta: {{ getFormControl(registerForm, 'type').value.label }}
           </p>
 
-          <div *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+          <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
             <p class="summary-detail">
-              Imię: {{ getFormControl(registerForm, 'name').value }}
+              Imię: {{ getFormControl(registerForm, 'firstName').value }}
             </p>
 
             <p class="summary-detail">
@@ -42,7 +42,7 @@
             </p>
           </div>
 
-          <div *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+          <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
             <p class="summary-detail">
               Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
             </p>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
@@ -9,6 +10,8 @@ import { PayuTokenCreateResponse } from '@interfaces/payu/payu-token-create-resp
 import { PayuService } from '@services/data-integration/payu.service';
 import { AccountType } from '@interfaces/account-type.interface';
 import { AccountRole } from '@interfaces/account-role.interface';
+import { AuthService } from '@services/data-integration/auth.service';
+import { SnackbarService } from '@services/utils/snackbar.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +35,9 @@ export class RegisterComponent implements OnInit {
     private formsService: FormsService,
     private cd: ChangeDetectorRef,
     private payuService: PayuService,
+    private authService: AuthService,
+    private snackbarService: SnackbarService,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -73,20 +79,35 @@ export class RegisterComponent implements OnInit {
   }
 
   public register(): void {
-    console.log('REGISTERING - Implement me');
+    const { email, password, roles, type, firstName, lastName, companyName, nip } = this.registerForm.value;
+    const { cardNumber } = this.paymentForm.value;
+    const rolesValues = roles.map((role: AccountRole) => role.value);
+
+    this.authService.register({
+      email, password, firstName, lastName, companyName,
+      nip: parseInt(nip, 10),
+      roles: rolesValues,
+      type: type.value,
+    }).subscribe(() => {
+      this.snackbarService.showSuccess('Konto założone pomyślnie, sprawdź maila w celu potwierdzenia rejestracji');
+      this.router.navigate(['/login']);
+    });
   }
 
   private createRegisterForm(): FormGroup {
     return this.fb.group({
       email: [ '', [ Validators.email, Validators.required ]],
-      password: [ '', Validators.required ],
+      password: [ '', [
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,24}$'),
+      ]],
       confirmPassword: [ '', Validators.required ],
       roles: [ [ this.rolesData[0] ], Validators.required ],
-      accountType: [ this.accountTypes[0] ],
-      name: [ '', Validators.required ],
-      lastName: [ '', Validators.required ],
-      companyName: [ '', Validators.required ],
-      nip: [ '', [ Validators.required, Validators.pattern('^[0-9]{10}$') ]],
+      type: [ this.accountTypes[0] ],
+      firstName: [ null, Validators.required ],
+      lastName: [ null, Validators.required ],
+      companyName: [ null, Validators.required ],
+      nip: [ null, [ Validators.required, Validators.pattern('^[0-9]{10}$') ]],
     });
   }
 
@@ -103,14 +124,14 @@ export class RegisterComponent implements OnInit {
   private togglePrivateAndCompanyFields(): void {
     this.formsService.disableFields(this.registerForm, [ 'companyName', 'nip' ]);
 
-    this.getFormControl(this.registerForm, 'accountType').valueChanges
+    this.getFormControl(this.registerForm, 'type').valueChanges
       .subscribe((accountType: AccountType) => {
         if (accountType.value === AccountTypes.Private) {
-          this.formsService.enableFields(this.registerForm, [ 'name', 'lastName' ]);
+          this.formsService.enableFields(this.registerForm, [ 'firstName', 'lastName' ]);
           this.formsService.disableFields(this.registerForm, [ 'companyName', 'nip' ]);
         } else {
           this.formsService.enableFields(this.registerForm, [ 'companyName', 'nip' ]);
-          this.formsService.disableFields(this.registerForm, [ 'name', 'lastName' ]);
+          this.formsService.disableFields(this.registerForm, [ 'firstName', 'lastName' ]);
         }
       });
   }

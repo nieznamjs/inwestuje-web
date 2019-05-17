@@ -11,11 +11,15 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="field">
+  <mat-form-field class="field-alt">
     <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
 
     <mat-error *ngIf="getFormControl(registerForm, 'password').hasError('required')">
       Hasło jest wymagane
+    </mat-error>
+
+    <mat-error *ngIf="getFormControl(registerForm, 'password').hasError('pattern')">
+      Hasło musi składać się z przynajmniej jednej małej litery, jednej wielkiej litery i cyfry oraz mieć długość 6-24 znaki
     </mat-error>
   </mat-form-field>
 
@@ -37,7 +41,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-button-toggle-group formControlName="accountType" class="field-alt toggle-group">
+  <mat-button-toggle-group formControlName="type" class="field-alt toggle-group">
     <mat-button-toggle [value]="accountTypes[0]" class="toggle-btn">
       Osoba prywatna
     </mat-button-toggle>
@@ -47,20 +51,20 @@
     </mat-button-toggle>
   </mat-button-toggle-group>
 
-  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
     <input
       matInput
       type="text"
       placeholder="Imię"
-      formControlName="name"
+      formControlName="firstName"
       required>
 
-    <mat-error *ngIf="getFormControl(registerForm, 'name').hasError('required')">
+    <mat-error *ngIf="getFormControl(registerForm, 'firstName').hasError('required')">
       Imię jest wymagane
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[0]">
+  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
     <input
       matInput
       type="text"
@@ -73,7 +77,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+  <mat-form-field class="field" *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
     <input
       matInput
       type="text"
@@ -86,7 +90,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'accountType').value === accountTypes[1]">
+  <mat-form-field class="field-alt" *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
     <input
       matInput
       [imask]="nipMask"
