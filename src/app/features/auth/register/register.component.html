@@ -24,42 +24,46 @@
 
       <mat-step label="Podsumowanie">
         <div class="summary-wrapper">
-          <p class="summary-detail">
+          <p>
             E-mail: {{ getFormControl(registerForm, 'email').value }}
           </p>
 
-          <p class="summary-detail">
+          <p>
             Typ konta: {{ getFormControl(registerForm, 'type').value.label }}
           </p>
 
           <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
-            <p class="summary-detail">
+            <p>
               Imię: {{ getFormControl(registerForm, 'firstName').value }}
             </p>
 
-            <p class="summary-detail">
+            <p>
               Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
             </p>
           </div>
 
           <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
-            <p class="summary-detail">
+            <p>
               Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
             </p>
 
-            <p class="summary-detail">
+            <p>
               NIP: {{ getFormControl(registerForm, 'nip').value }}
             </p>
           </div>
 
-          <p class="summary-detail">
+          <p>
            Role:
             <span *ngFor="let role of getFormControl(registerForm, 'roles').value; let isLast = last">
               {{ role.label }}{{ isLast ? '' : ', ' }}
             </span>
           </p>
 
-          <button mat-raised-button color="primary" class="btn" (click)="register()">
+          <mat-checkbox class="accept-terms-checkbox" color="primary" #acceptTerms>
+            Akceptuję regulamin itepeitede.
+          </mat-checkbox>
+
+          <button mat-raised-button color="primary" class="btn" (click)="register()" [disabled]="!acceptTerms.checked">
             Zarejestruj się
           </button>
         </div>
