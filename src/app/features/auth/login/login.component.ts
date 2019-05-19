@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { FormsService } from '@services/utils/forms.service';
 import { AuthService } from '@services/data-integration/auth.service';
-import { LoginResponse } from '@interfaces/http/login-response.interface';
-import { finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -48,13 +46,11 @@ export class LoginComponent {
         finalize(() => {
           this.isLoading = false;
         }),
-      ).subscribe((response: LoginResponse) => {
+      ).subscribe(() => {
         this.loginError = false;
         this.router.navigate(['/admin']);
-      }, (err: HttpErrorResponse) => {
-        if (err.error.message) {
-          this.loginError = true;
-        }
+      }, () => {
+        this.loginError = true;
       });
   }
 }
