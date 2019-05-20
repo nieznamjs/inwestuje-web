@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { FormsService } from '@services/utils/forms.service';
-import { AuthService } from '@services/data-integration/auth.service';
+import { AuthDataService } from '@services/data-integration/auth-data.service';
+import { PASSWORD_REQUIRMENT_REGEX } from '@constants/password-requirment';
 
 @Component({
   selector: 'app-login',
@@ -19,14 +20,14 @@ export class LoginComponent {
     email: [ null, [ Validators.required, Validators.email ]],
     password: [ null, [
       Validators.required,
-      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,24}$'),
+      Validators.pattern(PASSWORD_REQUIRMENT_REGEX),
     ]],
   });
 
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
-    private authService: AuthService,
+    private authService: AuthDataService,
     private router: Router,
   ) { }
 

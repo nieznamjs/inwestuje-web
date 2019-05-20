@@ -1,8 +1,8 @@
-export const configServiceMock = {
+export const configServiceDataMock = {
   getMerchantId: () => {
     return '123';
   },
   getApiUrl: () => {
-    return 'http://drefto-to-pizda.penis';
+    return 'http://normalurl.pls';
   },
 };

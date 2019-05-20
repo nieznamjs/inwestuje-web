@@ -5,7 +5,7 @@ import { User } from '@interfaces/user.interface';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
 
 export const newUserBody: CreateUserBody = {
-  email: 'drefto@piczka.ofkors',
+  email: 'some@email.com',
   password: '123',
   firstName: 'Pawcio',
   lastName: 'Drefcik',
@@ -17,7 +17,7 @@ export const newUserBody: CreateUserBody = {
 
 export const expectedUser: User = {
   id: '123',
-  email: 'drefto@pizda.to',
+  email: 'some@email.com',
   firstName: 'Pawcio',
   lastName: 'Drefcik',
   companyName: 'DreftCode',
@@ -34,7 +34,7 @@ export const expectedLoginResponse: LoginResponse = {
   success: true,
 };
 
-export const authServiceMock = {
+export const authServiceDataMock = {
   login: (email: string, password: string): Observable<LoginResponse> => {
     return of({ success: true });
   },

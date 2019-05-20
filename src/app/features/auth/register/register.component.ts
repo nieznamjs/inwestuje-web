@@ -7,11 +7,13 @@ import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
 import { ACCOUNT_ROLES } from '@constants/account-roles';
 import { PayuTokenCreateResponse } from '@interfaces/payu/payu-token-create-response';
-import { PayuService } from '@services/data-integration/payu.service';
+import { PayuDataService } from '@services/data-integration/payu-data.service';
 import { AccountType } from '@interfaces/account-type.interface';
 import { AccountRole } from '@interfaces/account-role.interface';
-import { AuthService } from '@services/data-integration/auth.service';
+import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { SnackbarService } from '@services/utils/snackbar.service';
+import { PASSWORD_REQUIRMENT_REGEX } from '@constants/password-requirment';
+import { NIP_REQUIRMENT_REGEX } from '@constants/nip-requirment';
 
 @Component({
   selector: 'app-register',
@@ -34,8 +36,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private formsService: FormsService,
     private cd: ChangeDetectorRef,
-    private payuService: PayuService,
-    private authService: AuthService,
+    private payuService: PayuDataService,
+    private authService: AuthDataService,
     private snackbarService: SnackbarService,
     private router: Router,
   ) { }
@@ -99,7 +101,7 @@ export class RegisterComponent implements OnInit {
       email: [ '', [ Validators.email, Validators.required ]],
       password: [ '', [
         Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,24}$'),
+        Validators.pattern(PASSWORD_REQUIRMENT_REGEX),
       ]],
       confirmPassword: [ '', Validators.required ],
       roles: [ [ this.rolesData[0] ], Validators.required ],
@@ -107,7 +109,7 @@ export class RegisterComponent implements OnInit {
       firstName: [ null, Validators.required ],
       lastName: [ null, Validators.required ],
       companyName: [ null, Validators.required ],
-      nip: [ null, [ Validators.required, Validators.pattern('^[0-9]{10}$') ]],
+      nip: [ null, [ Validators.required, Validators.pattern(NIP_REQUIRMENT_REGEX) ]],
     });
   }
 

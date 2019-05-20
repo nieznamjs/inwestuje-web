@@ -22,7 +22,9 @@
 }
 
 .field.ng-valid, .field.ng-untouched, .field-alt.ng-valid, .field-alt.ng-untouched {
-  margin-bottom: 0 !important;
+  &:not(:last-child) {
+    margin-bottom: 0;
+  }
 }
 
 .error {

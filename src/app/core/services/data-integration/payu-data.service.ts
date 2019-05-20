@@ -12,7 +12,7 @@ declare const OpenPayU: OpenPayU;
 @Injectable({
   providedIn: 'root'
 })
-export class PayuService {
+export class PayuDataService {
 
   constructor(
     private configService: ConfigService,

@@ -8,7 +8,7 @@ import { ConfigService } from '@services/utils/config.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UsersDataService {
 
   private readonly apiUrl = this.configService.getApiUrl();
 

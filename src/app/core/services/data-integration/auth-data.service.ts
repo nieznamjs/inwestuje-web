@@ -10,7 +10,7 @@ import { LoginResponse } from '@interfaces/http/login-response.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthDataService {
 
   private readonly apiUrl = this.configService.getApiUrl();
 

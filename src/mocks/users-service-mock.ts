@@ -17,7 +17,7 @@ export const expectedUser: User = {
   websiteUrl: 'https://dev.dreftocode.pl',
 };
 
-export const usersServiceMock = {
+export const usersServiceDataMock = {
   getUser: (id: string): Observable<User> => {
     return of(expectedUser);
   },
