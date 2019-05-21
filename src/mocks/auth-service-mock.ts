@@ -34,11 +34,12 @@ export const expectedLoginResponse: LoginResponse = {
   success: true,
 };
 
-export const authServiceDataMock = {
-  login: (email: string, password: string): Observable<LoginResponse> => {
+export class AuthServiceDataMock {
+  public login(email: string, password: string): Observable<LoginResponse> {
     return of({ success: true });
-  },
-  register: (newUser: CreateUserBody): Observable<User> => {
+  }
+
+  public register(newUser: CreateUserBody): Observable<User> {
     return of(expectedUser);
   }
-};
+}

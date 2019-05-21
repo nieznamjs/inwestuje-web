@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IMaskModule } from 'angular-imask';
 
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
-import { SnackbarComponent } from '@components/snackbar/snackbar.component';
+import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
 
 const materialModules = [
   MatInputModule,
@@ -34,7 +34,7 @@ const materialModules = [
 @NgModule({
   declarations: [
     AuthSidebarComponent,
-    SnackbarComponent,
+    SuccessSnackbarComponent,
   ],
   imports: [
     ...materialModules,
@@ -54,7 +54,7 @@ const materialModules = [
     IMaskModule,
   ],
   entryComponents: [
-    SnackbarComponent,
+    SuccessSnackbarComponent,
   ],
 })
 export class SharedModule { }

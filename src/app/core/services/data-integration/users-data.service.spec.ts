@@ -6,13 +6,14 @@ import { UsersDataService } from './users-data.service';
 import { ConfigService } from '@services/utils/config.service';
 import { User } from '@interfaces/user.interface';
 import { expectedUser } from '@mocks/users-service-mock';
-import { configServiceDataMock } from '@mocks/config-service-mock';
+import { ConfigServiceMock } from '@mocks/config-service-mock';
 
-describe('UsersService', () => {
-  const apiUrl = configServiceDataMock.getApiUrl();
+describe('UsersDataService', () => {
+  let apiUrl: string;
   let usersService: UsersDataService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
+  let configService: ConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,15 +21,16 @@ describe('UsersService', () => {
         HttpClientTestingModule,
       ],
       providers: [
-        UsersDataService,
-        { provide: ConfigService, useValue: configServiceDataMock },
+        ConfigServiceMock,
       ],
     });
 
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
+    configService = TestBed.get(ConfigServiceMock);
+    apiUrl = configService.getApiUrl();
 
-    usersService = new UsersDataService(httpClient, <any>configServiceDataMock);
+    usersService = new UsersDataService(httpClient, configService);
   });
 
   afterEach(() => {
@@ -36,16 +38,15 @@ describe('UsersService', () => {
   });
 
   it('should be created', () => {
-    usersService = TestBed.get(UsersDataService);
     expect(usersService).toBeTruthy();
   });
 
-  it('#getUser should return expected user', () => {
+  it('getUser should return expected user', () => {
     const userId = '123';
 
     usersService.getUser(userId).subscribe((user: User) => expect(user).toEqual(expectedUser));
 
-    const req = httpTestingController.expectOne(`${apiUrl}/user/${userId}`);
+    const req = httpTestingController.expectOne(`${configService.getApiUrl()}/user/${userId}`);
     req.flush(expectedUser);
 
     expect(req.request.method).toBe('GET');

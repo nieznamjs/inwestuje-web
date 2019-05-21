@@ -21,20 +21,20 @@ describe('FormsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#getFormControl should return proper FormControl', () => {
+  it('getFormControl should return proper FormControl', () => {
     expect(service.getFormControl(form, 'name')).toEqual(form.get('name'));
 
     expect(service.getFormControl(form, 'name').value).toEqual('Grzegorz');
   });
 
-  it('#enableField should enable fields', () => {
+  it('enableField should enable fields', () => {
     service.enableFields(form, [ 'name', 'lastName' ]);
 
     expect(form.get('name').enabled).toBeTruthy();
     expect(form.get('lastName').enabled).toBeTruthy();
   });
 
-  it('#disableField should disable fields', () => {
+  it('disableField should disable fields', () => {
     service.disableFields(form, [ 'name', 'lastName' ]);
 
     expect(form.get('name').disabled).toBeTruthy();

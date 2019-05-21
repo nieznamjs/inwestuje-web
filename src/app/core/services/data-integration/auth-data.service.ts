@@ -12,7 +12,7 @@ import { LoginResponse } from '@interfaces/http/login-response.interface';
 })
 export class AuthDataService {
 
-  private readonly apiUrl = this.configService.getApiUrl();
+  private readonly API_URL = this.configService.getApiUrl();
 
   constructor(
     private http: HttpClient,
@@ -20,10 +20,10 @@ export class AuthDataService {
   ) { }
 
   public register(newUser: CreateUserBody): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/auth/register`, newUser);
+    return this.http.post<User>(`${this.API_URL}/auth/register`, newUser);
   }
 
   public login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, { email, password });
+    return this.http.post<LoginResponse>(`${this.API_URL}/auth/login`, { email, password });
   }
 }

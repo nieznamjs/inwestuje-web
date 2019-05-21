@@ -14,6 +14,7 @@ import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { SnackbarService } from '@services/utils/snackbar.service';
 import { PASSWORD_REQUIRMENT_REGEX } from '@constants/password-requirment';
 import { NIP_REQUIRMENT_REGEX } from '@constants/nip-requirment';
+import { SnackbarMessages } from '@constants/snackbar-messages';
 
 @Component({
   selector: 'app-register',
@@ -91,7 +92,7 @@ export class RegisterComponent implements OnInit {
       roles: rolesValues,
       type: type.value,
     }).subscribe(() => {
-      this.snackbarService.showSuccess('Konto założone pomyślnie, sprawdź maila w celu potwierdzenia rejestracji');
+      this.snackbarService.showSuccess(SnackbarMessages.AccountCreated);
       this.router.navigate(['/login']);
     });
   }
