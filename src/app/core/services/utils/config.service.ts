@@ -11,7 +11,7 @@ export class ConfigService {
     return environment.payUMerchantId;
   }
 
-  get apiUrl(): string {
+  public get apiUrl(): string {
     return environment.apiUrl;
   }
 }

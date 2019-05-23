@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 
 import { FormsService } from '@services/utils/forms.service';
 import { AuthDataService } from '@services/data-integration/auth-data.service';
-import { PASSWORD_REQUIREMENT_REGEX } from '@constants/regexps';
+import { PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent {
     email: [ null, [ Validators.required, Validators.email ]],
     password: [ null, [
       Validators.required,
-      Validators.pattern(PASSWORD_REQUIREMENT_REGEX),
+      Validators.pattern(PASSWORD_REQUIREMENT_REGEX_STRING),
     ]],
   });
 

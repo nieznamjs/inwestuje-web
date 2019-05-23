@@ -12,18 +12,16 @@ import { LoginResponse } from '@interfaces/http/login-response.interface';
 })
 export class AuthDataService {
 
-  private readonly API_URL = this.config.apiUrl;
-
   constructor(
     private http: HttpClient,
     private config: ConfigService,
   ) { }
 
   public register(newUser: CreateUserBody): Observable<User> {
-    return this.http.post<User>(`${this.API_URL}/auth/register`, newUser);
+    return this.http.post<User>(`${this.config.apiUrl}/auth/register`, newUser);
   }
 
   public login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/auth/login`, { email, password });
+    return this.http.post<LoginResponse>(`${this.config.apiUrl}/auth/login`, { email, password });
   }
 }

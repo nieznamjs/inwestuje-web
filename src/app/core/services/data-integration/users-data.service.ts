@@ -10,14 +10,12 @@ import { ConfigService } from '@services/utils/config.service';
 })
 export class UsersDataService {
 
-  private readonly apiUrl = this.configService.apiUrl;
-
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
+    private config: ConfigService,
   ) { }
 
   public getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/user/${id}`);
+    return this.http.get<User>(`${this.config.apiUrl}/user/${id}`);
   }
 }
