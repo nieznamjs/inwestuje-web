@@ -32,6 +32,7 @@ pipeline {
         environment {
           AWS_ACCESS_KEY_ID = credentials('aws-access-key')
           AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+          AWS_REGION = credentials('aws-region')
         }
         when {
             branch 'master'
@@ -42,18 +43,27 @@ pipeline {
               sh 'docker image prune -a -f'
               sh 'docker container prune -f'
               sh 'docker build -t inwestuje-web .'
-              sh '\$(/var/lib/jenkins/.local/bin/aws ecr get-login --region eu-west-1 --no-include-email)'
+              sh '\$(/var/lib/jenkins/.local/bin/aws ecr get-login --region ${AWS_REGION} --no-include-email)'
               sh 'docker tag inwestuje-web:latest 130063139515.dkr.ecr.eu-west-1.amazonaws.com/inwestuje-web:latest'
               sh 'docker push 130063139515.dkr.ecr.eu-west-1.amazonaws.com/inwestuje-web'
             }
           }
           stage('Deploy image') {
             steps {
-              sh 'ssh jenkins@inwestuje-dev.deftcode.pl " \\$( AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}  /snap/bin/aws ecr get-login --region eu-west-1 --no-include-email)"'
+              sh 'ssh jenkins@inwestuje-dev.deftcode.pl " \\$( AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}  /snap/bin/aws ecr get-login --region ${AWS_REGION} --no-include-email)"'
               sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && git pull && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d --build"'
             }
           }
         }
       }
     }
+
+  post {
+    success {
+      mattermostSend color: "#42f44e", message: "Build succeeded #${env.BUILD_NUMBER} - ${env.JOB_NAME} (<${env.BUILD_URL}|Open>)"
+    }
+    failure {
+      mattermostSend color: "#f44b42", message: "Build failed #${env.BUILD_NUMBER} - ${env.JOB_NAME} (<${env.BUILD_URL}|Open>)"
+    }
+  }
 }
