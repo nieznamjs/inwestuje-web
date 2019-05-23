@@ -33,6 +33,11 @@ pipeline {
           AWS_ACCESS_KEY_ID = credentials('aws-access-key')
           AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
           AWS_REGION = credentials('aws-region')
+          DB_PASSWORD = credentials('dev-db-password')
+          DB_HOST = credentials('dev-db-host')
+          DB_USERNAME = credentials('dev-db-username')
+          DB_NAME = credentials('dev-db-name')
+          SECRET = credentials('dev-secret')
         }
         when {
             branch 'master'
@@ -51,7 +56,8 @@ pipeline {
           stage('Deploy image') {
             steps {
               sh 'ssh jenkins@inwestuje-dev.deftcode.pl " \\$( AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}  /snap/bin/aws ecr get-login --region ${AWS_REGION} --no-include-email)"'
-              sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && git pull && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d --build"'
+              sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && git pull && docker-compose stop && docker-compose rm -f && docker-compose pull"'
+              sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && DB_PASSWORD=${DB_PASSWORD} DB_HOST=${DB_HOST} DB_USERNAME=${DB_USERNAME} DB_NAME=${DB_NAME} SECRET=${SECRET} NODE_ENV=development docker-compose up -d --build"'
             }
           }
         }
