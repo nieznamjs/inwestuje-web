@@ -12,10 +12,10 @@ declare const OpenPayU: OpenPayU;
 @Injectable({
   providedIn: 'root'
 })
-export class PayuService {
+export class PayuDataService {
 
   constructor(
-    private configService: ConfigService,
+    private config: ConfigService,
   ) {}
 
   public createToken(): Observable<CreateTokenFormatErrors | PayuTokenCreateResponse> {
@@ -35,6 +35,6 @@ export class PayuService {
   }
 
   public async setMerchantId(): Promise<void> {
-    OpenPayU.merchantId = await this.configService.getMerchantId();
+    OpenPayU.merchantId = await this.config.getMerchantId();
   }
 }

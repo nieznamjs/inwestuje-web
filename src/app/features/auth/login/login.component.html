@@ -23,11 +23,20 @@
         <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
           Hasło jest wymagane
         </mat-error>
+
+        <mat-error *ngIf="getFormControl('password').hasError('pattern')">
+          Hasło musi składać się z przynajmniej jednej małej litery, jednej wielkiej litery i cyfry oraz mieć długość 6-24 znaki
+        </mat-error>
       </mat-form-field>
 
       <button class="btn" mat-raised-button color="primary">
         Zaloguj się
       </button>
+
+      <mat-error *ngIf="loginError" class="login-error">
+        Nieprawidłowy e-mail lub hasło
+      </mat-error>
+      <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading" class="loading-spinner"></mat-spinner>
     </form>
 
     <p>

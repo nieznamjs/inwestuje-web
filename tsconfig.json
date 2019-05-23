@@ -9,7 +9,8 @@
       "@directives/*": [ "src/app/shared/directives/*" ],
       "@constants/*": [ "src/app/shared/constants/*" ],
       "@interfaces/*": [ "src/app/shared/interfaces/*" ],
-      "@env/*": [ "src/environments/*" ]
+      "@env/*": [ "src/environments/*" ],
+      "@mocks/*": [ "tests/mocks/*" ]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

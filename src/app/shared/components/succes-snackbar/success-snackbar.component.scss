@@ -1,0 +1,11 @@
+@import "~src/variables";
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message {
+  color: $color-text-success;
+}
