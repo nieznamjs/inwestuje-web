@@ -3,7 +3,7 @@ export class ConfigServiceMock {
     return '123';
   }
 
-  public getApiUrl(): string {
+  get ApiUrl(): string {
     return 'http://normalurl.pls';
   }
 }

@@ -10,7 +10,7 @@
       "@constants/*": [ "src/app/shared/constants/*" ],
       "@interfaces/*": [ "src/app/shared/interfaces/*" ],
       "@env/*": [ "src/environments/*" ],
-      "@mocks/*": [ "src/mocks/*" ]
+      "@mocks/*": [ "tests/mocks/*" ]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

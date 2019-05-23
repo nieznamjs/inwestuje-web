@@ -10,7 +10,7 @@ import { ConfigService } from '@services/utils/config.service';
 })
 export class UsersDataService {
 
-  private readonly apiUrl = this.configService.getApiUrl();
+  private readonly apiUrl = this.configService.apiUrl;
 
   constructor(
     private http: HttpClient,

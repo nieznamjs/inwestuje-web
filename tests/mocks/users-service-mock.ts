@@ -18,7 +18,7 @@ export const expectedUser: User = {
 };
 
 export class UsersServiceDataMock {
-  getUser(id: string): Observable<User> {
+  public getUser(id: string): Observable<User> {
     return of(expectedUser);
   }
 }

@@ -15,7 +15,7 @@ declare const OpenPayU: OpenPayU;
 export class PayuDataService {
 
   constructor(
-    private configService: ConfigService,
+    private config: ConfigService,
   ) {}
 
   public createToken(): Observable<CreateTokenFormatErrors | PayuTokenCreateResponse> {
@@ -35,6 +35,6 @@ export class PayuDataService {
   }
 
   public async setMerchantId(): Promise<void> {
-    OpenPayU.merchantId = await this.configService.getMerchantId();
+    OpenPayU.merchantId = await this.config.getMerchantId();
   }
 }

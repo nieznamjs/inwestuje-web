@@ -29,7 +29,7 @@ describe('AuthDataService', () => {
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigServiceMock);
-    apiUrl = configService.getApiUrl();
+    apiUrl = configService.apiUrl;
 
     authService = new AuthDataService(httpClient, configService);
   });
@@ -46,18 +46,22 @@ describe('AuthDataService', () => {
     authService.register(newUserBody).subscribe((user: User) => expect(user).toEqual(expectedUser));
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/register`);
-    req.flush(expectedUser);
 
     expect(req.request.method).toBe('POST');
+
+    req.flush(expectedUser);
   });
 
   it('login should return object with success: boolean', () => {
     authService.login('dummy@email.com', '123')
-      .subscribe((response: LoginResponse) => expect(response).toEqual(expectedLoginResponse));
+      .subscribe((response: LoginResponse) => {
+        expect(response).toEqual(expectedLoginResponse);
+      });
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/login`);
-    req.flush(expectedLoginResponse);
 
     expect(req.request.method).toBe('POST');
+
+    req.flush(expectedLoginResponse);
   });
 });

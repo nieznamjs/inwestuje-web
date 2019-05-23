@@ -12,11 +12,11 @@ import { LoginResponse } from '@interfaces/http/login-response.interface';
 })
 export class AuthDataService {
 
-  private readonly API_URL = this.configService.getApiUrl();
+  private readonly API_URL = this.config.apiUrl;
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
+    private config: ConfigService,
   ) { }
 
   public register(newUser: CreateUserBody): Observable<User> {

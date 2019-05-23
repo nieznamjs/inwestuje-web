@@ -12,8 +12,7 @@ import { AccountType } from '@interfaces/account-type.interface';
 import { AccountRole } from '@interfaces/account-role.interface';
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { SnackbarService } from '@services/utils/snackbar.service';
-import { PASSWORD_REQUIRMENT_REGEX } from '@constants/password-requirment';
-import { NIP_REQUIRMENT_REGEX } from '@constants/nip-requirment';
+import { PASSWORD_REQUIREMENT_REGEX, NIP_REQUIREMENT_REGEX } from '@constants/regexps';
 import { SnackbarMessages } from '@constants/snackbar-messages';
 
 @Component({
@@ -102,7 +101,7 @@ export class RegisterComponent implements OnInit {
       email: [ '', [ Validators.email, Validators.required ]],
       password: [ '', [
         Validators.required,
-        Validators.pattern(PASSWORD_REQUIRMENT_REGEX),
+        Validators.pattern(PASSWORD_REQUIREMENT_REGEX),
       ]],
       confirmPassword: [ '', Validators.required ],
       roles: [ [ this.rolesData[0] ], Validators.required ],
@@ -110,7 +109,7 @@ export class RegisterComponent implements OnInit {
       firstName: [ null, Validators.required ],
       lastName: [ null, Validators.required ],
       companyName: [ null, Validators.required ],
-      nip: [ null, [ Validators.required, Validators.pattern(NIP_REQUIRMENT_REGEX) ]],
+      nip: [ null, [ Validators.required, Validators.pattern(NIP_REQUIREMENT_REGEX) ]],
     });
   }
 

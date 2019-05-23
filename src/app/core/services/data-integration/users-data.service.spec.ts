@@ -28,7 +28,7 @@ describe('UsersDataService', () => {
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
     configService = TestBed.get(ConfigServiceMock);
-    apiUrl = configService.getApiUrl();
+    apiUrl = configService.apiUrl;
 
     usersService = new UsersDataService(httpClient, configService);
   });
@@ -46,7 +46,7 @@ describe('UsersDataService', () => {
 
     usersService.getUser(userId).subscribe((user: User) => expect(user).toEqual(expectedUser));
 
-    const req = httpTestingController.expectOne(`${configService.getApiUrl()}/user/${userId}`);
+    const req = httpTestingController.expectOne(`${configService.apiUrl}/user/${userId}`);
     req.flush(expectedUser);
 
     expect(req.request.method).toBe('GET');

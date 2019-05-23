@@ -1,0 +1,2 @@
+export const PASSWORD_REQUIREMENT_REGEX = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,24}$';
+export const NIP_REQUIREMENT_REGEX = '^[0-9]{10}$';

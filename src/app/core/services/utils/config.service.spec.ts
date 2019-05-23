@@ -7,13 +7,11 @@ describe('ConfigService', () => {
     configService = new ConfigService();
   });
 
-  it('getMerchantId should return string with merchant ID', () => {
-    configService.getMerchantId().then((merchantId: string) => {
-      expect(typeof merchantId).toEqual('string');
-    });
+  it('getMerchantId should return string with merchant ID', async () => {
+    expect(typeof await configService.getMerchantId()).toBe('string');
   });
 
   it('getApiUrl should return proper API url', () => {
-    expect(configService.getApiUrl()).toEqual('https://inwestuje-dev.deftcode.pl/api');
+    expect(configService.apiUrl).toBe('https://inwestuje-dev.deftcode.pl/api');
   });
 });
