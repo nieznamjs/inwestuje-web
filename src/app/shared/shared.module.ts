@@ -12,12 +12,14 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatStepperModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IMaskModule } from 'angular-imask';
 
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
+import { ContainerComponent } from '@components/container/container.component';
 
 const materialModules = [
   MatInputModule,
@@ -29,12 +31,14 @@ const materialModules = [
   MatStepperModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
+  MatToolbarModule,
 ];
 
 @NgModule({
   declarations: [
     AuthSidebarComponent,
     SuccessSnackbarComponent,
+    ContainerComponent,
   ],
   imports: [
     ...materialModules,
@@ -52,6 +56,7 @@ const materialModules = [
     ReactiveFormsModule,
     AuthSidebarComponent,
     IMaskModule,
+    ContainerComponent,
   ],
   entryComponents: [
     SuccessSnackbarComponent,

@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+@import "~src/theme";
+@import "~src/variables";
+
+.container {
+  display: flex;
+  align-items: center;
+
+  height: 60px;
+}
