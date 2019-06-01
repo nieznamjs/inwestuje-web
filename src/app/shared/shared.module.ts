@@ -16,13 +16,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { IMaskModule } from 'angular-imask';
+
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
 import { ContainerComponent } from '@components/container/container.component';
 import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
+import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 
 const materialModules = [
   MatInputModule,
@@ -39,6 +41,7 @@ const materialModules = [
   MatPaginatorModule,
   MatMenuModule,
   MatIconModule,
+  MatDialogModule,
 ];
 
 @NgModule({
@@ -47,6 +50,7 @@ const materialModules = [
     SuccessSnackbarComponent,
     ContainerComponent,
     OrdinalNumberPipe,
+    ConfirmDialogComponent,
   ],
   imports: [
     ...materialModules,
@@ -69,6 +73,7 @@ const materialModules = [
   ],
   entryComponents: [
     SuccessSnackbarComponent,
+    ConfirmDialogComponent,
   ],
 })
 export class SharedModule { }

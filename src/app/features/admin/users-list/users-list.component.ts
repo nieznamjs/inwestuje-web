@@ -6,6 +6,11 @@ import { finalize, tap } from 'rxjs/operators';
 import { UsersDataService } from '@services/data-integration/users-data.service';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@constants/tables-options';
 import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
+import { User } from '@interfaces/user.interface';
+import { DialogService } from '@services/utils/dialog.service';
+import { ConfirmDialogMessages } from '@constants/confirm-dialog-messages';
+import { SnackbarService } from '@services/utils/snackbar.service';
+import { SnackbarMessages } from '@constants/snackbar-messages';
 
 @Component({
   selector: 'app-users-list',
@@ -24,6 +29,8 @@ export class UsersListComponent implements OnInit {
 
   constructor(
     private usersService: UsersDataService,
+    private dialogService: DialogService,
+    private snackbarService: SnackbarService,
   ) { }
 
   private getUsers(page: number, pageSize: number): Observable<GetUsersResponse> {
@@ -39,6 +46,7 @@ export class UsersListComponent implements OnInit {
       this.usersData = response;
     });
   }
+
   public onPaginationChange(event: PageEvent): void {
     this.getUsers(event.pageIndex + 1, event.pageSize)
       .pipe(
@@ -48,5 +56,20 @@ export class UsersListComponent implements OnInit {
         }),
       )
       .subscribe((response: GetUsersResponse) => this.usersData = response);
+  }
+
+  public deleteUser(user: User): void {
+    const dialogRef = this.dialogService.openConfirmDialog(`${ConfirmDialogMessages.DeleteUser} ${user.email}`);
+
+    dialogRef.afterClosed().subscribe((value: boolean) => {
+      if (value) {
+        this.usersService.deleteUser(user.id).subscribe(() => {
+          this.snackbarService.showSuccess(SnackbarMessages.UserDeleted);
+
+          this.getUsers(this.lastPage, this.lastPageSize)
+            .subscribe((response: GetUsersResponse) => this.usersData = response);
+        });
+      }
+    });
   }
 }

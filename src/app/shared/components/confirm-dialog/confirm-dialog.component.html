@@ -1,0 +1,13 @@
+<h3 class="message">
+  {{ data.message }}
+</h3>
+
+<div class="buttons-wrapper">
+  <button mat-raised-button color="primary" (click)="decide(true)">
+    Confirm
+  </button>
+
+  <button mat-raised-button color="warn" (click)="decide(false)">
+    Cancel
+  </button>
+</div>
