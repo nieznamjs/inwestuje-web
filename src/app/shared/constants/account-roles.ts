@@ -4,6 +4,7 @@ export enum AccountRoles {
   Investor = 'investor',
   DealMaker = 'dealMaker',
   Sourcer = 'sourcer',
+  Admin = 'admin',
 }
 
 export const ACCOUNT_ROLES: AccountRole[] = [

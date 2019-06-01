@@ -6,6 +6,8 @@ import { finalize } from 'rxjs/operators';
 import { FormsService } from '@services/utils/forms.service';
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
+import { LocalStorageService } from '@services/utils/local-storage.service';
+import { USER_ROLE_KEY } from '@constants/local-storage-keys';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +31,7 @@ export class LoginComponent {
     private formsService: FormsService,
     private authService: AuthDataService,
     private router: Router,
+    private localStorageService: LocalStorageService,
   ) { }
 
   public getFormControl(name: string): AbstractControl {
@@ -49,6 +52,8 @@ export class LoginComponent {
         }),
       ).subscribe(() => {
         this.loginError = false;
+        // TODO get userRole from response
+        this.localStorageService.set(USER_ROLE_KEY, 'admin');
         this.router.navigate(['/admin']);
       }, () => {
         this.loginError = true;
