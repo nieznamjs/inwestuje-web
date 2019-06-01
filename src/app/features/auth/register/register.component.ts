@@ -21,7 +21,7 @@ import { SnackbarMessages } from '@constants/snackbar-messages';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  @ViewChild('stepper') private stepper: MatStepper;
+  @ViewChild('stepper', { static: true }) private stepper: MatStepper;
 
   public readonly rolesData: AccountRole[] = ACCOUNT_ROLES;
   public readonly accountTypes: AccountType[] = ACCOUNT_TYPES;
