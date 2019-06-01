@@ -14,9 +14,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IMaskModule } from 'angular-imask';
 
+import { IMaskModule } from 'angular-imask';
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
 import { ContainerComponent } from '@components/container/container.component';
@@ -35,6 +37,8 @@ const materialModules = [
   MatToolbarModule,
   MatTableModule,
   MatPaginatorModule,
+  MatMenuModule,
+  MatIconModule,
 ];
 
 @NgModule({

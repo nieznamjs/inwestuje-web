@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 import { UsersDataService } from '@services/data-integration/users-data.service';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@constants/tables-options';
 import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
-import { PageEvent } from '@angular/material/paginator';
-import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users-list',
@@ -19,7 +19,7 @@ export class UsersListComponent implements OnInit {
   public defaultPageSize = DEFAULT_PAGE_SIZE;
   public lastPage = 1;
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
-  public displayedColumns = [ 'index', 'email', 'displayName', 'createdDate' ];
+  public displayedColumns = [ 'index', 'email', 'displayName', 'createdDate', 'actions' ];
   public usersData: GetUsersResponse;
 
   constructor(
