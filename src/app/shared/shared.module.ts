@@ -12,7 +12,9 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatStepperModule,
+  MatTableModule,
   MatToolbarModule,
+  MatPaginatorModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IMaskModule } from 'angular-imask';
@@ -20,6 +22,7 @@ import { IMaskModule } from 'angular-imask';
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
 import { ContainerComponent } from '@components/container/container.component';
+import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
 
 const materialModules = [
   MatInputModule,
@@ -32,6 +35,8 @@ const materialModules = [
   MatProgressSpinnerModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatTableModule,
+  MatPaginatorModule,
 ];
 
 @NgModule({
@@ -39,6 +44,7 @@ const materialModules = [
     AuthSidebarComponent,
     SuccessSnackbarComponent,
     ContainerComponent,
+    OrdinalNumberPipe,
   ],
   imports: [
     ...materialModules,
@@ -57,6 +63,7 @@ const materialModules = [
     AuthSidebarComponent,
     IMaskModule,
     ContainerComponent,
+    OrdinalNumberPipe,
   ],
   entryComponents: [
     SuccessSnackbarComponent,
