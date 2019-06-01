@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { UsersDataService } from '@services/data-integration/users-data.service';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@constants/tables-options';
 import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 import { finalize, tap } from 'rxjs/operators';
 
 @Component({
