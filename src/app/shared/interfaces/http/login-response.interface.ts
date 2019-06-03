@@ -1,3 +1,3 @@
 export interface LoginResponse {
-  success: boolean;
+  userRoles: string[];
 }

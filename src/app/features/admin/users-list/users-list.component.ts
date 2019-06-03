@@ -58,6 +58,16 @@ export class UsersListComponent implements OnInit {
       .subscribe((response: GetUsersResponse) => this.usersData = response);
   }
 
+  public editUser(user: User): void {
+    const dialogRef = this.dialogService.openEditUserDialog(user);
+
+    dialogRef.afterClosed().subscribe((editedUser: User) => {
+      if (editedUser) {
+        console.log(editedUser);
+      }
+    });
+  }
+
   public deleteUser(user: User): void {
     const dialogRef = this.dialogService.openConfirmDialog(`${ConfirmDialogMessages.DeleteUser} ${user.email}`);
 
