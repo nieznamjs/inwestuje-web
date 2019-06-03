@@ -11,4 +11,5 @@ export interface User {
   updatedDate: Date;
   phone: string;
   websiteUrl: string;
+  active: boolean;
 }

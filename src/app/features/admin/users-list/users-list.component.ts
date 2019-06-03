@@ -7,8 +7,6 @@ import { UsersDataService } from '@services/data-integration/users-data.service'
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@constants/tables-options';
 import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
 import { User } from '@interfaces/user.interface';
-import { DialogService } from '@services/utils/dialog.service';
-import { ConfirmDialogMessages } from '@constants/confirm-dialog-messages';
 import { SnackbarService } from '@services/utils/snackbar.service';
 import { SnackbarMessages } from '@constants/snackbar-messages';
 
@@ -24,12 +22,11 @@ export class UsersListComponent implements OnInit {
   public defaultPageSize = DEFAULT_PAGE_SIZE;
   public lastPage = 1;
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
-  public displayedColumns = [ 'index', 'email', 'displayName', 'createdDate', 'actions' ];
+  public displayedColumns = [ 'index', 'email', 'displayName', 'createdDate', 'active', 'actions' ];
   public usersData: GetUsersResponse;
 
   constructor(
     private usersService: UsersDataService,
-    private dialogService: DialogService,
     private snackbarService: SnackbarService,
   ) { }
 
@@ -58,28 +55,17 @@ export class UsersListComponent implements OnInit {
       .subscribe((response: GetUsersResponse) => this.usersData = response);
   }
 
-  public editUser(user: User): void {
-    const dialogRef = this.dialogService.openEditUserDialog(user);
+  public changeActiveProperty(userToChange: User): void {
+    const updatedUser = { ...userToChange, active: !userToChange.active };
 
-    dialogRef.afterClosed().subscribe((editedUser: User) => {
-      if (editedUser) {
-        console.log(editedUser);
-      }
-    });
-  }
+    this.usersService.updateUser(updatedUser).subscribe((returnedUser: User) => {
+      const updatedUsersData = this.usersData.data.map((user: User) => {
+        return returnedUser.id === user.id ? returnedUser : user;
+      });
 
-  public deleteUser(user: User): void {
-    const dialogRef = this.dialogService.openConfirmDialog(`${ConfirmDialogMessages.DeleteUser} ${user.email}`);
+      this.usersData.data = updatedUsersData;
 
-    dialogRef.afterClosed().subscribe((value: boolean) => {
-      if (value) {
-        this.usersService.deleteUser(user.id).subscribe(() => {
-          this.snackbarService.showSuccess(SnackbarMessages.UserDeleted);
-
-          this.getUsers(this.lastPage, this.lastPageSize)
-            .subscribe((response: GetUsersResponse) => this.usersData = response);
-        });
-      }
+      this.snackbarService.showSuccess(SnackbarMessages.UserUpdated);
     });
   }
 }

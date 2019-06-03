@@ -25,7 +25,6 @@ import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-sn
 import { ContainerComponent } from '@components/container/container.component';
 import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
-import { EditUserDialogComponent } from '@components/edit-user-dialog/edit-user-dialog.component';
 
 const materialModules = [
   MatInputModule,
@@ -52,7 +51,6 @@ const materialModules = [
     ContainerComponent,
     OrdinalNumberPipe,
     ConfirmDialogComponent,
-    EditUserDialogComponent,
   ],
   imports: [
     ...materialModules,

@@ -28,6 +28,7 @@ export const expectedUser: User = {
   createdDate: new Date('2005-10-13'),
   updatedDate: new Date('2005-10-14'),
   websiteUrl: 'https://dev.dreftocode.pl',
+  active: true,
 };
 
 export const expectedLoginResponse: LoginResponse = {

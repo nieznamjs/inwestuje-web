@@ -24,7 +24,7 @@ export class UsersDataService {
     return this.http.post<GetUsersResponse>(`${this.config.apiUrl}/user/findAll`, { page, pageSize });
   }
 
-  public deleteUser(id: string): Observable<User> {
-    return this.http.delete<User>(`${this.config.apiUrl}/user/${id}`);
+  public updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.config.apiUrl}/user`, user);
   }
 }
