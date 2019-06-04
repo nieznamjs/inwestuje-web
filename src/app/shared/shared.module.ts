@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
 import { IMaskModule } from 'angular-imask';
 
 import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
@@ -42,6 +43,7 @@ const materialModules = [
   MatMenuModule,
   MatIconModule,
   MatDialogModule,
+  MatSortModule,
 ];
 
 @NgModule({

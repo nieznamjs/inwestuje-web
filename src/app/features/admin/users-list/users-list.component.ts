@@ -22,7 +22,7 @@ export class UsersListComponent implements OnInit {
   public defaultPageSize = DEFAULT_PAGE_SIZE;
   public lastPage = 1;
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
-  public displayedColumns = [ 'index', 'email', 'displayName', 'createdDate', 'active', 'actions' ];
+  public displayedColumns = [ 'index', 'email', 'firstName', 'lastName', 'companyName', 'createdDate', 'active', 'actions' ];
   public usersData: GetUsersResponse;
 
   constructor(
