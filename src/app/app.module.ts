@@ -1,11 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './features/auth/auth.module';
+import { RootStoreModule } from './store';
+import { environment } from '@env/environment';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,8 @@ import { AuthModule } from './features/auth/auth.module';
     CoreModule,
     SharedModule,
     AuthModule,
+    RootStoreModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   bootstrap: [AppComponent],
 })
