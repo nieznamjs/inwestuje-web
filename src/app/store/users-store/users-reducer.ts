@@ -17,6 +17,7 @@ export function usersReducer(state = usersInitialState, action: UsersActions): U
         ...state,
         isLoading: false,
         error: null,
+        count: action.payload.count,
       });
     }
 

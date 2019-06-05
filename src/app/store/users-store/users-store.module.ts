@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { usersReducer } from './users-reducer';
 import { UsersEffects } from './users-effects';
+import { UsersFacade } from './users-facade';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { UsersEffects } from './users-effects';
   ],
   providers: [
     UsersEffects,
+    UsersFacade,
   ],
 })
 export class UsersStoreModule { }

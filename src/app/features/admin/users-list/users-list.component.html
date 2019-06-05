@@ -1,9 +1,9 @@
 <mat-card class="users-list-container">
-  <div class="loading-overlay" *ngIf="isLoadingUsers">
+  <div class="loading-overlay" *ngIf="isLoadingUsers$ | async">
     <mat-spinner class="loading-spinner" color="primary"></mat-spinner>
   </div>
 
-  <table class="users-table" mat-table matSort [dataSource]="usersData?.data">
+  <table class="users-table" mat-table matSort [dataSource]="users$ | async">
     <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef>No</th>
       <td mat-cell *matCellDef="let user; let i = index">
@@ -89,7 +89,7 @@
   </table>
 
   <mat-paginator
-    [length]="usersData?.count"
+    [length]="usersCount$ | async"
     [pageSizeOptions]="pageSizes"
     [pageSize]="defaultPageSize"
     (page)="onPaginationChange($event)">
