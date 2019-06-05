@@ -17,9 +17,7 @@ export class UsersEffects {
 
   @Effect()
   getUsersEffect$: Observable<Action> = this.actions$.pipe(
-    ofType<GetUsersAction>(
-      UsersActionsTypes.GET_USERS,
-    ),
+    ofType<GetUsersAction>(UsersActionsTypes.GET_USERS),
     startWith(new GetUsersAction()),
     switchMap(() => {
       return this.userService.getUsers(0, 0)

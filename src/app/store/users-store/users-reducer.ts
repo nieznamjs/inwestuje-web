@@ -1,6 +1,6 @@
 import { usersAdapter, usersInitialState } from './users-state';
 import { UsersActions, UsersActionsTypes } from './users-actions';
-import { UsersState } from '@interfaces/ngrx/admin/users/users-state';
+import { UsersState } from '@interfaces/ngrx/users/users-state';
 
 export function usersReducer(state = usersInitialState, action: UsersActions): UsersState {
   switch (action.type) {
@@ -11,7 +11,6 @@ export function usersReducer(state = usersInitialState, action: UsersActions): U
         error: null,
       };
     }
-
 
     case UsersActionsTypes.GET_USERS_SUCCESS: {
       return usersAdapter.addAll(action.payload.users, {

@@ -1,5 +1,5 @@
-import { AdminState } from '@interfaces/ngrx/admin/admin-state';
+import { UsersState } from '@interfaces/ngrx/users/users-state';
 
 export interface State {
-  admin: AdminState;
+  users: UsersState;
 }
