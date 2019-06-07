@@ -1,3 +1,5 @@
+@import "~src/variables";
+
 :host {
   display: block;
   width: 100%;
@@ -28,4 +30,11 @@
 
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 99;
+}
+
+.users-error {
+  margin: 10px 0;
+
+  color: $color-text-error;
+  text-align: center;
 }

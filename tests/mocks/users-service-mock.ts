@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 
 import { User } from '@interfaces/user.interface';
-import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
+import { GetAllResponse } from '@interfaces/http/get-all-response';
 
 export const expectedUser: User = {
   id: '123',
@@ -19,7 +19,7 @@ export const expectedUser: User = {
   active: true,
 };
 
-export const expectedUsersResponse: GetUsersResponse = {
+export const expectedUsersResponse: GetAllResponse<User> = {
   data: [ expectedUser ],
   count: 1,
 };

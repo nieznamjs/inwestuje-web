@@ -2,29 +2,57 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { UsersDataService } from '@services/data-integration/users-data.service';
-import { GetUsersAction, GetUsersActionFail, GetUsersActionSuccess, UsersActionsTypes } from './users-actions';
-import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
+import {
+  GetUsersAction,
+  GetUsersActionFail,
+  GetUsersActionSuccess,
+  UpdateUserAction,
+  UpdateUserActionSuccess,
+  UsersActionsTypes
+} from './users-actions';
+import { GetAllResponse } from '@interfaces/http/get-all-response';
+import { User } from '@interfaces/user.interface';
+import { SnackbarService } from '@services/utils/snackbar.service';
+import { SnackbarMessages } from '@constants/snackbar-messages';
 
 @Injectable()
 export class UsersEffects {
   constructor(
     private userService: UsersDataService,
     private actions$: Actions,
+    private snackbarService: SnackbarService,
   ) {}
 
   @Effect()
   getUsersEffect$: Observable<Action> = this.actions$.pipe(
     ofType<GetUsersAction>(UsersActionsTypes.GET_USERS),
-    startWith(new GetUsersAction()),
-    switchMap(() => {
-      return this.userService.getUsers(1, 5)
+    switchMap((action: GetUsersAction) => {
+      return this.userService.getUsers(action.payload)
         .pipe(
-          map((response: GetUsersResponse) => new GetUsersActionSuccess({ users: response.data, count: response.count })),
-          catchError(error => of(new GetUsersActionFail({ error }))),
+          map((response: GetAllResponse<User>) => new GetUsersActionSuccess({ data: response.data, count: response.count })),
+          catchError(error => of(new GetUsersActionFail({ error: error.message }))),
         );
     }),
+  );
+
+  @Effect()
+  updateUserEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<UpdateUserAction>(UsersActionsTypes.UPDATE_USER),
+    switchMap((action: UpdateUserAction) => {
+      return this.userService.updateUser(action.payload.user)
+        .pipe(
+          map((user: User) => {
+            this.snackbarService.showSuccess(SnackbarMessages.UserUpdated);
+            return new UpdateUserActionSuccess({ user });
+          }),
+          catchError(() => {
+            this.snackbarService.showError(SnackbarMessages.UserUpdateFail);
+            return of(null);
+          }),
+        );
+    })
   );
 }

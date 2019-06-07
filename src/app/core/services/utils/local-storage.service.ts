@@ -10,29 +10,29 @@ export class LocalStorageService {
     private snackbarService: SnackbarService,
   ) { }
 
-  public get(key: string) {
+  public get<T>(key: string): T {
     try {
       const data = localStorage.getItem(key);
       return JSON.parse(data);
     } catch (err) {
-      // handle this later with snackbar
+      // TODO handle this later with snackbar
     }
   }
 
-  public set(key: string, data: any) {
+  public set<T>(key: string, data: T): void {
     try {
       const serializedData = JSON.stringify(data);
       localStorage.setItem(key, serializedData);
     } catch (err) {
-      // handle this later with snackbar
+      // TODO handle this later with snackbar
     }
   }
 
-  public clear(key: string) {
+  public clear(key: string): void {
     try {
       localStorage.removeItem(key);
     } catch (err) {
-      // handle this later with snackbar
+      // TODO handle this later with snackbar
     }
   }
 }

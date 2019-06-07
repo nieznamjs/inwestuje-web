@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router, UrlSegment } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanLoad, Route, Router } from '@angular/router';
 
-import { USER_ROLE_KEY } from '@constants/local-storage-keys';
+import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LocalStorageService } from '@services/utils/local-storage.service';
 
 @Injectable({
@@ -14,13 +13,15 @@ export class UserTypeGuard implements CanLoad {
     private router: Router,
   ) {}
 
-  public canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+  public canLoad(route: Route): boolean {
     const allowedUserRoles = route.data['allowedUserRoles'];
-    const currentUserRole = this.localStorageService.get(USER_ROLE_KEY);
+    const currentUserRoles = this.localStorageService.get<string[]>(USER_ROLES_KEY);
 
-    if (!allowedUserRoles.includes(currentUserRole)) {
-      this.router.navigate([ '/login' ]);
-      return;
+    const userAllowed = currentUserRoles.some((role: string) => allowedUserRoles.includes(role));
+
+    if (!userAllowed) {
+      this.router.navigate([ '/' ]);
+      return false;
     }
 
     return true;

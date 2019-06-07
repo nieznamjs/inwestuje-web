@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
@@ -14,11 +14,15 @@ import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { SnackbarService } from '@services/utils/snackbar.service';
 import { NIP_REQUIREMENT_REGEX_STRING, PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 import { SnackbarMessages } from '@constants/snackbar-messages';
+import { DOMAIN_NAME } from '@constants/domain-name';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  providers: [
+    { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
+  ],
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('stepper', { static: true }) private stepper: MatStepper;
@@ -40,6 +44,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthDataService,
     private snackbarService: SnackbarService,
     private router: Router,
+    @Inject(DOMAIN_NAME) public domainName: string,
   ) { }
 
   public ngOnInit(): void {

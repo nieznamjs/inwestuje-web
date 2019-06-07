@@ -7,7 +7,7 @@ import { ConfigService } from '@services/utils/config.service';
 import { User } from '@interfaces/user.interface';
 import { expectedUser, expectedUsersResponse } from '@mocks/users-service-mock';
 import { ConfigServiceMock } from '@mocks/config-service-mock';
-import { GetUsersResponse } from '@interfaces/http/get-users-response.interface';
+import { GetAllResponse } from '@interfaces/http/get-all-response';
 
 describe('UsersDataService', () => {
   let apiUrl: string;
@@ -54,7 +54,7 @@ describe('UsersDataService', () => {
   });
 
   it('getUsers should return expected users response', () => {
-    usersService.getUsers(1, 1).subscribe((response: GetUsersResponse) => {
+    usersService.getUsers(1, 1).subscribe((response: GetAllResponse<User>) => {
       expect(response).toEqual(expectedUsersResponse);
     });
 

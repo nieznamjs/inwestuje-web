@@ -13,7 +13,7 @@ export function usersReducer(state = usersInitialState, action: UsersActions): U
     }
 
     case UsersActionsTypes.GET_USERS_SUCCESS: {
-      return usersAdapter.addAll(action.payload.users, {
+      return usersAdapter.addAll(action.payload.data, {
         ...state,
         isLoading: false,
         error: null,
@@ -27,6 +27,10 @@ export function usersReducer(state = usersInitialState, action: UsersActions): U
         isLoading: false,
         error: action.payload.error,
       };
+    }
+
+    case UsersActionsTypes.UPDATE_USER_SUCCESS: {
+      return usersAdapter.updateOne({ id: action.payload.user.id, changes: action.payload.user }, state);
     }
 
     default: {

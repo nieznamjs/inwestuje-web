@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
+import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackbar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,12 @@ export class SnackbarService {
 
   public showSuccess(message: string): MatSnackBarRef<SuccessSnackbarComponent> {
     return this.snackbar.openFromComponent(SuccessSnackbarComponent, {
+      data: { message },
+    });
+  }
+
+  public showError(message: string): MatSnackBarRef<ErrorSnackbarComponent> {
+    return this.snackbar.openFromComponent(ErrorSnackbarComponent, {
       data: { message },
     });
   }
