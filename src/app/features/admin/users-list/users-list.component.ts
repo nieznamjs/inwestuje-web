@@ -18,7 +18,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   private sortChangeSubscription: Subscription;
 
-  public pageSizes = PAGE_SIZE_OPTIONS;
+  public pageSizes = [2, 4, 6];
   public defaultPageSize = DEFAULT_PAGE_SIZE;
   public lastPage = 1;
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
@@ -50,8 +50,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersFacade.getUsers({
       page: this.lastPage,
       pageSize: this.lastPageSize,
-      // orderBy: this.defaultSortActive,
-      // order: this.defaultSortDirection,
+      orderBy: this.defaultSortActive,
+      order: this.defaultSortDirection.toUpperCase(),
     });
   }
 
@@ -63,8 +63,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersFacade.getUsers({
       page: event.pageIndex + 1,
       pageSize: event.pageSize,
-      // order: this.sort.direction,
-      // orderBy: this.sort.active,
+      order: this.sort.direction.toUpperCase(),
+      orderBy: this.sort.active,
     });
   }
 
@@ -72,8 +72,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersFacade.getUsers({
       page: this.paginator.pageIndex + 1,
       pageSize: this.paginator.pageSize,
-      // order: event.direction,
-      // orderBy: event.active,
+      order: event.direction.toUpperCase(),
+      orderBy: event.active,
     });
   }
 

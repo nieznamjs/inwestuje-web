@@ -5,7 +5,7 @@ import { UsersState } from '@interfaces/ngrx/users/users-state';
 
 export const usersAdapter: EntityAdapter<User> = createEntityAdapter<User>({
   selectId: model => model.id,
-  sortComparer: (a: User, b: User): number => b.id.toString().localeCompare(a.id.toString()),
+  sortComparer: false,
 });
 
 export const usersInitialState: UsersState = usersAdapter.getInitialState({
