@@ -51,7 +51,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
       page: this.lastPage,
       pageSize: this.lastPageSize,
       orderBy: this.defaultSortActive,
-      order: this.defaultSortDirection.toUpperCase(),
+      order: this.defaultSortDirection,
     });
   }
 
@@ -63,7 +63,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersFacade.getUsers({
       page: event.pageIndex + 1,
       pageSize: event.pageSize,
-      order: this.sort.direction.toUpperCase(),
+      order: this.sort.direction,
       orderBy: this.sort.active,
     });
   }
@@ -72,7 +72,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersFacade.getUsers({
       page: this.paginator.pageIndex + 1,
       pageSize: this.paginator.pageSize,
-      order: event.direction.toUpperCase(),
+      order: event.direction,
       orderBy: event.active,
     });
   }
