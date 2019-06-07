@@ -18,7 +18,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   private sortChangeSubscription: Subscription;
 
-  public pageSizes = [2, 4, 6];
+  public pageSizes = PAGE_SIZE_OPTIONS;
   public defaultPageSize = DEFAULT_PAGE_SIZE;
   public lastPage = 1;
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
