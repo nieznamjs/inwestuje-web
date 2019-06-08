@@ -9,7 +9,6 @@ import { ConfigService } from '@services/utils/config.service';
   providedIn: 'root'
 })
 export class UsersDataService {
-
   constructor(
     private http: HttpClient,
     private config: ConfigService,

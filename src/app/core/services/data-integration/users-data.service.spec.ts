@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -26,7 +27,7 @@ describe('UsersDataService', () => {
     });
 
     httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
     configService = TestBed.get(ConfigServiceMock);
     apiUrl = configService.apiUrl;
 
