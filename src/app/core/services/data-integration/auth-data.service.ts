@@ -11,7 +11,6 @@ import { LoginResponse } from '@interfaces/http/login-response.interface';
   providedIn: 'root'
 })
 export class AuthDataService {
-
   constructor(
     private http: HttpClient,
     private config: ConfigService,

@@ -21,6 +21,7 @@ pipeline {
                 }
                 stage('Test') {
                     steps {
+                        sh 'npm run lint'
                         sh 'npm run test:ci'
                     }
                 }
@@ -57,7 +58,7 @@ pipeline {
             steps {
               sh 'ssh jenkins@inwestuje-dev.deftcode.pl " \\$( AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}  /snap/bin/aws ecr get-login --region ${AWS_REGION} --no-include-email)"'
               sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && git pull && docker-compose stop && docker-compose rm -f && docker-compose pull"'
-              sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && DB_PASSWORD=${DB_PASSWORD} DB_HOST=${DB_HOST} DB_USERNAME=${DB_USERNAME} DB_NAME=${DB_NAME} SECRET=${SECRET} NODE_ENV=development docker-compose up -d --build"'
+              sh 'ssh jenkins@inwestuje-dev.deftcode.pl "cd ./app && DB_PASSWORD=${DB_PASSWORD} DB_HOST=${DB_HOST} DB_USERNAME=${DB_USERNAME} DB_NAME=${DB_NAME} SECRET=${SECRET} AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} AWS_REGION=${AWS_REGION} NODE_ENV=development docker-compose up -d --build"'
             }
           }
         }

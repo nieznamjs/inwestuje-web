@@ -11,7 +11,6 @@ import { GetAllRequestConfig } from '@interfaces/get-all-request-config';
   providedIn: 'root'
 })
 export class UsersDataService {
-
   constructor(
     private http: HttpClient,
     private config: ConfigService,
