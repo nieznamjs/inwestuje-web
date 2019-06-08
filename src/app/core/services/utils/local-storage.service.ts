@@ -16,7 +16,7 @@ export class LocalStorageService {
       const data = localStorage.getItem(key);
       return JSON.parse(data);
     } catch (err) {
-      this.snackbarService.showError(SnackbarMessages.GeneralError);
+      this.snackbarService.showError(SnackbarMessages.GeneralError, 3000);
     }
   }
 
@@ -25,7 +25,7 @@ export class LocalStorageService {
       const serializedData = JSON.stringify(data);
       localStorage.setItem(key, serializedData);
     } catch (err) {
-      this.snackbarService.showError(SnackbarMessages.GeneralError);
+      this.snackbarService.showError(SnackbarMessages.GeneralError, 3000);
     }
   }
 
@@ -33,7 +33,7 @@ export class LocalStorageService {
     try {
       localStorage.removeItem(key);
     } catch (err) {
-      this.snackbarService.showError(SnackbarMessages.GeneralError);
+      this.snackbarService.showError(SnackbarMessages.GeneralError, 3000);
     }
   }
 }

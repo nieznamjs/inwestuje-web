@@ -9,15 +9,12 @@ import { PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 import { LocalStorageService } from '@services/utils/local-storage.service';
 import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
-import { DOMAIN_NAME } from '@constants/domain-name';
+import { DOMAIN_NAME } from '@constants/app-config';
 
 @Component({
-  selector: 'app-login',
+  selector: 'iw-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [
-    { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
-  ],
 })
 export class LoginComponent {
 

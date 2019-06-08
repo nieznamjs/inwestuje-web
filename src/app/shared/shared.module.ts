@@ -27,6 +27,7 @@ import { ContainerComponent } from '@components/container/container.component';
 import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackbar.component';
+import { DOMAIN_NAME } from '@constants/app-config';
 
 const materialModules = [
   MatInputModule,
@@ -78,6 +79,9 @@ const materialModules = [
   entryComponents: [
     SuccessSnackbarComponent,
     ConfirmDialogComponent,
+  ],
+  providers: [
+    { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
   ],
 })
 export class SharedModule { }

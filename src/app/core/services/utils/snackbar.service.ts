@@ -13,15 +13,17 @@ export class SnackbarService {
     private snackbar: MatSnackBar,
   ) { }
 
-  public showSuccess(message: string): MatSnackBarRef<SuccessSnackbarComponent> {
+  public showSuccess(message: string, duration?: number): MatSnackBarRef<SuccessSnackbarComponent> {
     return this.snackbar.openFromComponent(SuccessSnackbarComponent, {
       data: { message },
+      duration,
     });
   }
 
-  public showError(message: string): MatSnackBarRef<ErrorSnackbarComponent> {
+  public showError(message: string, duration?: number): MatSnackBarRef<ErrorSnackbarComponent> {
     return this.snackbar.openFromComponent(ErrorSnackbarComponent, {
       data: { message },
+      duration,
     });
   }
 }

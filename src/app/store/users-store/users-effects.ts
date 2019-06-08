@@ -45,11 +45,11 @@ export class UsersEffects {
       return this.userService.updateUser(action.payload.user)
         .pipe(
           map((user: User) => {
-            this.snackbarService.showSuccess(SnackbarMessages.UserUpdated);
+            this.snackbarService.showSuccess(SnackbarMessages.UserUpdated, 3000);
             return new UpdateUserActionSuccess({ user });
           }),
           catchError(() => {
-            this.snackbarService.showError(SnackbarMessages.UserUpdateFail);
+            this.snackbarService.showError(SnackbarMessages.UserUpdateFail, 3000);
             return of(null);
           }),
         );

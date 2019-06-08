@@ -6,7 +6,7 @@ import { AccountRole } from '@interfaces/account-role.interface';
 import { AccountType } from '@interfaces/account-type.interface';
 
 @Component({
-  selector: 'app-user-data-form',
+  selector: 'iw-user-data-form',
   templateUrl: './user-data-form.component.html',
   styleUrls: ['./user-data-form.component.scss']
 })

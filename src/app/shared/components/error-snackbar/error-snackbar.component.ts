@@ -4,7 +4,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material';
 import { SnackbarData } from '@interfaces/snackbar-data.interface';
 
 @Component({
-  selector: 'app-error-snackbar',
+  selector: 'iw-error-snackbar',
   templateUrl: './error-snackbar.component.html',
   styleUrls: ['./error-snackbar.component.scss']
 })

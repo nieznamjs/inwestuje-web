@@ -14,15 +14,12 @@ import { AuthDataService } from '@services/data-integration/auth-data.service';
 import { SnackbarService } from '@services/utils/snackbar.service';
 import { NIP_REQUIREMENT_REGEX_STRING, PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 import { SnackbarMessages } from '@constants/snackbar-messages';
-import { DOMAIN_NAME } from '@constants/domain-name';
+import { DOMAIN_NAME } from '@constants/app-config';
 
 @Component({
-  selector: 'app-register',
+  selector: 'iw-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [
-    { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
-  ],
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('stepper', { static: true }) private stepper: MatStepper;

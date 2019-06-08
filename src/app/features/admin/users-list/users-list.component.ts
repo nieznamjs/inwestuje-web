@@ -10,7 +10,7 @@ import { SnackbarService } from '@services/utils/snackbar.service';
 import { UsersFacade } from '../../../store/users-store/users-facade';
 
 @Component({
-  selector: 'app-users-list',
+  selector: 'iw-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
@@ -24,7 +24,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
   public lastPageSize = PAGE_SIZE_OPTIONS[0];
   public defaultSortActive = 'createdDate';
   public defaultSortDirection = 'asc';
-  public displayedColumns = [ 'index', 'email', 'firstName', 'lastName', 'companyName', 'createdDate', 'active', 'actions' ];
+  public displayedColumns = [
+    'index', 'email', 'firstName', 'lastName', 'companyName', 'createdDate', 'type', 'roles', 'active', 'actions'
+  ];
   public isLoadingUsers$: Observable<boolean>;
   public users$: Observable<User[]>;
   public usersCount$: Observable<number>;
