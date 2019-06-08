@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SnackbarService } from '@services/utils/snackbar.service';
+import { SnackbarMessages } from '@constants/snackbar-messages';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class LocalStorageService {
       const data = localStorage.getItem(key);
       return JSON.parse(data);
     } catch (err) {
-      // TODO handle this later with snackbar
+      this.snackbarService.showError(SnackbarMessages.GeneralError);
     }
   }
 
@@ -24,7 +25,7 @@ export class LocalStorageService {
       const serializedData = JSON.stringify(data);
       localStorage.setItem(key, serializedData);
     } catch (err) {
-      // TODO handle this later with snackbar
+      this.snackbarService.showError(SnackbarMessages.GeneralError);
     }
   }
 
@@ -32,7 +33,7 @@ export class LocalStorageService {
     try {
       localStorage.removeItem(key);
     } catch (err) {
-      // TODO handle this later with snackbar
+      this.snackbarService.showError(SnackbarMessages.GeneralError);
     }
   }
 }
