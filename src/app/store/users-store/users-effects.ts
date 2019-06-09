@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 
 import { UsersDataService } from '@services/data-integration/users-data.service';
 import {
   GetUsersAction,
   GetUsersActionFail,
   GetUsersActionSuccess,
-  UpdateUserAction,
+  UpdateUserAction, UpdateUserActionFail,
   UpdateUserActionSuccess,
   UsersActionsTypes
 } from './users-actions';
@@ -41,16 +41,16 @@ export class UsersEffects {
   @Effect()
   updateUserEffect$: Observable<Action> = this.actions$.pipe(
     ofType<UpdateUserAction>(UsersActionsTypes.UPDATE_USER),
-    switchMap((action: UpdateUserAction) => {
+    mergeMap((action: UpdateUserAction) => {
       return this.userService.updateUser(action.payload.user)
         .pipe(
           map((user: User) => {
-            this.snackbarService.showSuccess(SnackbarMessages.UserUpdated, 3000);
+            this.snackbarService.showSuccess(SnackbarMessages.UserUpdated);
             return new UpdateUserActionSuccess({ user });
           }),
           catchError(() => {
-            this.snackbarService.showError(SnackbarMessages.UserUpdateFail, 3000);
-            return of(null);
+            this.snackbarService.showError(SnackbarMessages.UserUpdateFail);
+            return of(new UpdateUserActionFail({ userId: action.payload.user.id }));
           }),
         );
     })

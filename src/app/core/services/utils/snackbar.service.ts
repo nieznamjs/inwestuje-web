@@ -9,18 +9,20 @@ import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackba
 })
 export class SnackbarService {
 
+  private readonly DEFAULT_SNACKBAR_DURATION = 3000;
+
   constructor(
     private snackbar: MatSnackBar,
   ) { }
 
-  public showSuccess(message: string, duration?: number): MatSnackBarRef<SuccessSnackbarComponent> {
+  public showSuccess(message: string, duration: number = this.DEFAULT_SNACKBAR_DURATION): MatSnackBarRef<SuccessSnackbarComponent> {
     return this.snackbar.openFromComponent(SuccessSnackbarComponent, {
       data: { message },
       duration,
     });
   }
 
-  public showError(message: string, duration?: number): MatSnackBarRef<ErrorSnackbarComponent> {
+  public showError(message: string, duration: number = this.DEFAULT_SNACKBAR_DURATION): MatSnackBarRef<ErrorSnackbarComponent> {
     return this.snackbar.openFromComponent(ErrorSnackbarComponent, {
       data: { message },
       duration,

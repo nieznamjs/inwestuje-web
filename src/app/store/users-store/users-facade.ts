@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { UsersState } from '@interfaces/ngrx/users/users-state';
-import { selectAllUsers, selectUsersCount, selectUsersError, selectUsersIsLoading } from './users-selectors';
+import { selectAllUsers, selectUpdatingUsersId, selectUsersCount, selectUsersError, selectUsersIsLoading } from './users-selectors';
 import { GetUsersAction, UpdateUserAction } from './users-actions';
 import { GetAllRequestConfig } from '@interfaces/get-all-request-config';
 import { User } from '@interfaces/user.interface';
@@ -13,6 +13,7 @@ export class UsersFacade {
   public usersCount$ = this.store.select(selectUsersCount);
   public isLoadingUsers$ = this.store.select(selectUsersIsLoading);
   public usersError$ = this.store.select(selectUsersError);
+  public updatingUsersId$ = this.store.select(selectUpdatingUsersId);
 
   constructor(private store: Store<UsersState>) {}
 

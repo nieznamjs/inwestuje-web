@@ -12,4 +12,5 @@ export const usersInitialState: UsersState = usersAdapter.getInitialState({
   isLoading: false,
   error: null,
   count: 0,
+  updatingUsersId: [],
 });

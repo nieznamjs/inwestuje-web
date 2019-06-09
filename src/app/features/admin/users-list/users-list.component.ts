@@ -20,8 +20,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   public pageSizes = PAGE_SIZE_OPTIONS;
   public defaultPageSize = DEFAULT_PAGE_SIZE;
-  public lastPage = 1;
-  public lastPageSize = PAGE_SIZE_OPTIONS[0];
+  public currentPage = 1;
+  public currentPageSize = PAGE_SIZE_OPTIONS[0];
   public defaultSortActive = 'createdDate';
   public defaultSortDirection = 'asc';
   public displayedColumns = [
@@ -31,6 +31,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   public users$: Observable<User[]>;
   public usersCount$: Observable<number>;
   public usersError$: Observable<string>;
+  public updatingUsersId$: Observable<string[]>;
 
   @ViewChild(MatSort, { static: true }) private sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator;
@@ -46,12 +47,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.usersCount$ = this.usersFacade.usersCount$;
     this.isLoadingUsers$ = this.usersFacade.isLoadingUsers$;
     this.usersError$ = this.usersFacade.usersError$;
+    this.updatingUsersId$ = this.usersFacade.updatingUsersId$;
 
     this.sortChangeSubscription = this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     this.usersFacade.getUsers({
-      page: this.lastPage,
-      pageSize: this.lastPageSize,
+      page: this.currentPage,
+      pageSize: this.currentPageSize,
       orderBy: this.defaultSortActive,
       order: this.defaultSortDirection,
     });

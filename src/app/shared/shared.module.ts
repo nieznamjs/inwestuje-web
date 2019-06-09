@@ -78,6 +78,7 @@ const materialModules = [
   ],
   entryComponents: [
     SuccessSnackbarComponent,
+    ErrorSnackbarComponent,
     ConfirmDialogComponent,
   ],
   providers: [

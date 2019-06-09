@@ -6,4 +6,5 @@ export interface UsersState extends EntityState<User> {
   count: number;
   isLoading: boolean;
   error: string;
+  updatingUsersId: string[];
 }

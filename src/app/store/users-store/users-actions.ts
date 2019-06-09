@@ -9,6 +9,7 @@ export enum UsersActionsTypes {
   GET_USERS_FAIL = '[IW] Get Users Fail',
   UPDATE_USER = '[IW] Update User',
   UPDATE_USER_SUCCESS = '[IW] Update User Success',
+  UPDATE_USER_FAIL = '[IW] Update User Fail',
 }
 
 export class GetUsersAction implements Action {
@@ -41,9 +42,16 @@ export class UpdateUserActionSuccess implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+export class UpdateUserActionFail implements Action {
+  readonly type = UsersActionsTypes.UPDATE_USER_FAIL;
+
+  constructor(public payload: { userId: string }) {}
+}
+
 export type UsersActions =
   GetUsersAction
   | GetUsersActionSuccess
   | GetUsersActionFail
   | UpdateUserAction
-  | UpdateUserActionSuccess;
+  | UpdateUserActionSuccess
+  | UpdateUserActionFail;

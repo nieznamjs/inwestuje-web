@@ -29,8 +29,29 @@ export function usersReducer(state = usersInitialState, action: UsersActions): U
       };
     }
 
+    case UsersActionsTypes.UPDATE_USER: {
+      return {
+        ...state,
+        updatingUsersId: [
+          ...state.updatingUsersId,
+          action.payload.user.id,
+        ],
+      };
+    }
+
     case UsersActionsTypes.UPDATE_USER_SUCCESS: {
-      return usersAdapter.updateOne({ id: action.payload.user.id, changes: action.payload.user }, state);
+      return usersAdapter.updateOne({ id: action.payload.user.id, changes: action.payload.user }, {
+        ...state,
+        updatingUsersId: state.updatingUsersId.filter((id: string) => id !== action.payload.user.id),
+      });
+    }
+
+    case UsersActionsTypes.UPDATE_USER_FAIL: {
+      return {
+        ...state,
+        isLoading: false,
+        updatingUsersId: state.updatingUsersId.filter((id: string) => id !== action.payload.userId),
+      };
     }
 
     default: {
