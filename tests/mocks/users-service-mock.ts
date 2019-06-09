@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 
 import { User } from '@interfaces/user.interface';
+import { GetAllResponse } from '@interfaces/http/get-all-response';
 
 export const expectedUser: User = {
   id: '123',
@@ -15,6 +16,12 @@ export const expectedUser: User = {
   createdDate: new Date('2005-10-13'),
   updatedDate: new Date('2005-10-14'),
   websiteUrl: 'https://dev.dreftocode.pl',
+  active: true,
+};
+
+export const expectedUsersResponse: GetAllResponse<User> = {
+  data: [ expectedUser ],
+  count: 1,
 };
 
 export class UsersServiceDataMock {

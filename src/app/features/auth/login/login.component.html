@@ -1,7 +1,7 @@
 <div class="form-container">
   <mat-card class="form-card">
     <h2>
-      Inwestu.je (logo, czy coś)
+      {{ domainName }}
     </h2>
 
     <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -49,4 +49,4 @@
   </mat-card>
 </div>
 
-<app-auth-sidebar class="sidebar"></app-auth-sidebar>
+<iw-auth-sidebar class="sidebar"></iw-auth-sidebar>

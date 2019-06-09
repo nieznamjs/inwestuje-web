@@ -53,7 +53,7 @@ describe('AuthDataService', () => {
     req.flush(expectedUser);
   });
 
-  it('login should return object with success: boolean', () => {
+  it('login should return object with user roles', () => {
     authService.login('dummy@email.com', '123')
       .subscribe((response: LoginResponse) => {
         expect(response).toEqual(expectedLoginResponse);

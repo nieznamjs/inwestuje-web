@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 
 import { SnackbarData } from '@interfaces/snackbar-data.interface';
 
 @Component({
-  selector: 'app-snackbar',
+  selector: 'iw-snackbar',
   templateUrl: './success-snackbar.component.html',
   styleUrls: ['./success-snackbar.component.scss']
 })

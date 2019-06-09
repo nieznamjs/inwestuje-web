@@ -1,25 +1,25 @@
 <div class="form-container">
   <mat-card class="form-card">
     <h2>
-      Inwestu.je (logo, dupa, czy coś)
+      {{ domainName }} (logo, dupa, czy coś)
     </h2>
 
     <mat-horizontal-stepper linear #stepper>
       <mat-step label="Dane" [stepControl]="registerForm">
-        <app-user-data-form
+        <iw-user-data-form
           [registerForm]="registerForm"
           [rolesData]="rolesData"
           [accountTypes]="accountTypes">
-        </app-user-data-form>
+        </iw-user-data-form>
       </mat-step>
 
       <mat-step label="Płatności" [stepControl]="paymentForm">
-        <app-payment-form
+        <iw-payment-form
           [paymentForm]="paymentForm"
           [hasCardCheckError]="hasCardCheckError"
           [isCheckingCardData]="isCheckingCardData"
           (formSubmit)="onSubmitCardData()">
-        </app-payment-form>
+        </iw-payment-form>
       </mat-step>
 
       <mat-step label="Podsumowanie">
@@ -76,4 +76,4 @@
   </mat-card>
 </div>
 
-<app-auth-sidebar class="sidebar"></app-auth-sidebar>
+<iw-auth-sidebar class="sidebar"></iw-auth-sidebar>

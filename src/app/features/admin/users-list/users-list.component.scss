@@ -1,0 +1,44 @@
+@import "~src/variables";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.users-list-container {
+  position: relative;
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+}
+
+.loading-overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+}
+
+.users-error {
+  margin: 10px 0;
+
+  color: $color-text-error;
+  text-align: center;
+}
+
+.updating-user {
+  background-color: rgba(0, 0, 0, 0.3);
+}

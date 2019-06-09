@@ -4,7 +4,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { FormsService } from '@services/utils/forms.service';
 
 @Component({
-  selector: 'app-payment-form',
+  selector: 'iw-payment-form',
   templateUrl: './payment-form.component.html',
   styleUrls: ['./payment-form.component.scss']
 })

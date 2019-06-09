@@ -28,15 +28,16 @@ export const expectedUser: User = {
   createdDate: new Date('2005-10-13'),
   updatedDate: new Date('2005-10-14'),
   websiteUrl: 'https://dev.dreftocode.pl',
+  active: true,
 };
 
 export const expectedLoginResponse: LoginResponse = {
-  success: true,
+  userRoles: [ 'admin', 'sourcer' ],
 };
 
 export class AuthServiceDataMock {
   public login(email: string, password: string): Observable<LoginResponse> {
-    return of({ success: true });
+    return of({ userRoles: [ 'admin', 'sourcer' ]});
   }
 
   public register(newUser: CreateUserBody): Observable<User> {
