@@ -9,7 +9,7 @@ import { UsersFacade } from './users-facade';
 @NgModule({
   imports: [
     StoreModule.forFeature('users', usersReducer),
-    EffectsModule.forFeature([UsersEffects]),
+    EffectsModule.forFeature([ UsersEffects ]),
   ],
   providers: [
     UsersEffects,
