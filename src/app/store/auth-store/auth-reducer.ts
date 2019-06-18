@@ -1,7 +1,8 @@
 import { AuthState } from '@interfaces/ngrx/auth/auth-state.interface';
 import { AuthActions, AuthActionsTypes } from './auth-actions';
+import { authInitialState } from './auth-state';
 
-export function authReducer(state: AuthState, action: AuthActions): AuthState {
+export function authReducer(state: AuthState = authInitialState, action: AuthActions): AuthState {
   switch (action.type) {
     case AuthActionsTypes.LOGIN: {
       return {
@@ -15,6 +16,7 @@ export function authReducer(state: AuthState, action: AuthActions): AuthState {
         ...state,
         isLogging: false,
         isUserLogged: true,
+        loginError: null,
       };
     }
 
@@ -37,6 +39,7 @@ export function authReducer(state: AuthState, action: AuthActions): AuthState {
       return {
         ...state,
         isRegistering: false,
+        registerError: null,
       };
     }
 

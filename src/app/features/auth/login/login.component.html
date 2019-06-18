@@ -33,10 +33,10 @@
         Zaloguj się
       </button>
 
-      <mat-error *ngIf="loginError" class="login-error">
+      <mat-error *ngIf="loginError$ | async" class="login-error">
         Nieprawidłowy e-mail lub hasło
       </mat-error>
-      <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading" class="loading-spinner"></mat-spinner>
+      <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
     </form>
 
     <p>

@@ -66,6 +66,11 @@
           <button mat-raised-button color="primary" class="btn" (click)="register()" [disabled]="!acceptTerms.checked">
             Zarejestruj się
           </button>
+
+          <mat-error *ngIf="registerError$ | async" class="login-error">
+            Nieprawidłowy e-mail lub hasło
+          </mat-error>
+          <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
         </div>
       </mat-step>
     </mat-horizontal-stepper>

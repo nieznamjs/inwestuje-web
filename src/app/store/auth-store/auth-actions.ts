@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { CreateUserBody } from '@interfaces/http/create-user-body.inteface';
 
 export enum AuthActionsTypes {
   LOGIN = '[IW] Login',
@@ -27,6 +28,8 @@ export class LoginFailAction implements Action {
 
 export class RegisterAction implements Action {
   readonly type = AuthActionsTypes.REGISTER;
+
+  constructor(public payload: { newUser: CreateUserBody }) {}
 }
 
 export class RegisterSuccessAction implements Action {
