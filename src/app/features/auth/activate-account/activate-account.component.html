@@ -1,0 +1,9 @@
+<mat-spinner *ngIf="isActivating$ | async"></mat-spinner>
+
+<mat-error *ngIf="(activateError$ | async) as error">
+  {{ error }}
+</mat-error>
+
+<span *ngIf="isUserActivated$ | async">
+  Użytkownik został aktywowany!
+</span>

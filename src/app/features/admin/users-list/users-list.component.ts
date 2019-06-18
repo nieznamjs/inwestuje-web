@@ -7,7 +7,7 @@ import { UsersDataService } from '@services/data-integration/users-data.service'
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@constants/tables-options';
 import { User } from '@interfaces/user.interface';
 import { SnackbarService } from '@services/utils/snackbar.service';
-import { UsersFacade } from '../../../store/users-store/users-facade';
+import { UsersFacade } from '@store/users-store';
 
 @Component({
   selector: 'iw-users-list',

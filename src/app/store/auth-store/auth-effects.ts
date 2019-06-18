@@ -8,6 +8,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import {
+  ActivateAction, ActivateFailAction, ActivateSuccessAction,
   AuthActionsTypes,
   LoginAction,
   LoginFailAction,
@@ -60,6 +61,18 @@ export class AuthEffects {
             return new RegisterSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new RegisterFailAction({ error: err.message }))),
+        );
+    }),
+  );
+
+  @Effect()
+  activateEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<ActivateAction>(AuthActionsTypes.ACTIVATE),
+    switchMap((action: ActivateAction) => {
+      return this.authService.activate(action.payload.userId, action.payload.token)
+        .pipe(
+          map(() => new ActivateSuccessAction()),
+          catchError((err: HttpErrorResponse) => of(new ActivateFailAction({ error: err.message }))),
         );
     }),
   );

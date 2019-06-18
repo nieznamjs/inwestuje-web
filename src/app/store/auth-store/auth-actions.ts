@@ -8,6 +8,9 @@ export enum AuthActionsTypes {
   REGISTER = '[IW] Register',
   REGISTER_SUCCESS = '[IW] Register Success',
   REGISTER_FAIL = '[IW] Register Fail',
+  ACTIVATE = '[IW] Activate',
+  ACTIVATE_SUCCESS = '[IW] Activate Success',
+  ACTIVATE_FAIL = '[IW] Activate Fail',
 }
 
 export class LoginAction implements Action {
@@ -42,10 +45,29 @@ export class RegisterFailAction implements Action {
   constructor(public payload: { error: string }) {}
 }
 
+export class ActivateAction {
+  readonly type = AuthActionsTypes.ACTIVATE;
+
+  constructor(public payload: { userId: string, token: string }) {}
+}
+
+export class ActivateSuccessAction {
+  readonly type = AuthActionsTypes.ACTIVATE_SUCCESS;
+}
+
+export class ActivateFailAction {
+  readonly type = AuthActionsTypes.ACTIVATE_FAIL;
+
+  constructor(public payload: { error: string }) {}
+}
+
 export type AuthActions =
   LoginAction
   | LoginSuccessAction
   | LoginFailAction
   | RegisterAction
   | RegisterSuccessAction
-  | RegisterFailAction;
+  | RegisterFailAction
+  | ActivateAction
+  | ActivateSuccessAction
+  | ActivateFailAction;

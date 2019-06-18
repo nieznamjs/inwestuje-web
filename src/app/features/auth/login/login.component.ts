@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { FormsService } from '@services/utils/forms.service';
 import { PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 import { DOMAIN_NAME } from '@constants/app-config';
-import { AuthFacade } from '../../../store/auth-store/auth-facade';
-import { Observable } from 'rxjs';
+import { AuthFacade } from '@store/auth-store';
 
 @Component({
   selector: 'iw-login',

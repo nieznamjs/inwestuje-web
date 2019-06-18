@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { RegisterComponent } from './register/register.component';
 import { PaymentFormComponent } from './register/payment-form/payment-form.component';
 import { UserDataFormComponent } from './register/user-data-form/user-data-form.component';
+import { ActivateAccountComponent } from './activate-account/activate-account.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { UserDataFormComponent } from './register/user-data-form/user-data-form.
     RegisterComponent,
     PaymentFormComponent,
     UserDataFormComponent,
+    ActivateAccountComponent,
   ],
   imports: [
     AuthRoutingModule,

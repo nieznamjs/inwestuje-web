@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { Observable } from 'rxjs';
 
 import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
@@ -11,8 +12,7 @@ import { AccountType } from '@interfaces/account-type.interface';
 import { AccountRole } from '@interfaces/account-role.interface';
 import { NIP_REQUIREMENT_REGEX_STRING, PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
 import { DOMAIN_NAME } from '@constants/app-config';
-import { Observable } from 'rxjs';
-import { AuthFacade } from '../../../store/auth-store/auth-facade';
+import { AuthFacade } from '@store/auth-store';
 
 @Component({
   selector: 'iw-register',

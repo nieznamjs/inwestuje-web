@@ -1,7 +1,10 @@
 export interface AuthState {
-  isLogging: boolean;
-  isRegistering: boolean;
-  loginError: string | null;
-  registerError: string | null;
   isUserLogged: boolean;
+  isLogging: boolean;
+  loginError: string | null;
+  isRegistering: boolean;
+  registerError: string | null;
+  isActivating: boolean;
+  activateError: string | null;
+  isUserActivated: boolean;
 }

@@ -8,6 +8,7 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
       return {
         ...state,
         isLogging: true,
+        loginError: null,
       };
     }
 
@@ -16,7 +17,6 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
         ...state,
         isLogging: false,
         isUserLogged: true,
-        loginError: null,
       };
     }
 
@@ -32,6 +32,7 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
       return {
         ...state,
         isRegistering: true,
+        registerError: null,
       };
     }
 
@@ -39,7 +40,6 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
       return {
         ...state,
         isRegistering: false,
-        registerError: null,
       };
     }
 
@@ -48,6 +48,31 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
         ...state,
         isRegistering: false,
         registerError: action.payload.error,
+      };
+    }
+
+    case AuthActionsTypes.ACTIVATE: {
+      return {
+        ...state,
+        isActivating: true,
+        activateError: null,
+        isUserActivated: false,
+      };
+    }
+
+    case AuthActionsTypes.ACTIVATE_SUCCESS: {
+      return {
+        ...state,
+        isActivating: false,
+        isUserActivated: true,
+      };
+    }
+
+    case AuthActionsTypes.ACTIVATE_FAIL: {
+      return {
+        ...state,
+        isActivating: false,
+        activateError: action.payload.error,
       };
     }
 

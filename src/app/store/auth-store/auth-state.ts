@@ -6,4 +6,7 @@ export const authInitialState: AuthState = {
   registerError: null,
   isLogging: false,
   isRegistering: false,
+  isUserActivated: false,
+  isActivating: false,
+  activateError: null,
 };
