@@ -19,30 +19,6 @@
   text-align: center;
 }
 
-.field {
-  width: 100%;
-
-  line-height: 1.4;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.field-alt {
-  width: 100%;
-
-  line-height: 1.4;
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-}
-
-.field.ng-valid, .field.ng-untouched, .field-alt.ng-valid, .field-alt.ng-untouched {
-  margin-bottom: 0;
-}
-
 .btn {
   width: 100%;
 }

@@ -1,32 +1,3 @@
-.field {
-  width: 100%;
-
-  line-height: 1.4;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.field-alt {
-  width: 100%;
-  text-align: left;
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-
-  .toggle-btn {
-    flex: 1;
-  }
-}
-
-.field.ng-valid, .field.ng-untouched, .field-alt.ng-valid, .field-alt.ng-untouched {
-  &:not(:last-child) {
-    margin-bottom: 0;
-  }
-}
-
 .error {
   font-size: 75%;
   margin-top: 5px;
