@@ -11,6 +11,9 @@ export enum AuthActionsTypes {
   ACTIVATE = '[IW] Activate',
   ACTIVATE_SUCCESS = '[IW] Activate Success',
   ACTIVATE_FAIL = '[IW] Activate Fail',
+  RESET_PASSWORD_INIT = '[IW] Reset Password Init',
+  RESET_PASSWORD_INIT_SUCCESS = '[IW] Reset Password Init Success',
+  RESET_PASSWORD_INIT_FAIL = '[IW] Reset Password Init Fail',
 }
 
 export class LoginAction implements Action {
@@ -45,18 +48,34 @@ export class RegisterFailAction implements Action {
   constructor(public payload: { error: string }) {}
 }
 
-export class ActivateAction {
+export class ActivateAction  implements Action {
   readonly type = AuthActionsTypes.ACTIVATE;
 
   constructor(public payload: { userId: string, token: string }) {}
 }
 
-export class ActivateSuccessAction {
+export class ActivateSuccessAction  implements Action {
   readonly type = AuthActionsTypes.ACTIVATE_SUCCESS;
 }
 
-export class ActivateFailAction {
+export class ActivateFailAction  implements Action {
   readonly type = AuthActionsTypes.ACTIVATE_FAIL;
+
+  constructor(public payload: { error: string }) {}
+}
+
+export class ResetPasswordInitAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD_INIT;
+
+  constructor(public payload: { userEmail: string }) {}
+}
+
+export class ResetPasswordInitSuccessAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD_INIT_SUCCESS;
+}
+
+export class ResetPasswordInitFailAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD_INIT_FAIL;
 
   constructor(public payload: { error: string }) {}
 }
@@ -70,4 +89,7 @@ export type AuthActions =
   | RegisterFailAction
   | ActivateAction
   | ActivateSuccessAction
-  | ActivateFailAction;
+  | ActivateFailAction
+  | ResetPasswordInitAction
+  | ResetPasswordInitSuccessAction
+  | ResetPasswordInitFailAction;

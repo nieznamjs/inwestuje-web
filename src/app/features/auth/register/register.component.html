@@ -63,7 +63,12 @@
             Akceptuję regulamin itepeitede.
           </mat-checkbox>
 
-          <button mat-raised-button color="primary" class="btn" (click)="register()" [disabled]="!acceptTerms.checked">
+          <button
+            mat-raised-button
+            color="primary"
+            class="btn"
+            (click)="register()"
+            [disabled]="!acceptTerms.checked || (isLoading$ | async)">
             Zarejestruj się
           </button>
 

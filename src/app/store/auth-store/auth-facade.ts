@@ -3,15 +3,15 @@ import { Store } from '@ngrx/store';
 
 import { AuthState } from '@interfaces/ngrx/auth/auth-state.interface';
 import {
-  selectActivateError,
-  selectIsActivating,
+  selectActivateError, selectInitPasswordResetError,
+  selectIsActivating, selectIsInitializingPasswordReset,
   selectIsLogging,
   selectIsRegistering, selectIsUserActivated,
   selectIsUserLogged,
   selectLoginError,
   selectRegisterError
 } from './auth-selectors';
-import { ActivateAction, LoginAction, RegisterAction } from './auth-actions';
+import { ActivateAction, LoginAction, RegisterAction, ResetPasswordInitAction } from './auth-actions';
 import { CreateUserBody } from '@interfaces/http/create-user-body.inteface';
 
 @Injectable()
@@ -24,6 +24,8 @@ export class AuthFacade {
   public isActivating$ = this.store.select(selectIsActivating);
   public activateError$ = this.store.select(selectActivateError);
   public isUserActivated$ = this.store.select(selectIsUserActivated);
+  public isInitializingPasswordReset$ = this.store.select(selectIsInitializingPasswordReset);
+  public initPasswordResetError$ = this.store.select(selectInitPasswordResetError);
 
   constructor(private store: Store<AuthState>) {}
 
@@ -37,5 +39,9 @@ export class AuthFacade {
 
   public activate(userId: string, token: string): void {
     this.store.dispatch(new ActivateAction({ userId, token }));
+  }
+
+  public initPasswordReset(userEmail: string): void {
+    this.store.dispatch(new ResetPasswordInitAction({ userEmail }));
   }
 }

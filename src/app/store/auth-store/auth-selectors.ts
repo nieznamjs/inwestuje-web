@@ -10,6 +10,8 @@ export const getIsUserLogged = (state: AuthState) => state.isUserLogged;
 export const getIsActivating = (state: AuthState) => state.isActivating;
 export const getActivateError = (state: AuthState) => state.activateError;
 export const getIsUserActivated = (state: AuthState) => state.isUserActivated;
+export const getIsInitializingPasswordReset = (state: AuthState) => state.isInitializingPasswordReset;
+export const getInitPasswordResetError = (state: AuthState) => state.initResetPasswordError;
 
 export const authStateSelector = createFeatureSelector<AuthState>('auth');
 
@@ -21,3 +23,5 @@ export const selectIsUserLogged = createSelector(authStateSelector, getIsUserLog
 export const selectIsActivating = createSelector(authStateSelector, getIsActivating);
 export const selectActivateError = createSelector(authStateSelector, getActivateError);
 export const selectIsUserActivated = createSelector(authStateSelector, getIsUserActivated);
+export const selectIsInitializingPasswordReset = createSelector(authStateSelector, getIsInitializingPasswordReset);
+export const selectInitPasswordResetError = createSelector(authStateSelector, getInitPasswordResetError);

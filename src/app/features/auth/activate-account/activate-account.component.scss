@@ -1,8 +1,21 @@
+@import "~src/variables";
+
 :host {
   display: flex;
   align-items: center;
+  align-content: center;
   justify-content: center;
+  flex-wrap: wrap;
 
   height: 100vh;
   width: 100%;
+}
+
+.logo {
+  width: 100%;
+  text-align: center;
+}
+
+.success-message, .success-message-link {
+  color: $color-text-success;
 }

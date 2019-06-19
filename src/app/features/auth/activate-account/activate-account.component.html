@@ -1,9 +1,13 @@
+<h2 class="logo">
+  Tu będzie logo
+</h2>
+
 <mat-spinner *ngIf="isActivating$ | async"></mat-spinner>
 
-<mat-error *ngIf="(activateError$ | async) as error">
-  {{ error }}
+<mat-error *ngIf="activateError$ | async">
+  Wystąpił błąd. Spróbuj ponownie lub skontaktuj się z administratorem.
 </mat-error>
 
-<span *ngIf="isUserActivated$ | async">
-  Użytkownik został aktywowany!
-</span>
+<h3 class="success-message" *ngIf="isUserActivated$ | async">
+  Użytkownik został aktywowany, teraz możesz się <a class="success-message-link" routerLink="/login">zalogować</a>!
+</h3>

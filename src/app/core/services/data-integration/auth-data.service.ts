@@ -6,7 +6,7 @@ import { ConfigService } from '@services/utils/config.service';
 import { CreateUserBody } from '@interfaces/http/create-user-body.inteface';
 import { User } from '@interfaces/user.interface';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
-import { ActivateAccountResponse } from '@interfaces/http/activate-account-response.interface';
+import { SuccessResponse } from '@interfaces/http/success-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +25,17 @@ export class AuthDataService {
     return this.http.post<LoginResponse>(`${this.config.apiUrl}/auth/login`, { email, password });
   }
 
-  public activate(userId: string, token: string): Observable<ActivateAccountResponse> {
+  public activate(userId: string, token: string): Observable<SuccessResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: token,
       }),
     };
 
-    return this.http.post<ActivateAccountResponse>(`${this.config.apiUrl}/user/activate`, { userId }, httpOptions);
+    return this.http.post<SuccessResponse>(`${this.config.apiUrl}/user/activate`, { userId }, httpOptions);
+  }
+
+  public initPasswordReset(userEmail: string): Observable<SuccessResponse> {
+    return this.http.post<SuccessResponse>(`${this.config.apiUrl}/user/init-password-reset`, { userEmail });
   }
 }

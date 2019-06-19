@@ -8,14 +8,17 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import {
-  ActivateAction, ActivateFailAction, ActivateSuccessAction,
+  ActivateAction,
+  ActivateFailAction,
+  ActivateSuccessAction,
   AuthActionsTypes,
   LoginAction,
   LoginFailAction,
   LoginSuccessAction,
   RegisterAction,
   RegisterFailAction,
-  RegisterSuccessAction
+  RegisterSuccessAction,
+  ResetPasswordInitAction, ResetPasswordInitFailAction, ResetPasswordInitSuccessAction
 } from './auth-actions';
 import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LocalStorageService } from '@services/utils/local-storage.service';
@@ -73,6 +76,22 @@ export class AuthEffects {
         .pipe(
           map(() => new ActivateSuccessAction()),
           catchError((err: HttpErrorResponse) => of(new ActivateFailAction({ error: err.message }))),
+        );
+    }),
+  );
+
+  @Effect()
+  initPasswordReset$: Observable<Action> = this.actions$.pipe(
+    ofType<ResetPasswordInitAction>(AuthActionsTypes.RESET_PASSWORD_INIT),
+    switchMap((action: ResetPasswordInitAction) => {
+      return this.authService.initPasswordReset(action.payload.userEmail)
+        .pipe(
+          map(() => {
+            this.snackbarService.showSuccess(SnackbarMessages.SentEmailWithPasswordReset);
+            this.router.navigate(['/login']);
+            return new ResetPasswordInitSuccessAction();
+          }),
+          catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
         );
     }),
   );

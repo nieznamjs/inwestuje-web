@@ -7,4 +7,6 @@ export interface AuthState {
   isActivating: boolean;
   activateError: string | null;
   isUserActivated: boolean;
+  isInitializingPasswordReset: boolean;
+  initResetPasswordError: string | null;
 }
