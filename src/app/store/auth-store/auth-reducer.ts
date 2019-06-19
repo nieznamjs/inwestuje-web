@@ -99,6 +99,29 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
       };
     }
 
+    case AuthActionsTypes.RESET_PASSWORD: {
+      return {
+        ...state,
+        isResettingPassword: true,
+        resetPasswordError: null,
+      };
+    }
+
+    case AuthActionsTypes.RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isResettingPassword: false,
+      };
+    }
+
+    case AuthActionsTypes.RESET_PASSWORD_FAIL: {
+      return {
+        ...state,
+        isResettingPassword: false,
+        resetPasswordError: action.payload.error,
+      };
+    }
+
     default: {
       return state;
     }

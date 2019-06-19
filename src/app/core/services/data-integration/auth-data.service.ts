@@ -38,4 +38,14 @@ export class AuthDataService {
   public initPasswordReset(userEmail: string): Observable<SuccessResponse> {
     return this.http.post<SuccessResponse>(`${this.config.apiUrl}/user/init-password-reset`, { userEmail });
   }
+
+  public resetPassword(userId: string, newPassword: string, token: string): Observable<SuccessResponse> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: token,
+      }),
+    };
+
+    return this.http.post<SuccessResponse>(`${this.config.apiUrl}/user/${userId}/reset-password`, { newPassword }, httpOptions);
+  }
 }

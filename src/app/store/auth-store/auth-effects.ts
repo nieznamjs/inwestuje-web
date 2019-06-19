@@ -17,8 +17,8 @@ import {
   LoginSuccessAction,
   RegisterAction,
   RegisterFailAction,
-  RegisterSuccessAction,
-  ResetPasswordInitAction, ResetPasswordInitFailAction, ResetPasswordInitSuccessAction
+  RegisterSuccessAction, ResetPasswordAction, ResetPasswordFailAction,
+  ResetPasswordInitAction, ResetPasswordInitFailAction, ResetPasswordInitSuccessAction, ResetPasswordSuccessAction
 } from './auth-actions';
 import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LocalStorageService } from '@services/utils/local-storage.service';
@@ -92,6 +92,22 @@ export class AuthEffects {
             return new ResetPasswordInitSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
+        );
+    }),
+  );
+
+  @Effect()
+  resetPassword$: Observable<Action> = this.actions$.pipe(
+    ofType<ResetPasswordAction>(AuthActionsTypes.RESET_PASSWORD),
+    switchMap((action: ResetPasswordAction) => {
+      return this.authService.resetPassword(action.payload.userId, action.payload.newPassword, action.payload.token)
+        .pipe(
+          map(() => {
+            this.snackbarService.showSuccess(SnackbarMessages.PasswordChanged);
+            this.router.navigate(['/login']);
+            return new ResetPasswordSuccessAction();
+          }),
+          catchError((err: HttpErrorResponse) => of(new ResetPasswordFailAction({ error: err.message }))),
         );
     }),
   );

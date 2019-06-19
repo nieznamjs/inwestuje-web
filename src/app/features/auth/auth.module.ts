@@ -8,6 +8,7 @@ import { PaymentFormComponent } from './register/payment-form/payment-form.compo
 import { UserDataFormComponent } from './register/user-data-form/user-data-form.component';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import { ResetPasswordInitComponent } from './reset-password-init/reset-password-init.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ResetPasswordInitComponent } from './reset-password-init/reset-password
     UserDataFormComponent,
     ActivateAccountComponent,
     ResetPasswordInitComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     AuthRoutingModule,

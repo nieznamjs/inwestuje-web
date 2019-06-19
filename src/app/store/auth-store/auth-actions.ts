@@ -14,6 +14,9 @@ export enum AuthActionsTypes {
   RESET_PASSWORD_INIT = '[IW] Reset Password Init',
   RESET_PASSWORD_INIT_SUCCESS = '[IW] Reset Password Init Success',
   RESET_PASSWORD_INIT_FAIL = '[IW] Reset Password Init Fail',
+  RESET_PASSWORD = '[IW] Reset Password',
+  RESET_PASSWORD_SUCCESS = '[IW] Reset Password Success',
+  RESET_PASSWORD_FAIL = '[IW] Reset Password Fail',
 }
 
 export class LoginAction implements Action {
@@ -80,6 +83,22 @@ export class ResetPasswordInitFailAction implements Action {
   constructor(public payload: { error: string }) {}
 }
 
+export class ResetPasswordAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD;
+
+  constructor(public payload: { userId: string, newPassword: string, token: string }) {}
+}
+
+export class ResetPasswordSuccessAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD_SUCCESS;
+}
+
+export class ResetPasswordFailAction implements Action {
+  readonly type = AuthActionsTypes.RESET_PASSWORD_FAIL;
+
+  constructor(public payload: { error: string }) {}
+}
+
 export type AuthActions =
   LoginAction
   | LoginSuccessAction
@@ -92,4 +111,7 @@ export type AuthActions =
   | ActivateFailAction
   | ResetPasswordInitAction
   | ResetPasswordInitSuccessAction
-  | ResetPasswordInitFailAction;
+  | ResetPasswordInitFailAction
+  | ResetPasswordAction
+  | ResetPasswordSuccessAction
+  | ResetPasswordFailAction;

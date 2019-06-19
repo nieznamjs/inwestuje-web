@@ -3,15 +3,20 @@ import { Store } from '@ngrx/store';
 
 import { AuthState } from '@interfaces/ngrx/auth/auth-state.interface';
 import {
-  selectActivateError, selectInitPasswordResetError,
-  selectIsActivating, selectIsInitializingPasswordReset,
+  selectActivateError,
+  selectInitPasswordResetError,
+  selectIsActivating,
+  selectIsInitializingPasswordReset,
   selectIsLogging,
-  selectIsRegistering, selectIsUserActivated,
+  selectIsRegistering,
+  selectIsResettingPassword,
+  selectIsUserActivated,
   selectIsUserLogged,
   selectLoginError,
-  selectRegisterError
+  selectRegisterError,
+  selectResetPasswordError,
 } from './auth-selectors';
-import { ActivateAction, LoginAction, RegisterAction, ResetPasswordInitAction } from './auth-actions';
+import { ActivateAction, LoginAction, RegisterAction, ResetPasswordAction, ResetPasswordInitAction } from './auth-actions';
 import { CreateUserBody } from '@interfaces/http/create-user-body.inteface';
 
 @Injectable()
@@ -26,6 +31,8 @@ export class AuthFacade {
   public isUserActivated$ = this.store.select(selectIsUserActivated);
   public isInitializingPasswordReset$ = this.store.select(selectIsInitializingPasswordReset);
   public initPasswordResetError$ = this.store.select(selectInitPasswordResetError);
+  public isResettingPassword$ = this.store.select(selectIsResettingPassword);
+  public resetPasswordError$ = this.store.select(selectResetPasswordError);
 
   constructor(private store: Store<AuthState>) {}
 
@@ -43,5 +50,9 @@ export class AuthFacade {
 
   public initPasswordReset(userEmail: string): void {
     this.store.dispatch(new ResetPasswordInitAction({ userEmail }));
+  }
+
+  public resetPassword(userId: string, newPassword: string, token: string): void {
+    this.store.dispatch(new ResetPasswordAction({ userId, newPassword, token }));
   }
 }

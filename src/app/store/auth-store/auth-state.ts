@@ -11,4 +11,6 @@ export const authInitialState: AuthState = {
   activateError: null,
   isInitializingPasswordReset: false,
   initResetPasswordError: null,
+  isResettingPassword: false,
+  resetPasswordError: null,
 };
