@@ -19,6 +19,20 @@
   width: 100%;
 }
 
+.mat-button-toggle-group {
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+}
+
+.mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+  @media (max-width: 400px) {
+    border-left: none;
+    border-top: solid 1px rgba(0, 0, 0, 0.12);
+  }
+}
+
+
 .mat-button-toggle-checked {
   background-color: mat-color($inwestuje-web-primary);
   color: $color-white !important;

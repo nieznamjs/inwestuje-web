@@ -4,7 +4,7 @@
 
 <mat-spinner *ngIf="isActivating$ | async"></mat-spinner>
 
-<mat-error *ngIf="activateError$ | async">
+<mat-error class="error" *ngIf="activateError$ | async">
   Wystąpił błąd. Spróbuj ponownie lub skontaktuj się z administratorem.
 </mat-error>
 

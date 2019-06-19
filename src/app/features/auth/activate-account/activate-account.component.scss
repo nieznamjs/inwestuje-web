@@ -16,6 +16,10 @@
   text-align: center;
 }
 
+.error, .success-message {
+  text-align: center;
+}
+
 .success-message, .success-message-link {
   color: $color-text-success;
 }
