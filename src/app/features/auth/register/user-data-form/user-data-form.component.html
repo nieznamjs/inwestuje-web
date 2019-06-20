@@ -1,6 +1,6 @@
 <form class="form" [formGroup]="registerForm">
   <mat-form-field class="field">
-    <input matInput type="email" placeholder="E-mail" formControlName="email" required>
+    <input matInput type="email" placeholder="E-mail" formControlName="email" required autocomplete="email">
 
     <mat-error *ngIf="getFormControl(registerForm, 'email').hasError('required')">
       E-mail jest wymagany
@@ -12,7 +12,14 @@
   </mat-form-field>
 
   <mat-form-field class="field-alt">
-    <input matInput type="password" placeholder="Hasło" formControlName="password" required #password>
+    <input
+      matInput
+      type="password"
+      placeholder="Hasło"
+      formControlName="password"
+      required
+      #password
+      autocomplete="new-password">
 
     <mat-error *ngIf="getFormControl(registerForm, 'password').hasError('required')">
       Hasło jest wymagane
@@ -30,7 +37,8 @@
       placeholder="Potwierdź hasło"
       formControlName="confirmPassword"
       [pattern]="password.value"
-      required>
+      required
+      autocomplete="new-password">
 
     <mat-error *ngIf="getFormControl(registerForm, 'confirmPassword').hasError('required')">
       Potwierdzenie hasła jest wymagane
@@ -57,7 +65,8 @@
       type="text"
       placeholder="Imię"
       formControlName="firstName"
-      required>
+      required
+      autocomplete="given-name">
 
     <mat-error *ngIf="getFormControl(registerForm, 'firstName').hasError('required')">
       Imię jest wymagane
@@ -70,7 +79,8 @@
       type="text"
       placeholder="Nazwisko"
       formControlName="lastName"
-      required>
+      required
+      autocomplete="family-name">
 
     <mat-error *ngIf="getFormControl(registerForm, 'lastName').hasError('required')">
       Nazwisko jest wymagane
@@ -83,7 +93,8 @@
       type="text"
       placeholder="Nazwa firmy"
       formControlName="companyName"
-      required>
+      required
+      autocomplete="organization">
 
     <mat-error *ngIf="getFormControl(registerForm, 'companyName').hasError('required')">
       Nazwa firmy jest wymagana

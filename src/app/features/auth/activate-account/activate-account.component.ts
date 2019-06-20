@@ -37,8 +37,6 @@ export class ActivateAccountComponent implements OnInit {
     this.isUserActivated$ = this.authFacade.isUserActivated$;
     this.activateError$ = this.authFacade.activateError$;
 
-
-
     this.authFacade.activate(userId, token);
   }
 }

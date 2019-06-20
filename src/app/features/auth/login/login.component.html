@@ -6,7 +6,7 @@
 
     <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="field">
-        <input matInput type="email" placeholder="E-mail" formControlName="email" required>
+        <input matInput type="email" placeholder="E-mail" formControlName="email" required autocomplete="email">
 
         <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
           E-mail jest wymagany
@@ -18,7 +18,7 @@
       </mat-form-field>
 
       <mat-form-field class="field-alt">
-        <input matInput type="password" placeholder="Hasło" formControlName="password" required>
+        <input matInput type="password" placeholder="Hasło" formControlName="password" required autocomplete="current-password">
 
         <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
           Hasło jest wymagane
