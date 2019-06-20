@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { CreateUserBody } from '@interfaces/http/create-user-body.inteface';
 import { User } from '@interfaces/user.interface';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
+import { SuccessResponse } from '@interfaces/http/success-response.interface';
 
 export const newUserBody: CreateUserBody = {
   email: 'some@email.com',
@@ -31,6 +32,10 @@ export const expectedUser: User = {
   active: true,
 };
 
+export const expectedSuccessReponse: SuccessResponse = {
+  success: true,
+};
+
 export const expectedLoginResponse: LoginResponse = {
   userRoles: [ 'admin', 'sourcer' ],
 };
@@ -42,5 +47,17 @@ export class AuthServiceDataMock {
 
   public register(newUser: CreateUserBody): Observable<User> {
     return of(expectedUser);
+  }
+
+  public activate(userId: string, token: string): Observable<SuccessResponse> {
+    return of(expectedSuccessReponse);
+  }
+
+  public initPasswordReset(userEmail: string): Observable<SuccessResponse> {
+    return of(expectedSuccessReponse);
+  }
+
+  public resetPassword(userId: string, newPassword: string, token: string): Observable<SuccessResponse> {
+    return of(expectedSuccessReponse);
   }
 }

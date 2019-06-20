@@ -5,10 +5,11 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { AuthDataService } from './auth-data.service';
 import { ConfigService } from '@services/utils/config.service';
-import { expectedLoginResponse, expectedUser, newUserBody } from '@mocks/auth-service-mock';
+import { expectedLoginResponse, expectedSuccessReponse, expectedUser, newUserBody } from '@mocks/auth-service-mock';
 import { User } from '@interfaces/user.interface';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
 import { ConfigServiceMock } from '@mocks/config-service-mock';
+import { SuccessResponse } from '@interfaces/http/success-response.interface';
 
 describe('AuthDataService', () => {
   let apiUrl: string;
@@ -64,5 +65,43 @@ describe('AuthDataService', () => {
     expect(req.request.method).toBe('POST');
 
     req.flush(expectedLoginResponse);
+  });
+
+  it('activate should return success response', () => {
+    authService.activate('someId', 'someToken')
+      .subscribe((response: SuccessResponse) => {
+        expect(response).toEqual(expectedSuccessReponse);
+      });
+
+    const req = httpTestingController.expectOne(`${apiUrl}/user/activate`);
+    req.flush(expectedSuccessReponse);
+
+    expect(req.request.method).toBe('POST');
+  });
+
+  it('initPasswordReset should return success response', () => {
+    authService.initPasswordReset('dummy@email.com')
+      .subscribe((response: SuccessResponse) => {
+        expect(response).toEqual(expectedSuccessReponse);
+      });
+
+    const req = httpTestingController.expectOne(`${apiUrl}/user/init-password-reset`);
+    req.flush(expectedSuccessReponse);
+
+    expect(req.request.method).toBe('POST');
+  });
+
+  it('resetPassword should return success response', () => {
+    const userId = 'someId';
+
+    authService.resetPassword('userId', userId, 'token')
+      .subscribe((response: SuccessResponse) => {
+        expect(response).toEqual(expectedSuccessReponse);
+      });
+
+    const req = httpTestingController.expectOne(`${apiUrl}/user/${userId}/reset-password`);
+    req.flush(expectedSuccessReponse);
+
+    expect(req.request.method).toBe('POST');
   });
 });
