@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
     const { cardNumber } = this.paymentForm.value;
     const rolesValues = roles.map((role: AccountRole) => role.value);
 
-    this.authFacade.register({
+    this.authFacade.registerUser({
       email, password, firstName, lastName, companyName,
       nip: parseInt(nip, 10),
       roles: rolesValues,

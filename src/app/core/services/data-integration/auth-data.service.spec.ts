@@ -45,7 +45,7 @@ describe('AuthDataService', () => {
   });
 
   it('register should return created user', () => {
-    authService.register(newUserBody).subscribe((user: User) => expect(user).toEqual(expectedUser));
+    authService.registerUser(newUserBody).subscribe((user: User) => expect(user).toEqual(expectedUser));
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/register`);
 
@@ -68,7 +68,7 @@ describe('AuthDataService', () => {
   });
 
   it('activate should return success response', () => {
-    authService.activate('someId', 'someToken')
+    authService.activateUser('someId', 'someToken')
       .subscribe((response: SuccessResponse) => {
         expect(response).toEqual(expectedSuccessReponse);
       });

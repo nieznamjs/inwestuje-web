@@ -9,6 +9,7 @@ import { UserDataFormComponent } from './register/user-data-form/user-data-form.
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import { ResetPasswordInitComponent } from './reset-password-init/reset-password-init.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AuthComponent } from './auth.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ActivateAccountComponent,
     ResetPasswordInitComponent,
     ResetPasswordComponent,
+    AuthComponent,
   ],
   imports: [
     AuthRoutingModule,

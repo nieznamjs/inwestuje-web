@@ -12,7 +12,8 @@ const routes: Routes = [
       allowedUserRoles: [ AccountRoles.Admin ],
     },
   },
-  { path: '', pathMatch: 'full', redirectTo: '/login' },
+  { path: 'auth', loadChildren: () => import('../features/auth/auth.module').then(m => m.AuthModule) },
+  { path: '', pathMatch: 'full', redirectTo: '/auth/login' },
 ];
 
 @NgModule({

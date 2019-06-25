@@ -7,118 +7,156 @@ export function authReducer(state: AuthState = authInitialState, action: AuthAct
     case AuthActionsTypes.LOGIN: {
       return {
         ...state,
-        isLogging: true,
-        loginError: null,
+        login: {
+          isUserLogged: false,
+          isLoading: true,
+          error: null,
+        },
       };
     }
 
     case AuthActionsTypes.LOGIN_SUCCESS: {
       return {
         ...state,
-        isLogging: false,
-        isUserLogged: true,
+        login: {
+          ...state.login,
+          isUserLogged: true,
+          isLoading: false,
+        },
       };
     }
 
     case AuthActionsTypes.LOGIN_FAIL: {
       return {
         ...state,
-        isLogging: false,
-        loginError: action.payload.error,
+        login: {
+          isUserLogged: false,
+          isLoading: false,
+          error: action.payload.error,
+        },
       };
     }
 
     case AuthActionsTypes.REGISTER: {
       return {
         ...state,
-        isRegistering: true,
-        registerError: null,
+        userRegister: {
+          isLoading: true,
+          error: null,
+        },
       };
     }
 
     case AuthActionsTypes.REGISTER_SUCCESS: {
       return {
         ...state,
-        isRegistering: false,
+        userRegister: {
+          ...state.userRegister,
+          isLoading: false,
+        },
       };
     }
 
     case AuthActionsTypes.REGISTER_FAIL: {
       return {
         ...state,
-        isRegistering: false,
-        registerError: action.payload.error,
+        userRegister: {
+          isLoading: false,
+          error: action.payload.error,
+        },
       };
     }
 
     case AuthActionsTypes.ACTIVATE: {
       return {
         ...state,
-        isActivating: true,
-        activateError: null,
-        isUserActivated: false,
+        userActivation: {
+          isUserActivated: false,
+          isLoading: true,
+          error: null,
+        },
       };
     }
 
     case AuthActionsTypes.ACTIVATE_SUCCESS: {
       return {
         ...state,
-        isActivating: false,
-        isUserActivated: true,
+        userActivation: {
+          ...state.userActivation,
+          isLoading: false,
+          isUserActivated: true,
+        },
       };
     }
 
     case AuthActionsTypes.ACTIVATE_FAIL: {
       return {
         ...state,
-        isActivating: false,
-        activateError: action.payload.error,
+        userActivation: {
+          ...state.userActivation,
+          isLoading: false,
+          error: action.payload.error,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD_INIT: {
       return {
         ...state,
-        isInitializingPasswordReset: true,
-        initResetPasswordError: null,
+        initPasswordReset: {
+          isLoading: true,
+          error: null,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD_INIT_SUCCESS: {
       return {
         ...state,
-        isInitializingPasswordReset: false,
+        initPasswordReset: {
+          ...state.initPasswordReset,
+          isLoading: false,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD_INIT_FAIL: {
       return {
         ...state,
-        isInitializingPasswordReset: false,
-        initResetPasswordError: action.payload.error,
+        initPasswordReset: {
+          isLoading: false,
+          error: action.payload.error,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD: {
       return {
         ...state,
-        isResettingPassword: true,
-        resetPasswordError: null,
+        passwordReset: {
+          isLoading: true,
+          error: null,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
-        isResettingPassword: false,
+        passwordReset: {
+          ...state.passwordReset,
+          isLoading: false,
+        },
       };
     }
 
     case AuthActionsTypes.RESET_PASSWORD_FAIL: {
       return {
         ...state,
-        isResettingPassword: false,
-        resetPasswordError: action.payload.error,
+        passwordReset: {
+          isLoading: false,
+          error: action.payload.error,
+        },
       };
     }
 

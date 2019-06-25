@@ -17,7 +17,7 @@ export class AuthDataService {
     private config: ConfigService,
   ) { }
 
-  public register(newUser: CreateUserBody): Observable<User> {
+  public registerUser(newUser: CreateUserBody): Observable<User> {
     return this.http.post<User>(`${this.config.apiUrl}/auth/register`, newUser);
   }
 
@@ -25,7 +25,7 @@ export class AuthDataService {
     return this.http.post<LoginResponse>(`${this.config.apiUrl}/auth/login`, { email, password });
   }
 
-  public activate(userId: string, token: string): Observable<SuccessResponse> {
+  public activateUser(userId: string, token: string): Observable<SuccessResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: token,

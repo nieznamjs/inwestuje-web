@@ -1,14 +1,24 @@
 export interface AuthState {
-  isUserLogged: boolean;
-  isLogging: boolean;
-  loginError: string | null;
-  isRegistering: boolean;
-  registerError: string | null;
-  isActivating: boolean;
-  activateError: string | null;
-  isUserActivated: boolean;
-  isInitializingPasswordReset: boolean;
-  initResetPasswordError: string | null;
-  isResettingPassword: boolean;
-  resetPasswordError: string | null;
+  login: {
+    isUserLogged: boolean;
+    isLoading: boolean;
+    error: string | null;
+  };
+  userRegister: {
+    isLoading: boolean;
+    error: string | null;
+  };
+  userActivation: {
+    isUserActivated: boolean;
+    isLoading: boolean;
+    error: string | null;
+  };
+  passwordReset: {
+    isLoading: boolean;
+    error: string | null;
+  };
+  initPasswordReset: {
+    isLoading: boolean;
+    error: string | null;
+  };
 }

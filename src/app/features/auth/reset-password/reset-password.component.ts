@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SnackbarMessages } from '@constants/snackbar-messages';
 import { SnackbarService } from '@services/utils/snackbar.service';
@@ -21,13 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   private token: string;
   public isLoading$: Observable<boolean>;
   public resetPasswordError$: Observable<string>;
-  public resetPasswordForm = this.fb.group({
-    password: [ '', [
-      Validators.required,
-      Validators.pattern(PASSWORD_REQUIREMENT_REGEX_STRING),
-    ]],
-    confirmPassword: [ '', Validators.required ],
-  });
+  public resetPasswordForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -39,17 +33,30 @@ export class ResetPasswordComponent implements OnInit {
     @Inject(DOMAIN_NAME) public domainName: string,
   ) { }
 
+  private createForm(): FormGroup {
+    return this.fb.group({
+      password: [ '', [
+        Validators.required,
+        Validators.pattern(PASSWORD_REQUIREMENT_REGEX_STRING),
+      ]],
+      confirmPassword: [ '', Validators.required ],
+    });
+  }
+
   public ngOnInit(): void {
+    this.resetPasswordForm = this.createForm();
+
     this.userId = this.route.snapshot.paramMap.get('userId');
     this.token = this.route.snapshot.queryParamMap.get('token');
 
-    this.isLoading$ = this.authFacade.isResettingPassword$;
-    this.resetPasswordError$ = this.authFacade.resetPasswordError$;
-
     if (!this.userId || !this.token) {
       this.snackbarService.showError(SnackbarMessages.BadUrl);
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
+      return;
     }
+
+    this.isLoading$ = this.authFacade.isResettingPassword$;
+    this.resetPasswordError$ = this.authFacade.resetPasswordError$;
   }
 
   public getFormControl(name: string): AbstractControl {

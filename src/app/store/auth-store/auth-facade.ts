@@ -27,7 +27,7 @@ export class AuthFacade {
   public isRegistering$ = this.store.select(selectIsRegistering);
   public registerError$ = this.store.select(selectRegisterError);
   public isActivating$ = this.store.select(selectIsActivating);
-  public activateError$ = this.store.select(selectActivateError);
+  public userActivationError$ = this.store.select(selectActivateError);
   public isUserActivated$ = this.store.select(selectIsUserActivated);
   public isInitializingPasswordReset$ = this.store.select(selectIsInitializingPasswordReset);
   public initPasswordResetError$ = this.store.select(selectInitPasswordResetError);
@@ -40,11 +40,11 @@ export class AuthFacade {
     this.store.dispatch(new LoginAction({ email, password }));
   }
 
-  public register(newUser: CreateUserBody): void {
+  public registerUser(newUser: CreateUserBody): void {
     this.store.dispatch(new RegisterAction({ newUser }));
   }
 
-  public activate(userId: string, token: string): void {
+  public activateUser(userId: string, token: string): void {
     this.store.dispatch(new ActivateAction({ userId, token }));
   }
 

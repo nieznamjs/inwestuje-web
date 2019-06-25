@@ -27,7 +27,7 @@ export class UsersEffects {
   ) {}
 
   @Effect()
-  getUsersEffect$: Observable<Action> = this.actions$.pipe(
+  public getUsersEffect$: Observable<Action> = this.actions$.pipe(
     ofType<GetUsersAction>(UsersActionsTypes.GET_USERS),
     switchMap((action: GetUsersAction) => {
       return this.userService.getUsers(action.payload)
@@ -39,7 +39,7 @@ export class UsersEffects {
   );
 
   @Effect()
-  updateUserEffect$: Observable<Action> = this.actions$.pipe(
+  public updateUserEffect$: Observable<Action> = this.actions$.pipe(
     ofType<UpdateUserAction>(UsersActionsTypes.UPDATE_USER),
     mergeMap((action: UpdateUserAction) => {
       return this.userService.updateUser(action.payload.user)

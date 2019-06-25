@@ -2,18 +2,18 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { AuthState } from '@interfaces/ngrx/auth/auth-state.interface';
 
-export const getIsLogging = (state: AuthState) => state.isLogging;
-export const getIsRegistering = (state: AuthState) => state.isRegistering;
-export const getLoginError = (state: AuthState) => state.loginError;
-export const getRegisterError = (state: AuthState) => state.registerError;
-export const getIsUserLogged = (state: AuthState) => state.isUserLogged;
-export const getIsActivating = (state: AuthState) => state.isActivating;
-export const getActivateError = (state: AuthState) => state.activateError;
-export const getIsUserActivated = (state: AuthState) => state.isUserActivated;
-export const getIsInitializingPasswordReset = (state: AuthState) => state.isInitializingPasswordReset;
-export const getInitPasswordResetError = (state: AuthState) => state.initResetPasswordError;
-export const getIsResettingPassword = (state: AuthState) => state.isResettingPassword;
-export const getResetPasswordError = (state: AuthState) => state.resetPasswordError;
+export const getIsUserLogged = (state: AuthState) => state.login.isUserLogged;
+export const getIsLogging = (state: AuthState) => state.login.isLoading;
+export const getLoginError = (state: AuthState) => state.login.error;
+export const getIsRegistering = (state: AuthState) => state.userRegister.isLoading;
+export const getRegisterError = (state: AuthState) => state.userRegister.error;
+export const getIsUserActivated = (state: AuthState) => state.userActivation.isUserActivated;
+export const getIsActivating = (state: AuthState) => state.userActivation.isLoading;
+export const getActivateError = (state: AuthState) => state.userActivation.error;
+export const getIsInitializingPasswordReset = (state: AuthState) => state.initPasswordReset.isLoading;
+export const getInitPasswordResetError = (state: AuthState) => state.initPasswordReset.error;
+export const getIsResettingPassword = (state: AuthState) => state.passwordReset.isLoading;
+export const getResetPasswordError = (state: AuthState) => state.passwordReset.error;
 
 export const authStateSelector = createFeatureSelector<AuthState>('auth');
 

@@ -1,13 +1,15 @@
-<h2 class="logo">
-  Tu będzie logo
-</h2>
+<mat-card class="card">
+  <h2>
+    {{ domainName }}
+  </h2>
 
-<mat-spinner *ngIf="isActivating$ | async"></mat-spinner>
+  <mat-spinner class="loading-spinner" *ngIf="isActivating$ | async"></mat-spinner>
 
-<mat-error class="error" *ngIf="activateError$ | async">
-  Wystąpił błąd. Spróbuj ponownie lub skontaktuj się z administratorem.
-</mat-error>
+  <mat-error class="error" *ngIf="userActivationError$ | async">
+    Wystąpił błąd. Spróbuj ponownie lub skontaktuj się z administratorem.
+  </mat-error>
 
-<h3 class="success-message" *ngIf="isUserActivated$ | async">
-  Użytkownik został aktywowany, teraz możesz się <a class="success-message-link" routerLink="/login">zalogować</a>!
-</h3>
+  <h3 class="success-message" *ngIf="isUserActivated$ | async">
+    Użytkownik został aktywowany, teraz możesz się <a class="success-message-link" routerLink="/auth/login">zalogować</a>!
+  </h3>
+</mat-card>

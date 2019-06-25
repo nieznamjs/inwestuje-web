@@ -1,52 +1,48 @@
-<div class="form-container">
-  <mat-card class="form-card">
-    <h2>
-      {{ domainName }}
-    </h2>
+<mat-card class="form-card">
+  <h2>
+    {{ domainName }}
+  </h2>
 
-    <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="field">
-        <input matInput type="email" placeholder="E-mail" formControlName="email" required autocomplete="email">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="field">
+      <input matInput type="email" placeholder="E-mail" formControlName="email" required autocomplete="email">
 
-        <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
-          E-mail jest wymagany
-        </mat-error>
-
-        <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
-          Niepoprawny e-mail
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="field-alt">
-        <input matInput type="password" placeholder="Hasło" formControlName="password" required autocomplete="current-password">
-
-        <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
-          Hasło jest wymagane
-        </mat-error>
-
-        <mat-error *ngIf="getFormControl('password').hasError('pattern')">
-          Hasło musi składać się z przynajmniej jednej małej litery, jednej wielkiej litery i cyfry oraz mieć długość 6-24 znaki
-        </mat-error>
-      </mat-form-field>
-
-      <button class="btn" mat-raised-button color="primary" [disabled]="isLoading$ | async">
-        Zaloguj się
-      </button>
-
-      <mat-error *ngIf="loginError$ | async" class="login-error">
-        Nieprawidłowy e-mail lub hasło
+      <mat-error class="error" *ngIf="getFormControl('email').hasError('required')">
+        E-mail jest wymagany
       </mat-error>
-      <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
-    </form>
 
-    <p>
-      Nie masz jeszcze konta? <a routerLink="/register">Zarejestruj się!</a>
-    </p>
+      <mat-error class="error" *ngIf="getFormControl('email').hasError('email')">
+        Niepoprawny e-mail
+      </mat-error>
+    </mat-form-field>
 
-    <p>
-      Zapomniałeś hasła? <a routerLink="/init-reset-password">Zresetuj hasło!</a>
-    </p>
-  </mat-card>
-</div>
+    <mat-form-field class="field-alt">
+      <input matInput type="password" placeholder="Hasło" formControlName="password" required autocomplete="current-password">
 
-<iw-auth-sidebar class="sidebar"></iw-auth-sidebar>
+      <mat-error class="error" *ngIf="getFormControl('password').hasError('required')">
+        Hasło jest wymagane
+      </mat-error>
+
+      <mat-error *ngIf="getFormControl('password').hasError('pattern')">
+        Hasło musi składać się z przynajmniej jednej małej litery, jednej wielkiej litery i cyfry oraz mieć długość 6-24 znaki
+      </mat-error>
+    </mat-form-field>
+
+    <button class="btn" mat-raised-button color="primary" [disabled]="isLoading$ | async">
+      Zaloguj się
+    </button>
+
+    <mat-error *ngIf="loginError$ | async" class="login-error">
+      Nieprawidłowy e-mail lub hasło
+    </mat-error>
+    <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
+  </form>
+
+  <p>
+    Nie masz jeszcze konta? <a routerLink="/auth/register">Zarejestruj się!</a>
+  </p>
+
+  <p>
+    Zapomniałeś hasła? <a routerLink="/auth/init-reset-password">Zresetuj hasło!</a>
+  </p>
+</mat-card>

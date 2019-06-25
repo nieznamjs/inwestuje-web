@@ -37,7 +37,7 @@ export class AuthEffects {
   ) {}
 
   @Effect()
-  loginEffect$: Observable<Action> = this.actions$.pipe(
+  public loginEffect$: Observable<Action> = this.actions$.pipe(
     ofType<LoginAction>(AuthActionsTypes.LOGIN),
     switchMap((action: LoginAction) => {
       return this.authService.login(action.payload.email, action.payload.password)
@@ -53,14 +53,14 @@ export class AuthEffects {
   );
 
   @Effect()
-  registerEffect$: Observable<Action> = this.actions$.pipe(
+  public registerEffect$: Observable<Action> = this.actions$.pipe(
     ofType<RegisterAction>(AuthActionsTypes.REGISTER),
     switchMap((action: RegisterAction) => {
-      return this.authService.register(action.payload.newUser)
+      return this.authService.registerUser(action.payload.newUser)
         .pipe(
           map(() => {
             this.snackbarService.showSuccess(SnackbarMessages.AccountCreated);
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             return new RegisterSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new RegisterFailAction({ error: err.message }))),
@@ -69,10 +69,10 @@ export class AuthEffects {
   );
 
   @Effect()
-  activateEffect$: Observable<Action> = this.actions$.pipe(
+  public activateUserEffect$: Observable<Action> = this.actions$.pipe(
     ofType<ActivateAction>(AuthActionsTypes.ACTIVATE),
     switchMap((action: ActivateAction) => {
-      return this.authService.activate(action.payload.userId, action.payload.token)
+      return this.authService.activateUser(action.payload.userId, action.payload.token)
         .pipe(
           map(() => new ActivateSuccessAction()),
           catchError((err: HttpErrorResponse) => of(new ActivateFailAction({ error: err.message }))),
@@ -81,14 +81,14 @@ export class AuthEffects {
   );
 
   @Effect()
-  initPasswordReset$: Observable<Action> = this.actions$.pipe(
+  public initPasswordReset$: Observable<Action> = this.actions$.pipe(
     ofType<ResetPasswordInitAction>(AuthActionsTypes.RESET_PASSWORD_INIT),
     switchMap((action: ResetPasswordInitAction) => {
       return this.authService.initPasswordReset(action.payload.userEmail)
         .pipe(
           map(() => {
             this.snackbarService.showSuccess(SnackbarMessages.SentEmailWithPasswordReset);
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             return new ResetPasswordInitSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
@@ -97,14 +97,14 @@ export class AuthEffects {
   );
 
   @Effect()
-  resetPassword$: Observable<Action> = this.actions$.pipe(
+  public resetPassword$: Observable<Action> = this.actions$.pipe(
     ofType<ResetPasswordAction>(AuthActionsTypes.RESET_PASSWORD),
     switchMap((action: ResetPasswordAction) => {
       return this.authService.resetPassword(action.payload.userId, action.payload.newPassword, action.payload.token)
         .pipe(
           map(() => {
             this.snackbarService.showSuccess(SnackbarMessages.PasswordChanged);
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             return new ResetPasswordSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new ResetPasswordFailAction({ error: err.message }))),

@@ -1,89 +1,85 @@
-<div class="form-container">
-  <mat-card class="form-card">
-    <h2>
-      {{ domainName }} (logo, dupa, czy coś)
-    </h2>
+<mat-card class="form-card">
+  <h2>
+    {{ domainName }} (logo, dupa, czy coś)
+  </h2>
 
-    <mat-horizontal-stepper linear #stepper>
-      <mat-step label="Dane" [stepControl]="registerForm">
-        <iw-user-data-form
-          [registerForm]="registerForm"
-          [rolesData]="rolesData"
-          [accountTypes]="accountTypes">
-        </iw-user-data-form>
-      </mat-step>
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step label="Dane" [stepControl]="registerForm">
+      <iw-user-data-form
+        [registerForm]="registerForm"
+        [rolesData]="rolesData"
+        [accountTypes]="accountTypes">
+      </iw-user-data-form>
+    </mat-step>
 
-      <mat-step label="Płatności" [stepControl]="paymentForm">
-        <iw-payment-form
-          [paymentForm]="paymentForm"
-          [hasCardCheckError]="hasCardCheckError"
-          [isCheckingCardData]="isCheckingCardData"
-          (formSubmit)="onSubmitCardData()">
-        </iw-payment-form>
-      </mat-step>
+    <mat-step label="Płatności" [stepControl]="paymentForm">
+      <iw-payment-form
+        [paymentForm]="paymentForm"
+        [hasCardCheckError]="hasCardCheckError"
+        [isCheckingCardData]="isCheckingCardData"
+        (formSubmit)="onSubmitCardData()">
+      </iw-payment-form>
+    </mat-step>
 
-      <mat-step label="Podsumowanie">
-        <div class="summary-wrapper">
+    <mat-step label="Podsumowanie">
+      <div class="summary-wrapper">
+        <p>
+          E-mail: {{ getFormControl(registerForm, 'email').value }}
+        </p>
+
+        <p>
+          Typ konta: {{ getFormControl(registerForm, 'type').value.label }}
+        </p>
+
+        <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
           <p>
-            E-mail: {{ getFormControl(registerForm, 'email').value }}
+            Imię: {{ getFormControl(registerForm, 'firstName').value }}
           </p>
 
           <p>
-            Typ konta: {{ getFormControl(registerForm, 'type').value.label }}
+            Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
           </p>
-
-          <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[0]">
-            <p>
-              Imię: {{ getFormControl(registerForm, 'firstName').value }}
-            </p>
-
-            <p>
-              Nazwisko: {{ getFormControl(registerForm, 'lastName').value }}
-            </p>
-          </div>
-
-          <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
-            <p>
-              Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
-            </p>
-
-            <p>
-              NIP: {{ getFormControl(registerForm, 'nip').value }}
-            </p>
-          </div>
-
-          <p>
-           Role:
-            <span *ngFor="let role of getFormControl(registerForm, 'roles').value; let isLast = last">
-              {{ role.label }}{{ isLast ? '' : ', ' }}
-            </span>
-          </p>
-
-          <mat-checkbox class="accept-terms-checkbox" color="primary" #acceptTerms>
-            Akceptuję regulamin itepeitede.
-          </mat-checkbox>
-
-          <button
-            mat-raised-button
-            color="primary"
-            class="btn"
-            (click)="register()"
-            [disabled]="!acceptTerms.checked || (isLoading$ | async)">
-            Zarejestruj się
-          </button>
-
-          <mat-error *ngIf="registerError$ | async" class="login-error">
-            Nieprawidłowy e-mail lub hasło
-          </mat-error>
-          <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
         </div>
-      </mat-step>
-    </mat-horizontal-stepper>
 
-    <span>
-      Posiadasz już konto? <a routerLink="/login">Zaloguj się!</a>
-    </span>
-  </mat-card>
-</div>
+        <div *ngIf="getFormControl(registerForm, 'type').value === accountTypes[1]">
+          <p>
+            Nazwa firmy: {{ getFormControl(registerForm, 'companyName').value }}
+          </p>
 
-<iw-auth-sidebar class="sidebar"></iw-auth-sidebar>
+          <p>
+            NIP: {{ getFormControl(registerForm, 'nip').value }}
+          </p>
+        </div>
+
+        <p>
+         Role:
+          <span *ngFor="let role of getFormControl(registerForm, 'roles').value; let isLast = last">
+            {{ role.label }}{{ isLast ? '' : ', ' }}
+          </span>
+        </p>
+
+        <mat-checkbox class="accept-terms-checkbox" color="primary" #acceptTerms>
+          Akceptuję regulamin itepeitede.
+        </mat-checkbox>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="btn"
+          (click)="register()"
+          [disabled]="!acceptTerms.checked || (isLoading$ | async)">
+          Zarejestruj się
+        </button>
+
+        <mat-error *ngIf="registerError$ | async" class="login-error">
+          Nieprawidłowy e-mail lub hasło
+        </mat-error>
+        <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+  <span>
+    Posiadasz już konto? <a routerLink="/auth/login">Zaloguj się!</a>
+  </span>
+</mat-card>
