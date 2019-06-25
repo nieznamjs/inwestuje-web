@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 1020px) {
+    position: relative;
+
+    flex-wrap: wrap;
+    align-items: center;
+
+    min-height: 100vh;
+  }
+}

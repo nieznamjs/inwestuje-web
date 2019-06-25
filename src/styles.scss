@@ -35,3 +35,30 @@ a {
   white-space: normal !important;
 }
 
+.field {
+  width: 100%;
+
+  line-height: 1.4;
+}
+
+.field-alt {
+  width: 100%;
+  text-align: left;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  .toggle-btn {
+    flex: 1;
+  }
+}
+
+.field.mat-form-field-invalid {
+  margin-bottom: 10px;
+}
+
+.field-alt.mat-form-field-invalid {
+  margin-bottom: 20px;
+}
+

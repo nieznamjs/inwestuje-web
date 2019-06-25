@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { UsersState } from '@interfaces/ngrx/users/users-state';
+import { UsersState } from '@interfaces/ngrx/users/users-state.interface';
 import { usersAdapter } from './users-state';
 import { User } from '@interfaces/user.interface';
 

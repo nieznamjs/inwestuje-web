@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { UsersState } from '@interfaces/ngrx/users/users-state';
+import { UsersState } from '@interfaces/ngrx/users/users-state.interface';
 import { selectAllUsers, selectUpdatingUsersId, selectUsersCount, selectUsersError, selectUsersIsLoading } from './users-selectors';
 import { GetUsersAction, UpdateUserAction } from './users-actions';
 import { GetAllRequestConfig } from '@interfaces/get-all-request-config';

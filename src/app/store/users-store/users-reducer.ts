@@ -1,6 +1,6 @@
 import { usersAdapter, usersInitialState } from './users-state';
 import { UsersActions, UsersActionsTypes } from './users-actions';
-import { UsersState } from '@interfaces/ngrx/users/users-state';
+import { UsersState } from '@interfaces/ngrx/users/users-state.interface';
 
 export function usersReducer(state = usersInitialState, action: UsersActions): UsersState {
   switch (action.type) {

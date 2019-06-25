@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { FormsService } from '@services/utils/forms.service';
 import { ACCOUNT_TYPES, AccountTypes } from '@constants/account-types';
@@ -10,11 +10,9 @@ import { PayuTokenCreateResponse } from '@interfaces/payu/payu-token-create-resp
 import { PayuDataService } from '@services/data-integration/payu-data.service';
 import { AccountType } from '@interfaces/account-type.interface';
 import { AccountRole } from '@interfaces/account-role.interface';
-import { AuthDataService } from '@services/data-integration/auth-data.service';
-import { SnackbarService } from '@services/utils/snackbar.service';
 import { NIP_REQUIREMENT_REGEX_STRING, PASSWORD_REQUIREMENT_REGEX_STRING } from '@constants/regexes';
-import { SnackbarMessages } from '@constants/snackbar-messages';
 import { DOMAIN_NAME } from '@constants/app-config';
+import { AuthFacade } from '@store/auth-store';
 
 @Component({
   selector: 'iw-register',
@@ -32,21 +30,23 @@ export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
   public paymentForm: FormGroup;
   public cardDataToken: string;
+  public isLoading$: Observable<boolean>;
+  public registerError$: Observable<string>;
 
   constructor(
+    private authFacade: AuthFacade,
     private fb: FormBuilder,
     private formsService: FormsService,
     private cd: ChangeDetectorRef,
     private payuService: PayuDataService,
-    private authService: AuthDataService,
-    private snackbarService: SnackbarService,
-    private router: Router,
     @Inject(DOMAIN_NAME) public domainName: string,
   ) { }
 
   public ngOnInit(): void {
     this.registerForm = this.createRegisterForm();
     this.paymentForm = this.createPaymentForm();
+    this.isLoading$ = this.authFacade.isRegistering$;
+    this.registerError$ = this.authFacade.registerError$;
 
     this.togglePrivateAndCompanyFields();
   }
@@ -87,14 +87,11 @@ export class RegisterComponent implements OnInit {
     const { cardNumber } = this.paymentForm.value;
     const rolesValues = roles.map((role: AccountRole) => role.value);
 
-    this.authService.register({
+    this.authFacade.registerUser({
       email, password, firstName, lastName, companyName,
       nip: parseInt(nip, 10),
       roles: rolesValues,
       type: type.value,
-    }).subscribe(() => {
-      this.snackbarService.showSuccess(SnackbarMessages.AccountCreated);
-      this.router.navigate(['/login']);
     });
   }
 

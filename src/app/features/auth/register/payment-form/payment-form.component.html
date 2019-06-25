@@ -8,7 +8,8 @@
       type="text"
       placeholder="Numer karty"
       formControlName="cardNumber"
-      required>
+      required
+      autocomplete="cc-number">
 
     <mat-error *ngIf="getFormControl(paymentForm, 'cardNumber').hasError('pattern')">
       Nieprawidłowy numer karty
@@ -29,7 +30,8 @@
         type="text"
         placeholder="Kod CVV2/CVC2"
         formControlName="cvv"
-        required>
+        required
+        autocomplete="cc-csc">
     </label>
 
     <mat-error *ngIf="getFormControl(paymentForm, 'cvv').hasError('required')">
@@ -47,7 +49,8 @@
         type="text"
         placeholder="Miesiąc ważności karty"
         formControlName="expMonth"
-        required>
+        required
+        autocomplete="cc-exp-month">
 
       <mat-error *ngIf="getFormControl(paymentForm, 'expMonth').hasError('required')">
         Miesiąc jest wymagany
@@ -67,7 +70,8 @@
         type="text"
         placeholder="Rok ważności karty"
         formControlName="expYear"
-        required>
+        required
+        autocomplete="cc-exp-year">
 
       <mat-error *ngIf="getFormControl(paymentForm, 'expYear').hasError('required')">
         Rok jest wymagany
