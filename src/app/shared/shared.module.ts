@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -30,6 +30,7 @@ import { DOMAIN_NAME } from '@constants/app-config';
 import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
 import { AccountTypePipe } from '@pipes/account-type.pipe';
 import { AccountRolePipe } from '@pipes/account-role.pipe';
+import { MatPaginatorIntlPl } from './helpers/mat-paginator-intl-pl';
 
 const materialModules = [
   MatInputModule,
@@ -88,6 +89,7 @@ const materialModules = [
   ],
   providers: [
     { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlPl },
   ],
 })
 export class SharedModule { }
