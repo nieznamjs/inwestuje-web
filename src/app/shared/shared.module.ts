@@ -21,13 +21,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { IMaskModule } from 'angular-imask';
 
-import { AuthSidebarComponent } from '@components/auth-sidebar/auth-sidebar.component';
 import { SuccessSnackbarComponent } from '@components/succes-snackbar/success-snackbar.component';
 import { ContainerComponent } from '@components/container/container.component';
 import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackbar.component';
 import { DOMAIN_NAME } from '@constants/app-config';
+import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
 
 const materialModules = [
   MatInputModule,
@@ -50,12 +50,12 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    AuthSidebarComponent,
     SuccessSnackbarComponent,
     ContainerComponent,
     OrdinalNumberPipe,
     ConfirmDialogComponent,
     ErrorSnackbarComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     ...materialModules,
@@ -71,7 +71,6 @@ const materialModules = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AuthSidebarComponent,
     IMaskModule,
     ContainerComponent,
     OrdinalNumberPipe,
