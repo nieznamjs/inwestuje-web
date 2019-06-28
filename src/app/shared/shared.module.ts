@@ -28,6 +28,8 @@ import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialo
 import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackbar.component';
 import { DOMAIN_NAME } from '@constants/app-config';
 import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
+import { AccountTypePipe } from '@pipes/account-type.pipe';
+import { AccountRolePipe } from '@pipes/account-role.pipe';
 
 const materialModules = [
   MatInputModule,
@@ -56,6 +58,8 @@ const materialModules = [
     ConfirmDialogComponent,
     ErrorSnackbarComponent,
     PageNotFoundComponent,
+    AccountTypePipe,
+    AccountRolePipe,
   ],
   imports: [
     ...materialModules,
@@ -74,6 +78,8 @@ const materialModules = [
     IMaskModule,
     ContainerComponent,
     OrdinalNumberPipe,
+    AccountTypePipe,
+    AccountRolePipe,
   ],
   entryComponents: [
     SuccessSnackbarComponent,

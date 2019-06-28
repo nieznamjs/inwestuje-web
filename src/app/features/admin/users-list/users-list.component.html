@@ -68,12 +68,16 @@
 
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
-      <td mat-cell *matCellDef="let user">{{ user.type }}</td>
+      <td mat-cell *matCellDef="let user">{{ user.type | accountType }}</td>
     </ng-container>
 
     <ng-container matColumnDef="roles">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
-      <td mat-cell *matCellDef="let user">{{ user.roles.join(', ') }}</td>
+      <td mat-cell *matCellDef="let user">
+        <span *ngFor="let role of user.roles; let i = index">
+          {{ role | accountRole }}{{ i === user.roles.length - 1 ? '' : ', ' }}
+        </span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="active">
