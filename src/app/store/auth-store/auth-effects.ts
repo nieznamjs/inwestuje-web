@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import {
@@ -17,14 +17,21 @@ import {
   LoginSuccessAction,
   RegisterAction,
   RegisterFailAction,
-  RegisterSuccessAction, ResetPasswordAction, ResetPasswordFailAction,
-  ResetPasswordInitAction, ResetPasswordInitFailAction, ResetPasswordInitSuccessAction, ResetPasswordSuccessAction
+  RegisterSuccessAction,
+  ResetPasswordAction,
+  ResetPasswordFailAction,
+  ResetPasswordInitAction,
+  ResetPasswordInitFailAction,
+  ResetPasswordInitSuccessAction,
+  ResetPasswordSuccessAction
 } from './auth-actions';
 import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LocalStorageService } from '@services/utils/local-storage.service';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
 import { SnackbarMessages } from '@constants/snackbar-messages';
 import { SnackbarService } from '@services/utils/snackbar.service';
+import { ErrorMessages } from '@constants/error-messages';
+import { INVALID_UUID_SYNTAX_ERROR_REGEX } from '@constants/regexes';
 
 @Injectable()
 export class AuthEffects {
@@ -47,7 +54,15 @@ export class AuthEffects {
             this.router.navigate(['/admin']);
             return new LoginSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new LoginFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            let errorMessage = ErrorMessages.GeneralServerError;
+
+            if (err.error.statusCode === 401) {
+              errorMessage = ErrorMessages.Unauthorized;
+            }
+
+            return of(new LoginFailAction({ error: errorMessage }));
+          }),
         );
     }),
   );
@@ -63,7 +78,15 @@ export class AuthEffects {
             this.router.navigate(['/auth/login']);
             return new RegisterSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new RegisterFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            let errorMessage = ErrorMessages.GeneralServerError;
+
+            if (err.error.statusCode === 409) {
+              errorMessage = ErrorMessages.UserAlreadyExists;
+            }
+
+            return of(new RegisterFailAction({ error: errorMessage }));
+          }),
         );
     }),
   );
@@ -75,7 +98,15 @@ export class AuthEffects {
       return this.authService.activateUser(action.payload.userId, action.payload.token)
         .pipe(
           map(() => new ActivateSuccessAction()),
-          catchError((err: HttpErrorResponse) => of(new ActivateFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            let errorMessage = ErrorMessages.GeneralServerError;
+
+            if (err.error.statusCode === 401) {
+              errorMessage = ErrorMessages.BadUrl;
+            }
+
+            return of(new ActivateFailAction({ error: errorMessage }));
+          }),
         );
     }),
   );
@@ -86,12 +117,12 @@ export class AuthEffects {
     switchMap((action: ResetPasswordInitAction) => {
       return this.authService.initPasswordReset(action.payload.userEmail)
         .pipe(
-          map(() => {
+          map(() => new ResetPasswordInitSuccessAction()),
+          catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
+          finalize(() => {
             this.snackbarService.showSuccess(SnackbarMessages.SentEmailWithPasswordReset);
             this.router.navigate(['/auth/login']);
-            return new ResetPasswordInitSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
         );
     }),
   );
@@ -107,7 +138,15 @@ export class AuthEffects {
             this.router.navigate(['/auth/login']);
             return new ResetPasswordSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new ResetPasswordFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            let errorMessage = ErrorMessages.GeneralServerError;
+
+            if (err.error.statusCode === 404 || err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX)) {
+              errorMessage = ErrorMessages.BadUrl;
+            }
+
+            return of(new ResetPasswordFailAction({ error: errorMessage }));
+          }),
         );
     }),
   );

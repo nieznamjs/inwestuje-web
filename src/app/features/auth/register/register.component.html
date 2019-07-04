@@ -71,8 +71,8 @@
           Zarejestruj się
         </button>
 
-        <mat-error *ngIf="registerError$ | async" class="login-error">
-          Nieprawidłowy e-mail lub hasło
+        <mat-error *ngIf="(registerError$ | async) as error" class="register-error">
+          {{ error }}
         </mat-error>
         <mat-spinner color="primary" [diameter]="50" *ngIf="isLoading$ | async" class="loading-spinner"></mat-spinner>
       </div>
