@@ -11,7 +11,7 @@ pipeline {
                 docker { image 'weboaks/node-karma-protractor-chrome:alpine' }
             }
             environment {
-              HOME='.'
+              HOME="${env.WORKSPACE}"
             }
             stages {
                 stage('Build') {
