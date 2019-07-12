@@ -15,7 +15,7 @@ export class PageNotFoundComponent {
     @Inject(DOMAIN_NAME) public domainName: string,
   ) { }
 
-  goBack(): void {
+  public goBack(): void {
     this.location.back();
   }
 }

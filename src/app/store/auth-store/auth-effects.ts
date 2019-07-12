@@ -32,6 +32,7 @@ import { SnackbarMessages } from '@constants/snackbar-messages';
 import { SnackbarService } from '@services/utils/snackbar.service';
 import { ErrorMessages } from '@constants/error-messages';
 import { INVALID_UUID_SYNTAX_ERROR_REGEX } from '@constants/regexes';
+import { HttpStatusCodes } from '@constants/http-status-codes';
 
 @Injectable()
 export class AuthEffects {
@@ -55,13 +56,10 @@ export class AuthEffects {
             return new LoginSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => {
-            let errorMessage = ErrorMessages.GeneralServerError;
+            const isUnauthorizedStatusCode = err.error.statusCode === HttpStatusCodes.Unauthorized;
+            const error = isUnauthorizedStatusCode ? ErrorMessages.Unauthorized : ErrorMessages.GeneralServerError;
 
-            if (err.error.statusCode === 401) {
-              errorMessage = ErrorMessages.Unauthorized;
-            }
-
-            return of(new LoginFailAction({ error: errorMessage }));
+            return of(new LoginFailAction({ error }));
           }),
         );
     }),
@@ -79,13 +77,10 @@ export class AuthEffects {
             return new RegisterSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => {
-            let errorMessage = ErrorMessages.GeneralServerError;
+            const isConflictStatusCode = err.error.statusCode === HttpStatusCodes.Conflict;
+            const error = isConflictStatusCode ? ErrorMessages.UserAlreadyExists : ErrorMessages.GeneralServerError;
 
-            if (err.error.statusCode === 409) {
-              errorMessage = ErrorMessages.UserAlreadyExists;
-            }
-
-            return of(new RegisterFailAction({ error: errorMessage }));
+            return of(new RegisterFailAction({ error }));
           }),
         );
     }),
@@ -99,13 +94,10 @@ export class AuthEffects {
         .pipe(
           map(() => new ActivateSuccessAction()),
           catchError((err: HttpErrorResponse) => {
-            let errorMessage = ErrorMessages.GeneralServerError;
+            const isUnauthorizedStatusCode = err.error.statusCode === HttpStatusCodes.Unauthorized;
+            const error = isUnauthorizedStatusCode ? ErrorMessages.Unauthorized : ErrorMessages.BadUrl;
 
-            if (err.error.statusCode === 401) {
-              errorMessage = ErrorMessages.BadUrl;
-            }
-
-            return of(new ActivateFailAction({ error: errorMessage }));
+            return of(new ActivateFailAction({ error }));
           }),
         );
     }),
@@ -139,13 +131,11 @@ export class AuthEffects {
             return new ResetPasswordSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => {
-            let errorMessage = ErrorMessages.GeneralServerError;
+            const isNotFoundStatusCode = err.error.statusCode === HttpStatusCodes.NotFound
+              || err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX);
+            const error = isNotFoundStatusCode ? ErrorMessages.BadUrl : ErrorMessages.GeneralServerError;
 
-            if (err.error.statusCode === 404 || err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX)) {
-              errorMessage = ErrorMessages.BadUrl;
-            }
-
-            return of(new ResetPasswordFailAction({ error: errorMessage }));
+            return of(new ResetPasswordFailAction({ error }));
           }),
         );
     }),
