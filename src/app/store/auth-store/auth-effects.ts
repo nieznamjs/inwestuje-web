@@ -131,9 +131,9 @@ export class AuthEffects {
             return new ResetPasswordSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => {
-            const isNotFoundStatusCode = err.error.statusCode === HttpStatusCodes.NotFound
-              || err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX);
-            const error = isNotFoundStatusCode ? ErrorMessages.BadUrl : ErrorMessages.GeneralServerError;
+            const isInvalidUuidSyntax = err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX);
+            const isNotFoundStatusCode = err.error.statusCode === HttpStatusCodes.NotFound;
+            const error = isNotFoundStatusCode || isInvalidUuidSyntax ? ErrorMessages.BadUrl : ErrorMessages.GeneralServerError;
 
             return of(new ResetPasswordFailAction({ error }));
           }),
