@@ -10,6 +10,7 @@ import { ActivateAccountComponent } from './activate-account/activate-account.co
 import { ResetPasswordInitComponent } from './reset-password-init/reset-password-init.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthComponent } from './auth.component';
+import { AuthSidebarComponent } from './auth-sidebar/auth-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AuthComponent } from './auth.component';
     ResetPasswordInitComponent,
     ResetPasswordComponent,
     AuthComponent,
+    AuthSidebarComponent,
   ],
   imports: [
     AuthRoutingModule,
