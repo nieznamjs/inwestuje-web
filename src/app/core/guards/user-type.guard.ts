@@ -13,15 +13,23 @@ export class UserTypeGuard implements CanLoad {
     private router: Router,
   ) {}
 
+  private preventLoading(): boolean {
+    this.router.navigate([ '/auth/login' ]);
+    return false;
+  }
+
   public canLoad(route: Route): boolean {
     const allowedUserRoles = route.data['allowedUserRoles'];
     const currentUserRoles = this.localStorageService.get<string[]>(USER_ROLES_KEY);
 
+    if (!currentUserRoles) {
+      return this.preventLoading();
+    }
+
     const userAllowed = currentUserRoles.some((role: string) => allowedUserRoles.includes(role));
 
     if (!userAllowed) {
-      this.router.navigate([ '/' ]);
-      return false;
+      return this.preventLoading();
     }
 
     return true;

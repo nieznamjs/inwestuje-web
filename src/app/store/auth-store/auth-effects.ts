@@ -44,7 +44,7 @@ export class AuthEffects {
         .pipe(
           map((response: LoginResponse) =>  {
             this.localStorageService.set<string[]>(USER_ROLES_KEY, response.userRoles);
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/app']);
             return new LoginSuccessAction();
           }),
           catchError((err: HttpErrorResponse) => of(new LoginFailAction({ error: err.message }))),
