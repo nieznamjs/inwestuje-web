@@ -1,0 +1,15 @@
+<mat-card class="card">
+  <h1 class="title">
+    {{ domainName }}
+  </h1>
+
+<!-- tu można wjebać jakieś logo, albo inne img z 404, ewentualnie zamiast domainName -->
+
+  <p class="text">
+    Przepraszamy, nie znaleziono takiej strony. Jesteśmy jednak pewni, że znajdziesz odpowiednią inwestycję <a class="link" routerLink="/search">tutaj</a>.
+  </p>
+
+  <p class="text">
+    Możesz też się <a class="link" (click)="goBack()">cofnąć</a>, lub przejść na <a class="link" routerLink="/">stronę główną</a>.
+  </p>
+</mat-card>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 
 import { AuthDataService } from '@services/data-integration/auth-data.service';
 import {
@@ -17,14 +17,22 @@ import {
   LoginSuccessAction,
   RegisterAction,
   RegisterFailAction,
-  RegisterSuccessAction, ResetPasswordAction, ResetPasswordFailAction,
-  ResetPasswordInitAction, ResetPasswordInitFailAction, ResetPasswordInitSuccessAction, ResetPasswordSuccessAction
+  RegisterSuccessAction,
+  ResetPasswordAction,
+  ResetPasswordFailAction,
+  ResetPasswordInitAction,
+  ResetPasswordInitFailAction,
+  ResetPasswordInitSuccessAction,
+  ResetPasswordSuccessAction
 } from './auth-actions';
 import { USER_ROLES_KEY } from '@constants/local-storage-keys';
 import { LocalStorageService } from '@services/utils/local-storage.service';
 import { LoginResponse } from '@interfaces/http/login-response.interface';
 import { SnackbarMessages } from '@constants/snackbar-messages';
 import { SnackbarService } from '@services/utils/snackbar.service';
+import { ErrorMessages } from '@constants/error-messages';
+import { INVALID_UUID_SYNTAX_ERROR_REGEX } from '@constants/regexes';
+import { HttpStatusCodes } from '@constants/http-status-codes';
 
 @Injectable()
 export class AuthEffects {
@@ -47,7 +55,12 @@ export class AuthEffects {
             this.router.navigate(['/app']);
             return new LoginSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new LoginFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            const isUnauthorizedStatusCode = err.error.statusCode === HttpStatusCodes.Unauthorized;
+            const error = isUnauthorizedStatusCode ? ErrorMessages.Unauthorized : ErrorMessages.GeneralServerError;
+
+            return of(new LoginFailAction({ error }));
+          }),
         );
     }),
   );
@@ -63,7 +76,12 @@ export class AuthEffects {
             this.router.navigate(['/auth/login']);
             return new RegisterSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new RegisterFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            const isConflictStatusCode = err.error.statusCode === HttpStatusCodes.Conflict;
+            const error = isConflictStatusCode ? ErrorMessages.UserAlreadyExists : ErrorMessages.GeneralServerError;
+
+            return of(new RegisterFailAction({ error }));
+          }),
         );
     }),
   );
@@ -75,7 +93,12 @@ export class AuthEffects {
       return this.authService.activateUser(action.payload.userId, action.payload.token)
         .pipe(
           map(() => new ActivateSuccessAction()),
-          catchError((err: HttpErrorResponse) => of(new ActivateFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            const isUnauthorizedStatusCode = err.error.statusCode === HttpStatusCodes.Unauthorized;
+            const error = isUnauthorizedStatusCode ? ErrorMessages.Unauthorized : ErrorMessages.BadUrl;
+
+            return of(new ActivateFailAction({ error }));
+          }),
         );
     }),
   );
@@ -86,12 +109,12 @@ export class AuthEffects {
     switchMap((action: ResetPasswordInitAction) => {
       return this.authService.initPasswordReset(action.payload.userEmail)
         .pipe(
-          map(() => {
+          map(() => new ResetPasswordInitSuccessAction()),
+          catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
+          finalize(() => {
             this.snackbarService.showSuccess(SnackbarMessages.SentEmailWithPasswordReset);
             this.router.navigate(['/auth/login']);
-            return new ResetPasswordInitSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new ResetPasswordInitFailAction({ error: err.message }))),
         );
     }),
   );
@@ -107,7 +130,13 @@ export class AuthEffects {
             this.router.navigate(['/auth/login']);
             return new ResetPasswordSuccessAction();
           }),
-          catchError((err: HttpErrorResponse) => of(new ResetPasswordFailAction({ error: err.message }))),
+          catchError((err: HttpErrorResponse) => {
+            const isInvalidUuidSyntax = err.error.message.match(INVALID_UUID_SYNTAX_ERROR_REGEX);
+            const isNotFoundStatusCode = err.error.statusCode === HttpStatusCodes.NotFound;
+            const error = isNotFoundStatusCode || isInvalidUuidSyntax ? ErrorMessages.BadUrl : ErrorMessages.GeneralServerError;
+
+            return of(new ResetPasswordFailAction({ error }));
+          }),
         );
     }),
   );

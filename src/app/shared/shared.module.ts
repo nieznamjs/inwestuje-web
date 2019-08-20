@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,6 +29,10 @@ import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackba
 import { DOMAIN_NAME } from '@constants/app-config';
 import { GlobalHeaderComponent } from '@components/global-header/global-header.component';
 import { GlobalHeaderNavComponent } from '@components/global-header/global-header-nav/global-header-nav.component';
+import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
+import { AccountTypePipe } from '@pipes/account-type.pipe';
+import { AccountRolePipe } from '@pipes/account-role.pipe';
+import { MatPaginatorIntlPl } from './helpers/mat-paginator-intl-pl';
 
 const materialModules = [
   MatInputModule,
@@ -58,6 +62,9 @@ const materialModules = [
     ErrorSnackbarComponent,
     GlobalHeaderComponent,
     GlobalHeaderNavComponent,
+    PageNotFoundComponent,
+    AccountTypePipe,
+    AccountRolePipe,
   ],
   imports: [
     ...materialModules,
@@ -77,6 +84,8 @@ const materialModules = [
     ContainerComponent,
     OrdinalNumberPipe,
     GlobalHeaderComponent,
+    AccountTypePipe,
+    AccountRolePipe,
   ],
   entryComponents: [
     SuccessSnackbarComponent,
@@ -85,6 +94,7 @@ const materialModules = [
   ],
   providers: [
     { provide: DOMAIN_NAME, useValue: DOMAIN_NAME },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlPl },
   ],
 })
 export class SharedModule { }
