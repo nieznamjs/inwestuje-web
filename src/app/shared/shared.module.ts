@@ -27,6 +27,8 @@ import { OrdinalNumberPipe } from '@pipes/ordinal-number.pipe';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
 import { ErrorSnackbarComponent } from '@components/error-snackbar/error-snackbar.component';
 import { DOMAIN_NAME } from '@constants/app-config';
+import { GlobalHeaderComponent } from '@components/global-header/global-header.component';
+import { GlobalHeaderNavComponent } from '@components/global-header/global-header-nav/global-header-nav.component';
 import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
 import { AccountTypePipe } from '@pipes/account-type.pipe';
 import { AccountRolePipe } from '@pipes/account-role.pipe';
@@ -58,6 +60,8 @@ const materialModules = [
     OrdinalNumberPipe,
     ConfirmDialogComponent,
     ErrorSnackbarComponent,
+    GlobalHeaderComponent,
+    GlobalHeaderNavComponent,
     PageNotFoundComponent,
     AccountTypePipe,
     AccountRolePipe,
@@ -79,6 +83,7 @@ const materialModules = [
     IMaskModule,
     ContainerComponent,
     OrdinalNumberPipe,
+    GlobalHeaderComponent,
     AccountTypePipe,
     AccountRolePipe,
   ],

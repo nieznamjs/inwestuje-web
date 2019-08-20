@@ -1,0 +1,21 @@
+@import "~src/variables";
+@import "~src/theme";
+
+.global-header {
+  height: 60px;
+
+  background-color: mat-color($inwestuje-web-gray);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100%;
+}
+
+.link-logo {
+  color: $color-white;
+  text-decoration: none;
+}
